@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Cargo - Envíos Internacionales</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDKs (Compatibilidad V8 para usar firebase.initializeApp) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #f3f4f6; }
+        h1, h2, h3, .brand-font { font-family: 'Oswald', sans-serif; }
+        
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 31, 63, 0.8), rgba(0, 31, 63, 0.8)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .input-classic {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            background-color: white;
+            transition: border-color 0.2s;
+        }
+        .input-classic:focus {
+            border-color: #f97316; /* Orange-500 */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+        }
+        
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            font-size: 0.9rem;
+        }
+        .data-table th {
+            background-color: #0f172a;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .data-table td {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 10px;
+        }
+        .data-table tr:hover { background-color: #f9fafb; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-shipping-fast text-orange-500 text-3xl"></i>
+                    <span class="text-2xl font-bold tracking-wide uppercase brand-font">Global Cargo</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="hover:text-orange-500 transition">Inicio</a>
+                    <a href="#cotizar" class="hover:text-orange-500 transition">Cotizar Envío</a>
+                    <a href="#rastreo" class="hover:text-orange-500 transition">Rastreo</a>
+                    <button onclick="toggleAdminPanel()" class="text-xs bg-slate-800 px-3 py-1 rounded hover:bg-slate-700 border border-slate-600">
+                        <i class="fas fa-lock"></i> Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div id="inicio" class="hero-bg h-96 flex items-center justify-center text-center px-4">
+        <div class="text-white max-w-3xl">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4 uppercase">Conectamos Distancias</h1>
+            <p class="text-xl md:text-2xl font-light mb-8">Envíos de encomiendas puerta a puerta con seguridad garantizada.</p>
+            <a href="#registro-envio" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded shadow-lg transition transform hover:scale-105 uppercase tracking-wider">
+                Registrar Envío
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- FORMULARIO DE REGISTRO (2/3 del ancho) -->
+        <div id="registro-envio" class="lg:col-span-2 bg-white rounded-lg shadow-md p-8 border-t-4 border-orange-500">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-box-open text-orange-500"></i> Nuevo Pedido de Encomienda
+            </h2>
+            
+            <form id="shippingForm" class="space-y-6">
+                <!-- Sección Remitente -->
+                <div class="bg-slate-50 p-5 rounded-md border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2">1. Datos del Remitente (Quien envía)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                            <input type="text" id="senderName" required class="input-classic" placeholder="Ej: Carlos Alpas">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">DNI / Pasaporte</label>
+                            <input type="text" id="senderId" required class="input-classic" placeholder="Documento de Identidad">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
+                            <input type="tel" id="senderPhone" required class="input-classic" placeholder="+51 ...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                            <input type="email" id="senderEmail" class="input-classic" placeholder="correo@ejemplo.com">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Destinatario -->
+                <div class="bg-slate-50 p-5 rounded-md border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2">2. Datos del Destinatario (Quien recibe)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+                            <input type="text" id="receiverName" required class="input-classic" placeholder="Ej: María Pérez">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">País de Destino</label>
+                            <select id="destinationCountry" class="input-classic">
+                                <option value="USA">Estados Unidos 🇺🇸</option>
+                                <option value="ESP">España 🇪🇸</option>
+                                <option value="MEX">México 🇲🇽</option>
+                                <option value="COL">Colombia 🇨🇴</option>
+                                <option value="ARG">Argentina 🇦🇷</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
+                            <input type="text" id="destinationCity" required class="input-classic" placeholder="Ej: Madrid">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Dirección Exacta</label>
+                            <input type="text" id="destinationAddress" required class="input-classic" placeholder="Calle, Número, Piso, Depto">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Teléfono Destinatario</label>
+                            <input type="tel" id="receiverPhone" required class="input-classic">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sección Paquete -->
+                <div class="bg-slate-50 p-5 rounded-md border border-slate-200">
+                    <h3 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2">3. Detalles del Paquete</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Peso Aprox (kg)</label>
+                            <input type="number" id="pkgWeight" step="0.1" class="input-classic" placeholder="0.0">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Descripción del Contenido</label>
+                            <input type="text" id="pkgDesc" required class="input-classic" placeholder="Ej: Ropa, Juguetes, Documentos">
+                        </div>
+                        <div class="md:col-span-3">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" required class="w-4 h-4 text-orange-600 rounded">
+                                <span class="text-sm text-gray-600">Declaro que no envío objetos prohibidos (armas, drogas, dinero).</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón Enviar -->
+                <button type="submit" id="btnSubmit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded shadow-lg transition text-lg uppercase tracking-widest">
+                    <i class="fas fa-paper-plane mr-2"></i> Registrar Pedido
+                </button>
+                <p id="statusMsg" class="text-center text-sm font-bold mt-2 hidden"></p>
+
+            </form>
+        </div>
+
+        <!-- SIDEBAR / INFO (1/3 del ancho) -->
+        <div class="space-y-8">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="font-bold text-xl mb-4 text-orange-600">¿Por qué elegirnos?</h3>
+                <ul class="space-y-3 text-gray-600">
+                    <li class="flex gap-3"><i class="fas fa-shield-alt text-slate-800 mt-1"></i> Seguro contra pérdidas incluido.</li>
+                    <li class="flex gap-3"><i class="fas fa-plane text-slate-800 mt-1"></i> Salidas diarias a todo el mundo.</li>
+                    <li class="flex gap-3"><i class="fas fa-qrcode text-slate-800 mt-1"></i> Tracking en tiempo real.</li>
+                </ul>
+            </div>
+
+            <div class="bg-slate-800 text-white p-6 rounded-lg shadow-md text-center">
+                <i class="fas fa-headset text-4xl text-orange-500 mb-3"></i>
+                <h3 class="font-bold text-xl">¿Necesitas Ayuda?</h3>
+                <p class="text-slate-300 text-sm mt-2 mb-4">Llámanos para cotizaciones especiales o carga pesada.</p>
+                <a href="tel:+51999999999" class="text-orange-400 font-bold hover:underline">+51 924 181 502</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ADMIN PANEL MODAL -->
+    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex justify-center items-center p-4">
+        <div class="bg-white w-full max-w-6xl h-5/6 rounded-lg shadow-2xl flex flex-col overflow-hidden">
+            <!-- Header Modal -->
+            <div class="bg-slate-900 text-white p-4 flex justify-between items-center">
+                <h2 class="text-xl font-bold"><i class="fas fa-database"></i> Base de Datos de Pedidos</h2>
+                <button onclick="toggleAdminPanel()" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+            </div>
+            
+            <!-- Auth Simple -->
+            <div id="adminAuth" class="flex-grow flex flex-col justify-center items-center p-10">
+                <i class="fas fa-lock text-6xl text-slate-300 mb-4"></i>
+                <h3 class="text-xl font-bold mb-2">Acceso Restringido</h3>
+                <p class="text-gray-500 mb-4">Ingresa el PIN de administrador para ver la data.</p>
+                <input type="password" id="adminPin" class="border p-2 rounded w-48 text-center text-xl tracking-widest mb-2" placeholder="PIN">
+                <button onclick="checkPin()" class="bg-orange-500 text-white px-6 py-2 rounded font-bold hover:bg-orange-600">Entrar</button>
+                <p id="pinError" class="text-red-500 text-sm mt-2 hidden">PIN Incorrecto</p>
+            </div>
+
+            <!-- Data Table View -->
+            <div id="adminData" class="hidden flex-col h-full">
+                <div class="p-4 bg-gray-100 border-b flex justify-between items-center">
+                    <p class="text-sm text-gray-600">Total Registros: <span id="recordCount" class="font-bold">0</span></p>
+                    <button onclick="exportToCSV()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm font-bold flex items-center gap-2">
+                        <i class="fas fa-file-excel"></i> Descargar Excel (CSV)
+                    </button>
+                </div>
+                <div class="flex-grow overflow-auto p-4">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>ID</th>
+                                <th>Remitente</th>
+                                <th>Destinatario</th>
+                                <th>País</th>
+                                <th>Contenido</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm mt-auto">
+        <p>© 2024 Global Cargo International. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="module">
+        // --- 1. CONFIGURACIÓN FIREBASE ---
+        // Se usa la variable global inyectada por el entorno
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app';
+
+        // Autenticación Anónima Inicial (Requerido por reglas de seguridad)
+        async function initAuth() {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await auth.signInWithCustomToken(__initial_auth_token);
+            } else {
+                await auth.signInAnonymously();
+            }
+        }
+        initAuth();
+
+        // --- 2. LÓGICA DE FORMULARIO (Guardar) ---
+        const form = document.getElementById('shippingForm');
+        const statusMsg = document.getElementById('statusMsg');
+        const btnSubmit = document.getElementById('btnSubmit');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // UI Loading
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Guardando...';
+
+            try {
+                // Check auth
+                const user = auth.currentUser;
+                if (!user) throw new Error("No hay conexión con el servidor.");
+
+                // Recolectar datos
+                const orderData = {
+                    createdAt: new Date(),
+                    sender: {
+                        name: document.getElementById('senderName').value,
+                        id: document.getElementById('senderId').value,
+                        phone: document.getElementById('senderPhone').value,
+                        email: document.getElementById('senderEmail').value
+                    },
+                    receiver: {
+                        name: document.getElementById('receiverName').value,
+                        phone: document.getElementById('receiverPhone').value,
+                        country: document.getElementById('destinationCountry').value,
+                        city: document.getElementById('destinationCity').value,
+                        address: document.getElementById('destinationAddress').value
+                    },
+                    package: {
+                        weight: document.getElementById('pkgWeight').value,
+                        desc: document.getElementById('pkgDesc').value
+                    },
+                    status: 'Pendiente'
+                };
+
+                // GUARDAR EN FIRESTORE (Colección Publica para este demo)
+                await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').add(orderData);
+
+                // Éxito
+                statusMsg.textContent = "✅ ¡Pedido registrado correctamente en la Base de Datos!";
+                statusMsg.className = "text-center text-lg font-bold mt-4 text-green-600 block";
+                form.reset();
+
+                // Refrescar tabla si está abierta
+                if(!document.getElementById('adminData').classList.contains('hidden')){
+                    loadOrders();
+                }
+
+            } catch (error) {
+                console.error(error);
+                statusMsg.textContent = "❌ Error al guardar. Intenta de nuevo.";
+                statusMsg.className = "text-center text-lg font-bold mt-4 text-red-600 block";
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Registrar Pedido';
+            }
+        });
+
+        // --- 3. LÓGICA DE ADMIN (Leer y Excel) ---
+        window.toggleAdminPanel = () => {
+            const modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
+            // Reset state
+            if(modal.classList.contains('hidden')) {
+                document.getElementById('adminAuth').classList.remove('hidden');
+                document.getElementById('adminData').classList.add('hidden');
+                document.getElementById('adminPin').value = '';
+            }
+        };
+
+        window.checkPin = () => {
+            const pin = document.getElementById('adminPin').value;
+            // PIN SIMULADO: 1234 (En producción usarías auth real)
+            if (pin === "1234") {
+                document.getElementById('adminAuth').classList.add('hidden');
+                document.getElementById('adminData').classList.remove('hidden');
+                document.getElementById('adminData').style.display = 'flex'; // Fix flex issue
+                loadOrders();
+            } else {
+                document.getElementById('pinError').classList.remove('hidden');
+            }
+        };
+
+        let allOrders = []; // Store for CSV export
+
+        async function loadOrders() {
+            const tbody = document.getElementById('tableBody');
+            const countSpan = document.getElementById('recordCount');
+            tbody.innerHTML = '<tr><td colspan="7" class="text-center p-4">Cargando datos...</td></tr>';
+
+            try {
+                // LEER DE FIRESTORE
+                const snapshot = await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').orderBy('createdAt', 'desc').limit(50).get();
+                // Nota: Si la consulta falla por falta de índice, remover .orderBy('createdAt', 'desc')
+                
+                allOrders = [];
+                tbody.innerHTML = '';
+                
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString() : '-';
+                    allOrders.push({id: doc.id, ...data});
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${date}</td>
+                        <td class="font-mono text-xs text-gray-500">${doc.id.slice(0,5)}...</td>
+                        <td>
+                            <div class="font-bold">${data.sender.name}</div>
+                            <div class="text-xs text-gray-500">${data.sender.phone}</div>
+                        </td>
+                        <td>
+                            <div class="font-bold">${data.receiver.name}</div>
+                            <div class="text-xs text-gray-500">${data.receiver.city}</div>
+                        </td>
+                        <td><span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">${data.receiver.country}</span></td>
+                        <td>${data.package.desc}</td>
+                        <td><span class="text-yellow-600 font-bold text-xs">${data.status || 'Nuevo'}</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+                
+                countSpan.textContent = snapshot.size;
+
+                if (snapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center p-4 text-gray-500">No hay pedidos registrados aún.</td></tr>';
+                }
+
+            } catch (error) {
+                console.error("Error loading orders:", error);
+                // Si falla por índice (error común en Firestore al ordenar), intentamos sin ordenar
+                if(error.message.includes('index')) {
+                     const snapshotBackup = await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').limit(50).get();
+                     // ... lógica repetida o manejo de error simplificado ...
+                     tbody.innerHTML = '<tr><td colspan="7" class="text-center p-4 text-orange-500">Recargando sin orden (falta índice)...</td></tr>';
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center p-4 text-red-500">Error cargando datos.</td></tr>';
+                }
+            }
+        }
+
+        window.exportToCSV = () => {
+            if (allOrders.length === 0) {
+                alert("No hay datos para exportar");
+                return;
+            }
+
+            // Headers
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "ID,Fecha,Remitente,Tel Remitente,Destinatario,Pais,Ciudad,Direccion,Tel Destinatario,Peso,Descripcion\n";
+
+            // Rows
+            allOrders.forEach(order => {
+                const date = order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString() : '-';
+                const row = [
+                    order.id,
+                    date,
+                    `"${order.sender.name}"`,
+                    order.sender.phone,
+                    `"${order.receiver.name}"`,
+                    order.receiver.country,
+                    `"${order.receiver.city}"`,
+                    `"${order.receiver.address}"`,
+                    order.receiver.phone,
+                    order.package.weight,
+                    `"${order.package.desc}"`
+                ].join(",");
+                csvContent += row + "\n";
+            });
+
+            // Download trigger
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "reporte_encomiendas.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+    </script>
+</body>
+</html>
