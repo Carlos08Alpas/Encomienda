@@ -87,6 +87,7 @@
                         <button onclick="navigateTo('orders')" class="hover:text-orange-400 transition text-sm font-bold uppercase">Realizar Pedido</button>
                     </div>
 
+                    <!-- Información de usuario -->
                     <div id="user-info" class="hidden text-xs text-right mr-4 md:block border-l border-slate-700 pl-4">
                         <p class="text-slate-400">Usuario Activo:</p>
                         <p id="display-user-email" class="font-bold text-orange-400"></p>
@@ -309,7 +310,7 @@
                 });
             } else { throw new Error("No config"); }
         } catch (e) {
-            console.warn("Modo Demo");
+            console.warn("Modo Demo Activado");
             useLocalStorage = true;
             updateUIState();
         }
@@ -320,13 +321,17 @@
             document.getElementById('order-section').classList.add('hidden-screen');
             document.getElementById('auth-section').classList.add('hidden-screen');
             
-            if (screen === 'home') document.getElementById('home-screen').classList.remove('hidden-screen');
-            else if (screen === 'orders') document.getElementById('order-section').classList.remove('hidden-screen');
-            else if (screen === 'auth') document.getElementById('auth-section').classList.remove('hidden-screen');
+            if (screen === 'home') {
+                document.getElementById('home-screen').classList.remove('hidden-screen');
+            } else if (screen === 'orders') {
+                document.getElementById('order-section').classList.remove('hidden-screen');
+            } else if (screen === 'auth') {
+                document.getElementById('auth-section').classList.remove('hidden-screen');
+            }
             window.scrollTo(0, 0);
         };
 
-        // --- ACTUALIZACIÓN DE INTERFAZ ---
+        // --- ACTUALIZACIÓN DE INTERFAZ (LOGUEO) ---
         function updateUIState() {
             const locked = document.getElementById('order-locked');
             const unlocked = document.getElementById('order-unlocked');
@@ -339,15 +344,15 @@
 
             if (isLoggedIn) {
                 const email = currentUser ? currentUser.email : localStorage.getItem('demo_session');
-                locked.classList.add('hidden-screen');
-                unlocked.classList.remove('hidden-screen');
+                if(locked) locked.classList.add('hidden-screen');
+                if(unlocked) unlocked.classList.remove('hidden-screen');
                 navLogin.classList.add('hidden-screen');
                 navLogout.classList.remove('hidden-screen');
                 userInfo.classList.remove('hidden');
                 displayEmail.textContent = email;
             } else {
-                locked.classList.remove('hidden-screen');
-                unlocked.classList.add('hidden-screen');
+                if(locked) locked.classList.remove('hidden-screen');
+                if(unlocked) unlocked.classList.add('hidden-screen');
                 navLogin.classList.remove('hidden-screen');
                 navLogout.classList.add('hidden-screen');
                 userInfo.classList.add('hidden');
@@ -372,7 +377,7 @@
             document.getElementById('auth-switch-btn').textContent = authMode === 'login' ? "Regístrate aquí" : "Inicia sesión";
         }
 
-        // --- LÓGICA DE AUTH ---
+        // --- LÓGICA DE AUTENTICACIÓN ---
         document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('auth-email').value;
@@ -381,12 +386,13 @@
             btn.disabled = true;
 
             if (useLocalStorage) {
-                // Simulación de validación en LocalStorage
                 const users = JSON.parse(localStorage.getItem('app_users') || '[]');
                 if (authMode === 'login') {
                     const found = users.find(u => u.email === email && u.pass === pass);
                     if (found) {
                         localStorage.setItem('demo_session', email);
+                        // IMPORTANTE: Actualizar estado de UI antes de navegar
+                        updateUIState();
                         navigateTo('home');
                     } else {
                         alert("Usuario no encontrado o contraseña incorrecta. Por favor regístrate primero.");
@@ -410,6 +416,7 @@
             try {
                 if (authMode === 'login') {
                     await auth.signInWithEmailAndPassword(email, pass);
+                    // El listener onAuthStateChanged disparará updateUIState() automáticamente
                     navigateTo('home');
                 } else {
                     await auth.createUserWithEmailAndPassword(email, pass);
@@ -440,7 +447,7 @@
                 const users = JSON.parse(localStorage.getItem('app_users') || '[]');
                 const found = users.find(u => u.email === email);
                 if (found) {
-                    alert("Simulación: Tu contraseña es '" + found.pass + "'. En una web real, recibirías un email.");
+                    alert("Modo Demo: Tu contraseña es '" + found.pass + "'.");
                 } else {
                     alert("El correo ingresado no pertenece a ningún usuario registrado.");
                 }
@@ -456,8 +463,12 @@
         };
 
         window.handleLogout = () => {
-            if (useLocalStorage) { localStorage.removeItem('demo_session'); location.reload(); }
-            else { auth.signOut().then(() => location.reload()); }
+            if (useLocalStorage) { 
+                localStorage.removeItem('demo_session'); 
+                location.reload(); 
+            } else { 
+                auth.signOut().then(() => location.reload()); 
+            }
         };
 
         // --- LÓGICA DE REGISTRO DE PEDIDOS ---
@@ -471,9 +482,21 @@
             const orderData = {
                 userEmail,
                 createdAt: new Date().toISOString(),
-                sender: { name: document.getElementById('senderName').value, id: document.getElementById('senderId').value, phone: document.getElementById('senderPhone').value },
-                receiver: { name: document.getElementById('receiverName').value, country: document.getElementById('destinationCountry').value, city: document.getElementById('destinationCity').value, address: document.getElementById('destinationAddress').value },
-                package: { weight: document.getElementById('pkgWeight').value, desc: document.getElementById('pkgDesc').value }
+                sender: { 
+                    name: document.getElementById('senderName').value, 
+                    id: document.getElementById('senderId').value, 
+                    phone: document.getElementById('senderPhone').value 
+                },
+                receiver: { 
+                    name: document.getElementById('receiverName').value, 
+                    country: document.getElementById('destinationCountry').value, 
+                    city: document.getElementById('destinationCity').value, 
+                    address: document.getElementById('destinationAddress').value 
+                },
+                package: { 
+                    weight: document.getElementById('pkgWeight').value, 
+                    desc: document.getElementById('pkgDesc').value 
+                }
             };
 
             try {
@@ -483,15 +506,19 @@
                     localStorage.setItem('orders_db', JSON.stringify(orders));
                 } else {
                     await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').add({
-                        ...orderData, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        ...orderData, 
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 }
                 status.textContent = "✅ PEDIDO REGISTRADO CORRECTAMENTE";
                 status.classList.remove('hidden');
                 document.getElementById('shippingForm').reset();
                 setTimeout(() => status.classList.add('hidden'), 5000);
-            } catch (err) { alert("Error al registrar."); }
-            finally { btn.disabled = false; }
+            } catch (err) { 
+                alert("Error al registrar: " + err.message); 
+            } finally { 
+                btn.disabled = false; 
+            }
         });
 
         // --- ADMIN & EXCEL PROFESIONAL ---
@@ -514,11 +541,12 @@
         let currentOrders = [];
         async function loadAdminOrders() {
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center">Cargando...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center">Cargando registros...</td></tr>';
             currentOrders = [];
             try {
-                if (useLocalStorage) { currentOrders = JSON.parse(localStorage.getItem('orders_db') || '[]'); }
-                else {
+                if (useLocalStorage) { 
+                    currentOrders = JSON.parse(localStorage.getItem('orders_db') || '[]'); 
+                } else {
                     const snap = await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').limit(100).get();
                     snap.forEach(doc => {
                         const d = doc.data();
@@ -529,17 +557,26 @@
                 tbody.innerHTML = '';
                 currentOrders.forEach(ord => {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td class="p-4 border-b text-xs">${new Date(ord.createdAt).toLocaleDateString()}</td><td class="p-4 border-b font-bold">${ord.userEmail}</td><td class="p-4 border-b">${ord.sender.name}</td><td class="p-4 border-b">${ord.receiver.name}</td><td class="p-4 border-b">${ord.receiver.country}</td><td class="p-4 border-b">${ord.package.weight}kg</td>`;
+                    const dateObj = new Date(ord.createdAt);
+                    row.innerHTML = `
+                        <td class="p-4 border-b text-xs">${dateObj.toLocaleDateString()}</td>
+                        <td class="p-4 border-b font-bold">${ord.userEmail}</td>
+                        <td class="p-4 border-b">${ord.sender.name}</td>
+                        <td class="p-4 border-b">${ord.receiver.name}</td>
+                        <td class="p-4 border-b">${ord.receiver.country}</td>
+                        <td class="p-4 border-b">${ord.package.weight}kg</td>
+                    `;
                     tbody.appendChild(row);
                 });
-            } catch (e) { tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">Error.</td></tr>'; }
+            } catch (e) { 
+                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">Error al cargar datos.</td></tr>'; 
+            }
         }
 
         window.exportToExcel = () => {
-            if (currentOrders.length === 0) return alert("Sin datos.");
+            if (currentOrders.length === 0) return alert("No hay datos para exportar.");
             
-            // Estilo para la cabecera y tabla
-            const headerColor = "#f97316"; // Naranja de la marca
+            const headerColor = "#f97316"; 
             const textColor = "#ffffff";
             
             let html = `
@@ -600,7 +637,11 @@
             link.download = `Reporte_GlobalCargo_${Date.now()}.xls`;
             link.click();
         };
+
+        // Al cargar la página por primera vez, asegurar el estado correcto
+        window.onload = () => {
+            updateUIState();
+        };
     </script>
 </body>
 </html>
-
