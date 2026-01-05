@@ -29,11 +29,12 @@
 
         .input-field {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
             background-color: white;
             transition: all 0.2s;
+            font-size: 0.9rem;
         }
         .input-field:focus {
             border-color: #f97316;
@@ -72,6 +73,14 @@
             width: auto;
             object-fit: contain;
         }
+        .box-item {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -80,9 +89,8 @@
     <nav class="bg-slate-950 text-white shadow-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <!-- Botón de Inicio (Logo e Imagen) -->
+                <!-- Botón de Inicio -->
                 <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-                    <!-- Si tienes logo.png en tu PC, súbelo a github con ese nombre -->
                     <img src="logo.jpeg" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4060/4060012.png'" class="nav-logo-img" alt="Logo">
                     <span class="text-xl font-bold tracking-tighter uppercase brand-font">IMPERIAL SERVICE CARGO</span>
                 </div>
@@ -90,22 +98,18 @@
                 <div class="flex items-center gap-4">
                     <div class="hidden md:flex gap-6 mr-6">
                         <button onclick="navigateTo('home')" class="hover:text-orange-400 transition text-sm font-bold uppercase">Inicio</button>
-                        <button onclick="navigateTo('orders')" class="hover:text-orange-400 transition text-sm font-bold uppercase">Realizar Pedido</button>
+                        <button onclick="navigateTo('orders')" class="hover:text-orange-400 transition text-sm font-bold uppercase">Pedidos</button>
                     </div>
 
                     <div id="user-info" class="hidden text-xs text-right mr-4 md:block border-l border-slate-700 pl-4">
-                        <p class="text-slate-400">Usuario Activo:</p>
+                        <p class="text-slate-400">Usuario:</p>
                         <p id="display-user-email" class="font-bold text-orange-400"></p>
                     </div>
                     
                     <div class="flex gap-2">
                         <button id="nav-login" onclick="showAuthScreen('login')" class="text-sm px-4 py-2 bg-orange-600 rounded font-bold hover:bg-orange-700 transition text-white">Entrar / Registrarse</button>
-                        
-                        <button id="nav-logout" onclick="handleLogout()" class="hidden-screen text-sm px-4 py-2 bg-slate-800 text-white rounded font-bold hover:bg-slate-700 transition border border-slate-700">
-                            <i class="fas fa-sign-out-alt mr-2"></i>Salir
-                        </button>
-                        
-                        <button onclick="toggleAdminPanel()" class="text-sm bg-slate-800 px-3 py-2 rounded hover:bg-slate-700 border border-slate-700" title="Panel Administrador">
+                        <button id="nav-logout" onclick="handleLogout()" class="hidden-screen text-sm px-4 py-2 bg-slate-800 text-white rounded font-bold hover:bg-slate-700 transition border border-slate-700">Salir</button>
+                        <button onclick="toggleAdminPanel()" class="text-sm bg-slate-800 px-3 py-2 rounded hover:bg-slate-700 border border-slate-700">
                             <i class="fas fa-user-shield"></i>
                         </button>
                     </div>
@@ -117,13 +121,13 @@
     <main class="flex-grow">
         
         <!-- PANTALLA: INICIO (HOME) -->
-        <section id="home-screen" class="transition-all duration-300">
+        <section id="home-section" class="transition-all duration-300">
             <div class="hero-bg h-[350px] flex items-center justify-center text-center px-4">
                 <div class="max-w-3xl">
                     <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 uppercase">IMPERIAL SERVICE CARGO</h1>
-                    <p class="text-lg text-slate-300 mb-8 font-light">Líderes en logística internacional y transporte de confianza.</p>
-                    <button onclick="navigateTo('orders')" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-10 rounded shadow-xl transition transform hover:scale-105 uppercase">
-                        Hacer un Pedido
+                    <p class="text-lg text-slate-300 mb-8 font-light">Especialistas en envíos nacionales e internacionales con base en Perú.</p>
+                    <button onclick="navigateTo('orders')" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-10 rounded shadow-xl transition uppercase">
+                        Realizar Registro de Pedido
                     </button>
                 </div>
             </div>
@@ -132,22 +136,18 @@
                 <div class="space-y-4">
                     <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Vídeo Informativo</h2>
                     <div class="video-container shadow-2xl">
-                        <!-- Si el video es local y lo subes a github, usa: src="video.mp4" -->
                         <video controls poster="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?fit=crop&w=800&q=80">
                             <source src="video.mp4" type="video/mp4">
                             Tu navegador no soporta videos.
                         </video>
                     </div>
-                    <p class="text-xs text-gray-400 italic text-center">Sube tu archivo como 'video.mp4' a GitHub para visualizarlo aquí.</p>
                 </div>
 
                 <div class="space-y-4">
-                    <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Nuestro Flyer</h2>
+                    <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Nuestras Rutas</h2>
                     <div class="bg-white p-2 rounded-xl shadow-lg border border-slate-200">
-                        <!-- Sube tu flyer a github como flyer.jpg -->
-                        <img src="flyer.jpeg" onerror="this.src='https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&w=800&q=80'" alt="Flyer Imperial" class="w-full h-auto rounded-lg">
+                        <img src="flyer.jpeg" onerror="this.src='https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&w=800&q=80'" alt="Flyer" class="w-full h-auto rounded-lg">
                     </div>
-                    <p class="text-xs text-gray-400 italic text-center">Sube tu archivo como 'flyer.jpg' a GitHub para visualizarlo aquí.</p>
                 </div>
             </div>
         </section>
@@ -156,8 +156,8 @@
         <section id="auth-section" class="hidden-screen py-20">
             <div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl border border-slate-100">
                 <div class="text-center mb-8">
-                    <h2 id="auth-title" class="text-3xl font-bold text-slate-800">Iniciar Sesión</h2>
-                    <p id="auth-subtitle" class="text-slate-500 mt-2">Accede a IMPERIAL SERVICE CARGO</p>
+                    <h2 id="auth-title" class="text-3xl font-bold text-slate-800">Acceso Imperial</h2>
+                    <p id="auth-subtitle" class="text-slate-500 mt-2">Identifícate para gestionar tus envíos</p>
                 </div>
 
                 <form id="authForm" class="space-y-4">
@@ -169,124 +169,155 @@
                         <label class="block text-sm font-semibold text-slate-700 mb-1">Contraseña</label>
                         <input type="password" id="auth-pass" required class="input-field" placeholder="••••••••">
                     </div>
-                    
-                    <button type="submit" id="auth-btn" class="w-full btn-primary mt-4">Entrar al Sistema</button>
+                    <button type="submit" id="auth-btn" class="w-full btn-primary mt-4">Ingresar</button>
                     
                     <div class="flex flex-col gap-3 mt-6 text-center">
                         <p class="text-sm text-slate-600">
-                            <span id="auth-switch-text">¿No tienes cuenta?</span>
-                            <button type="button" onclick="toggleAuthMode()" id="auth-switch-btn" class="text-orange-600 font-bold hover:underline ml-1">Regístrate aquí</button>
+                            <span id="auth-switch-text">¿Nuevo usuario?</span>
+                            <button type="button" onclick="toggleAuthMode()" id="auth-switch-btn" class="text-orange-600 font-bold hover:underline ml-1">Crea una cuenta</button>
                         </p>
-                        <button type="button" onclick="handlePasswordRecovery()" class="text-xs text-slate-400 hover:text-slate-600 underline">¿Olvidaste tu contraseña?</button>
                     </div>
                 </form>
             </div>
         </section>
 
         <!-- PANTALLA: FORMULARIO DE PEDIDO -->
-        <section id="order-section" class="hidden-screen max-w-7xl mx-auto px-4 py-12">
+        <section id="orders-section" class="hidden-screen max-w-7xl mx-auto px-4 py-12">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2">
+                    <!-- Bloqueo -->
                     <div id="order-locked" class="bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl p-20 text-center">
                         <i class="fas fa-lock text-5xl text-slate-400 mb-4"></i>
-                        <h3 class="text-xl font-bold text-slate-700">Área Exclusiva de Clientes</h3>
-                        <p class="text-slate-500 mb-6">Por favor, inicia sesión para registrar un nuevo envío con Imperial Service.</p>
-                        <button onclick="showAuthScreen('login')" class="btn-primary">Iniciar Sesión / Registrarse</button>
+                        <h3 class="text-xl font-bold text-slate-700">Inicia sesión para registrar</h3>
+                        <button onclick="showAuthScreen('login')" class="btn-primary mt-4">Ir al Login</button>
                     </div>
 
-                    <div id="order-unlocked" class="hidden-screen bg-white rounded-xl shadow-lg p-8 border-t-4 border-orange-500">
+                    <!-- Formulario -->
+                    <div id="order-unlocked" class="hidden-screen bg-white rounded-xl shadow-lg p-6 border-t-4 border-orange-500">
                         <h2 class="text-2xl font-bold text-slate-800 mb-6 uppercase brand-font flex items-center gap-2">
-                            <i class="fas fa-file-signature text-orange-500"></i> Nuevo Registro de Envío
+                            <i class="fas fa-clipboard-list text-orange-500"></i> Registro de Encomienda (PERÚ)
                         </h2>
 
-                        <form id="shippingForm" class="space-y-8">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="space-y-4">
-                                    <h3 class="font-bold text-slate-500 uppercase text-xs tracking-widest border-b pb-2">Remitente</h3>
-                                    <input type="text" id="senderName" required class="input-field" placeholder="Nombre completo">
-                                    <input type="text" id="senderId" required class="input-field" placeholder="DNI / Pasaporte">
-                                    <input type="tel" id="senderPhone" required class="input-field" placeholder="Teléfono">
-                                </div>
-                                <div class="space-y-4">
-                                    <h3 class="font-bold text-slate-500 uppercase text-xs tracking-widest border-b pb-2">Destinatario</h3>
-                                    <input type="text" id="receiverName" required class="input-field" placeholder="Nombre del destinatario">
-                                    <select id="destinationCountry" class="input-field">
-                                        <option value="Perú">Perú 🇵🇪</option>
-                                        <option value="España">España 🇪🇸</option>
-                                        <option value="USA">USA 🇺🇸</option>
-                                        <option value="México">México 🇲🇽</option>
-                                        <option value="Colombia">Colombia 🇨🇴</option>
-                                    </select>
-                                    <input type="text" id="destinationCity" required class="input-field" placeholder="Ciudad">
-                                    <input type="text" id="destinationAddress" required class="input-field" placeholder="Dirección completa">
+                        <form id="shippingForm" class="space-y-6">
+                            <!-- Remitente -->
+                            <div class="bg-slate-50 p-4 rounded-lg border">
+                                <h3 class="font-bold text-slate-700 text-sm uppercase mb-3 border-b pb-1 italic">Origen (Remitente)</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="text" id="senderName" required class="input-field" placeholder="Nombre Completo">
+                                    <input type="text" id="senderId" required class="input-field" placeholder="DNI / RUC">
+                                    <input type="tel" id="senderPhone" required class="input-field" placeholder="Teléfono Móvil">
                                 </div>
                             </div>
 
-                            <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                                <h3 class="font-bold text-slate-500 uppercase text-xs tracking-widest mb-4">Información del Paquete</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                    <input type="number" id="pkgWeight" step="0.1" required class="input-field" placeholder="Peso (kg)">
-                                    <input type="text" id="pkgDesc" required class="md:col-span-2 input-field" placeholder="Contenido detallado">
+                            <!-- Destinatario -->
+                            <div class="bg-slate-50 p-4 rounded-lg border">
+                                <h3 class="font-bold text-slate-700 text-sm uppercase mb-3 border-b pb-1 italic">Destino (Receptor)</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <input type="text" id="receiverName" required class="input-field" placeholder="Nombre de quién recibe">
+                                    <input type="tel" id="receiverPhone" required class="input-field" placeholder="Celular principal">
+                                    <input type="tel" id="receiverRefPhone" class="input-field" placeholder="Teléfono de referencia (Opcional)">
+                                    
+                                    <div class="space-y-1">
+                                        <label class="text-[10px] uppercase font-bold text-gray-400">Departamento</label>
+                                        <select id="destRegion" required class="input-field" onchange="window.updateProvinces()">
+                                            <option value="">Seleccione Departamento</option>
+                                        </select>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label class="text-[10px] uppercase font-bold text-gray-400">Provincia</label>
+                                        <select id="destProv" required class="input-field" onchange="window.updateDistricts()">
+                                            <option value="">Seleccione Provincia</option>
+                                        </select>
+                                    </div>
+                                    <div class="space-y-1">
+                                        <label class="text-[10px] uppercase font-bold text-gray-400">Distrito</label>
+                                        <select id="destDist" required class="input-field">
+                                            <option value="">Seleccione Distrito</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <input type="text" id="destAddress" required class="input-field md:col-span-2 mt-2" placeholder="Dirección Exacta (Calle, Nro, Referencia)">
                                 </div>
                             </div>
 
-                            <button type="submit" id="btnSubmit" class="w-full btn-primary h-16 text-lg">Guardar y Procesar Pedido</button>
-                            <p id="statusMsg" class="text-center font-bold hidden"></p>
+                            <!-- Cajas -->
+                            <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                                <h3 class="font-bold text-orange-800 text-sm uppercase mb-3 flex justify-between items-center">
+                                    Detalle de Carga / Bultos
+                                    <button type="button" onclick="addBoxRow()" class="bg-orange-500 text-white text-xs px-2 py-1 rounded hover:bg-orange-600 shadow">
+                                        <i class="fas fa-plus"></i> Agregar Caja
+                                    </button>
+                                </h3>
+                                <div id="boxes-container"></div>
+                            </div>
+
+                            <button type="submit" id="btnSubmit" class="w-full btn-primary h-14">Registrar Pedido Maestro</button>
+                            
+                            <!-- Éxito -->
+                            <div id="post-success-actions" class="hidden-screen space-y-4 mt-4">
+                                <div class="bg-green-100 text-green-700 p-4 rounded-lg border border-green-200 text-center">
+                                    <p class="font-bold text-lg"><i class="fas fa-check-circle"></i> Registro Imperial Exitoso</p>
+                                    <p class="text-sm">Datos guardados en el sistema.</p>
+                                </div>
+                                <button type="button" onclick="sendToWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-3 shadow-xl">
+                                    <i class="fab fa-whatsapp text-3xl"></i> 
+                                    <div class="text-left">
+                                        <div class="text-xs uppercase opacity-80">Solicitar Ahora</div>
+                                        <div class="text-lg uppercase">Cotizar por WhatsApp</div>
+                                    </div>
+                                </button>
+                                <button type="button" onclick="resetForm()" class="w-full text-slate-500 text-sm underline pt-2">Realizar un nuevo registro</button>
+                            </div>
                         </form>
                     </div>
                 </div>
 
-                <div class="space-y-6">
-                    <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg">
-                        <h3 class="font-bold text-lg mb-4 text-orange-500 border-b border-slate-800 pb-2">Atención al Cliente</h3>
-                        <p class="text-sm text-slate-400 italic">Central de soporte para socios y clientes Imperial.</p>
-                        <div class="mt-6 flex items-center gap-3">
-                            <i class="fab fa-whatsapp text-2xl text-green-500"></i>
-                            <span class="text-sm">+51 924 181 502</span>
-                        </div>
+                <!-- Info Sidebar -->
+                <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg h-fit">
+                    <h3 class="font-bold text-lg mb-4 text-orange-500 border-b border-slate-800 pb-2">Central Imperial</h3>
+                    <p class="text-sm text-slate-400">Atención inmediata para cotizaciones y recojos a domicilio.</p>
+                    <div class="mt-6 flex items-center gap-3">
+                        <i class="fab fa-whatsapp text-2xl text-green-500"></i>
+                        <span class="text-sm font-bold">+39 327 102 8705</span>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- ADMIN PANEL MODAL -->
-    <div id="adminModal" class="fixed inset-0 bg-slate-900/90 z-[100] hidden flex justify-center items-center p-4 backdrop-blur-sm">
+    <!-- ADMIN MODAL -->
+    <div id="adminModal" class="fixed inset-0 bg-slate-900/95 z-[100] hidden flex justify-center items-center p-4">
         <div class="bg-white w-full max-w-6xl h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
-            <div class="bg-slate-950 text-white p-6 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <i class="fas fa-user-shield text-orange-500"></i>
-                    <h2 class="text-xl font-bold uppercase brand-font">Administración Imperial</h2>
-                </div>
+            <div class="bg-slate-950 text-white p-5 flex justify-between items-center">
+                <h2 class="text-xl font-bold uppercase brand-font italic">Administración Imperial Cargo</h2>
                 <button onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-3xl">&times;</button>
             </div>
             
             <div id="adminAuth" class="flex-grow flex flex-col justify-center items-center p-12 text-center">
-                <i class="fas fa-lock text-6xl text-slate-300 mb-6"></i>
-                <h3 class="text-2xl font-bold text-slate-800">Verificación Requerida</h3>
-                <input type="password" id="adminPin" class="mt-4 border-2 border-slate-200 p-4 rounded-xl w-64 text-center text-3xl tracking-[1rem] outline-none" placeholder="****">
-                <button onclick="checkPin()" class="mt-6 bg-slate-900 text-white px-10 py-3 rounded-xl font-bold">Autenticar</button>
-                <p id="pinError" class="text-red-500 text-sm mt-4 hidden">PIN Incorrecto</p>
+                <i class="fas fa-user-lock text-6xl text-slate-300 mb-6"></i>
+                <h3 class="text-2xl font-bold text-slate-800">Verificación de Supervisor</h3>
+                <input type="password" id="adminPin" class="mt-4 border-2 p-4 rounded-xl w-64 text-center text-3xl tracking-[1rem]" placeholder="****">
+                <button onclick="checkPin()" class="mt-6 bg-slate-900 text-white px-10 py-3 rounded-xl font-bold">Acceder</button>
+                <p id="pinError" class="text-red-500 text-sm mt-4 hidden">Clave incorrecta</p>
             </div>
 
             <div id="adminData" class="hidden flex-col h-full bg-slate-50">
                 <div class="p-6 bg-white border-b flex justify-between items-center">
-                    <h4 class="text-lg font-bold text-slate-800">Base de Datos de Encomiendas</h4>
-                    <button onclick="exportToExcel()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold flex items-center gap-2">
-                        <i class="fas fa-file-excel"></i> Descargar Excel Profesional
+                    <h4 class="text-lg font-bold">Historial Maestro de Encomiendas</h4>
+                    <button onclick="exportToExcel()" class="bg-green-600 text-white px-4 py-2 rounded font-bold text-sm flex items-center gap-2">
+                        <i class="fas fa-file-excel"></i> Exportar Reporte
                     </button>
                 </div>
-                <div class="flex-grow overflow-auto">
-                    <table class="w-full text-left">
+                <div class="flex-grow overflow-auto p-4">
+                    <table class="w-full text-left bg-white rounded-lg shadow border">
                         <thead class="bg-slate-100 sticky top-0">
                             <tr>
-                                <th class="p-4 border-b">Fecha</th>
-                                <th class="p-4 border-b">Usuario Registro</th>
-                                <th class="p-4 border-b">Remitente</th>
-                                <th class="p-4 border-b">Destinatario</th>
-                                <th class="p-4 border-b">País</th>
-                                <th class="p-4 border-b">Peso</th>
-                                <th class="p-4 border-b text-center">Acciones</th>
+                                <th class="p-3 border-b text-xs text-slate-600">Fecha</th>
+                                <th class="p-3 border-b text-xs text-slate-600">Usuario</th>
+                                <th class="p-3 border-b text-xs text-slate-600">Remitente</th>
+                                <th class="p-3 border-b text-xs text-slate-600">Destino (Distrito)</th>
+                                <th class="p-3 border-b text-xs text-slate-600 text-center">Bultos / Peso Total</th>
+                                <th class="p-3 border-b text-xs text-slate-600 text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody"></tbody>
@@ -296,18 +327,39 @@
         </div>
     </div>
 
-    <footer class="bg-slate-950 text-slate-500 py-10 text-center text-xs">
-        <p>© 2024 IMPERIAL SERVICE CARGO - Especialistas en Logística Global</p>
+    <footer class="bg-slate-950 text-slate-500 py-6 text-center text-xs mt-auto">
+        <p>© 2024 IMPERIAL SERVICE CARGO - Especialistas en logística desde Perú para el mundo.</p>
     </footer>
 
     <script type="module">
-        // --- INICIALIZACIÓN ---
+        // --- DATA GEOGRÁFICA DE PERÚ ---
+        const peruData = {
+            "Amazonas": { "Chachapoyas": ["Chachapoyas", "Asunción", "Balsas"], "Bagua": ["Bagua", "Aramango", "Copallin"] },
+            "Ancash": { "Huaraz": ["Huaraz", "Independencia", "Cochabamba"], "Santa": ["Chimbote", "Nuevo Chimbote", "Coishco"] },
+            "Arequipa": { "Arequipa": ["Arequipa", "Cerro Colorado", "Cayma", "Yanahuara", "Paucarpata"], "Camaná": ["Camaná", "José María Quimper"], "Islay": ["Mollendo", "Mejía"] },
+            "Cusco": { "Cusco": ["Cusco", "San Jerónimo", "San Sebastián", "Wanchaq"], "Urubamba": ["Urubamba", "Ollantaytambo", "Machupicchu"] },
+            "Ica": { "Ica": ["Ica", "Parcona", "Subtanjalla"], "Chincha": ["Chincha Alta", "Grocio Prado"], "Nazca": ["Nazca", "Marcona"] },
+            "La Libertad": { "Trujillo": ["Trujillo", "Víctor Larco Herrera", "Huanchaco", "El Porvenir"], "Ascope": ["Ascope", "Chicama"] },
+            "Lambayeque": { "Chiclayo": ["Chiclayo", "José Leonardo Ortiz", "La Victoria", "Pimentel"], "Lambayeque": ["Lambayeque", "Olmos"] },
+            "Lima": { 
+                "Lima": ["Miraflores", "San Isidro", "Los Olivos", "Santiago de Surco", "La Molina", "San Juan de Lurigancho", "Ate", "Barranco", "Chorrillos", "San Miguel", "Callao", "Pueblo Libre", "Breña", "La Victoria", "Lince"],
+                "Cañete": ["San Vicente de Cañete", "Mala", "Asia", "Lunahuaná"],
+                "Huaral": ["Huaral", "Chancay"],
+                "Huaura": ["Huacho", "Sayán"]
+            },
+            "Loreto": { "Maynas": ["Iquitos", "Punchana", "Belén"] },
+            "Piura": { "Piura": ["Piura", "Castilla", "Catacaos"], "Sullana": ["Sullana", "Lancones"], "Talara": ["Talara", "Máncora"] },
+            "Puno": { "Puno": ["Puno", "Acora"], "San Román": ["Juliaca"] },
+            "Tacna": { "Tacna": ["Tacna", "Alto de la Alianza", "Pocollay"] }
+        };
+
+        // --- SESIÓN ---
         let db = null;
         let auth = null;
         let currentUser = null;
-        let appId = typeof __app_id !== 'undefined' ? __app_id : 'imperial-cargo-app';
+        let appId = typeof __app_id !== 'undefined' ? __app_id : 'imperial-service-v5';
         let useLocalStorage = false;
-        let authMode = 'login';
+        let lastSavedOrder = null;
 
         try {
             if (typeof __firebase_config !== 'undefined' && __firebase_config) {
@@ -315,26 +367,68 @@
                 firebase.initializeApp(config);
                 auth = firebase.auth();
                 db = firebase.firestore();
-                
-                auth.onAuthStateChanged(user => {
-                    currentUser = user;
-                    updateUIState();
-                });
+                auth.onAuthStateChanged(user => { currentUser = user; updateUIState(); });
             } else { throw new Error("No config"); }
         } catch (e) {
-            console.warn("Modo Demo");
             useLocalStorage = true;
             updateUIState();
         }
 
+        // --- GEOGRAFÍA ---
+        window.initGeography = () => {
+            const regionSelect = document.getElementById('destRegion');
+            if(!regionSelect) return;
+            regionSelect.innerHTML = '<option value="">Seleccione Departamento</option>';
+            Object.keys(peruData).sort().forEach(region => {
+                const opt = document.createElement('option');
+                opt.value = region;
+                opt.textContent = region;
+                regionSelect.appendChild(opt);
+            });
+        };
+
+        window.updateProvinces = () => {
+            const region = document.getElementById('destRegion').value;
+            const provSelect = document.getElementById('destProv');
+            const distSelect = document.getElementById('destDist');
+            provSelect.innerHTML = '<option value="">Seleccione Provincia</option>';
+            distSelect.innerHTML = '<option value="">Seleccione Distrito</option>';
+            if (region && peruData[region]) {
+                Object.keys(peruData[region]).sort().forEach(prov => {
+                    const opt = document.createElement('option');
+                    opt.value = prov;
+                    opt.textContent = prov;
+                    provSelect.appendChild(opt);
+                });
+            }
+        };
+
+        window.updateDistricts = () => {
+            const region = document.getElementById('destRegion').value;
+            const prov = document.getElementById('destProv').value;
+            const distSelect = document.getElementById('destDist');
+            distSelect.innerHTML = '<option value="">Seleccione Distrito</option>';
+            if (region && prov && peruData[region][prov]) {
+                peruData[region][prov].sort().forEach(dist => {
+                    const opt = document.createElement('option');
+                    opt.value = dist;
+                    opt.textContent = dist;
+                    distSelect.appendChild(opt);
+                });
+            }
+        };
+
         // --- NAVEGACIÓN ---
         window.navigateTo = (screen) => {
-            document.getElementById('home-screen').classList.add('hidden-screen');
-            document.getElementById('order-section').classList.add('hidden-screen');
-            document.getElementById('auth-section').classList.add('hidden-screen');
-            if (screen === 'home') document.getElementById('home-screen').classList.remove('hidden-screen');
-            else if (screen === 'orders') document.getElementById('order-section').classList.remove('hidden-screen');
-            else if (screen === 'auth') document.getElementById('auth-section').classList.remove('hidden-screen');
+            // Ocultar todas las pantallas (buscando tanto ID -screen como -section)
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden-screen'));
+            
+            const target = document.getElementById(`${screen}-section`) || document.getElementById(`${screen}-screen`);
+            if (target) {
+                target.classList.remove('hidden-screen');
+            } else {
+                console.error("No se encontró la pantalla:", screen);
+            }
             window.scrollTo(0, 0);
         };
 
@@ -345,20 +439,19 @@
             const navLogout = document.getElementById('nav-logout');
             const userInfo = document.getElementById('user-info');
             const displayEmail = document.getElementById('display-user-email');
-
-            const isLoggedIn = currentUser || (useLocalStorage && localStorage.getItem('demo_session'));
+            const isLoggedIn = currentUser || (useLocalStorage && localStorage.getItem('imperial_session'));
 
             if (isLoggedIn) {
-                const email = currentUser ? currentUser.email : localStorage.getItem('demo_session');
-                if(locked) locked.classList.add('hidden-screen');
-                if(unlocked) unlocked.classList.remove('hidden-screen');
+                const email = currentUser ? currentUser.email : localStorage.getItem('imperial_session');
+                locked?.classList.add('hidden-screen');
+                unlocked?.classList.remove('hidden-screen');
                 navLogin.classList.add('hidden-screen');
                 navLogout.classList.remove('hidden-screen');
                 userInfo.classList.remove('hidden');
                 displayEmail.textContent = email;
             } else {
-                if(locked) locked.classList.remove('hidden-screen');
-                if(unlocked) unlocked.classList.add('hidden-screen');
+                locked?.classList.remove('hidden-screen');
+                unlocked?.classList.add('hidden-screen');
                 navLogin.classList.remove('hidden-screen');
                 navLogout.classList.add('hidden-screen');
                 userInfo.classList.add('hidden');
@@ -366,24 +459,18 @@
         }
 
         window.showAuthScreen = (mode) => {
-            authMode = mode;
+            window.authMode = mode;
             navigateTo('auth');
-            updateAuthFormUI();
+            document.getElementById('auth-title').textContent = mode === 'login' ? "Iniciar Sesión" : "Crear Cuenta";
+            document.getElementById('auth-btn').textContent = mode === 'login' ? "Entrar" : "Registrarme";
         };
 
         window.toggleAuthMode = () => {
-            authMode = authMode === 'login' ? 'signup' : 'login';
-            updateAuthFormUI();
+            const mode = window.authMode === 'login' ? 'signup' : 'login';
+            window.showAuthScreen(mode);
         };
 
-        function updateAuthFormUI() {
-            document.getElementById('auth-title').textContent = authMode === 'login' ? "Iniciar Sesión" : "Crear Cuenta";
-            document.getElementById('auth-btn').textContent = authMode === 'login' ? "Entrar al Sistema" : "Registrarme";
-            document.getElementById('auth-switch-text').textContent = authMode === 'login' ? "¿No tienes cuenta?" : "¿Ya tienes cuenta?";
-            document.getElementById('auth-switch-btn').textContent = authMode === 'login' ? "Regístrate aquí" : "Inicia sesión";
-        }
-
-        // --- LÓGICA DE AUTH ---
+        // --- AUTH ---
         document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('auth-email').value;
@@ -392,195 +479,268 @@
             btn.disabled = true;
 
             if (useLocalStorage) {
-                const users = JSON.parse(localStorage.getItem('app_users') || '[]');
-                if (authMode === 'login') {
+                const users = JSON.parse(localStorage.getItem('imp_users') || '[]');
+                if (window.authMode === 'login') {
                     const found = users.find(u => u.email === email && u.pass === pass);
-                    if (found) {
-                        localStorage.setItem('demo_session', email);
-                        updateUIState();
-                        navigateTo('home');
-                    } else {
-                        alert("Usuario no encontrado o contraseña incorrecta.");
-                    }
+                    if (found) { localStorage.setItem('imperial_session', email); updateUIState(); navigateTo('home'); }
+                    else alert("Credenciales incorrectas.");
                 } else {
-                    const exists = users.find(u => u.email === email);
-                    if (exists) {
-                        alert("Este correo ya tiene una cuenta.");
-                    } else {
-                        users.push({ email, pass });
-                        localStorage.setItem('app_users', JSON.stringify(users));
-                        alert("¡Cuenta creada exitosamente!");
-                        authMode = 'login';
-                        updateAuthFormUI();
-                    }
+                    if(users.find(u => u.email === email)) alert("Correo ya registrado.");
+                    else { users.push({ email, pass }); localStorage.setItem('imp_users', JSON.stringify(users)); alert("Cuenta creada."); window.showAuthScreen('login'); }
                 }
                 btn.disabled = false;
                 return;
             }
 
             try {
-                if (authMode === 'login') {
-                    await auth.signInWithEmailAndPassword(email, pass);
-                    navigateTo('home');
-                } else {
-                    await auth.createUserWithEmailAndPassword(email, pass);
-                    alert("¡Cuenta creada exitosamente!");
-                    authMode = 'login';
-                    updateAuthFormUI();
-                }
-            } catch (err) {
-                alert("Error: " + err.message);
-            } finally {
-                btn.disabled = false;
-            }
+                if (window.authMode === 'login') { await auth.signInWithEmailAndPassword(email, pass); navigateTo('home'); }
+                else { await auth.createUserWithEmailAndPassword(email, pass); alert("Registrado."); window.showAuthScreen('login'); }
+            } catch (err) { alert(err.message); }
+            finally { btn.disabled = false; }
         });
 
-        window.handlePasswordRecovery = async () => {
-            const email = document.getElementById('auth-email').value;
-            if(!email) return alert("Escribe tu correo primero.");
-            if (useLocalStorage) {
-                alert("Modo Demo: No se puede enviar correo.");
-                return;
-            }
-            try {
-                await auth.sendPasswordResetEmail(email);
-                alert("Enlace enviado.");
-            } catch (e) {
-                alert("Error.");
-            }
-        };
-
         window.handleLogout = () => {
-            if (useLocalStorage) { localStorage.removeItem('demo_session'); location.reload(); }
-            else { auth.signOut().then(() => location.reload()); }
+            if (useLocalStorage) { localStorage.removeItem('imperial_session'); location.reload(); }
+            else auth.signOut().then(() => location.reload());
         };
 
-        // --- LÓGICA DE REGISTRO DE PEDIDOS ---
+        // --- CAJAS ---
+        let boxCount = 0;
+        window.addBoxRow = () => {
+            boxCount++;
+            const container = document.getElementById('boxes-container');
+            const row = document.createElement('div');
+            row.className = 'box-item';
+            row.innerHTML = `
+                <div class="flex justify-between items-center mb-2">
+                    <span class="font-bold text-orange-600"><i class="fas fa-box"></i> Bulto #${boxCount}</span>
+                    <button type="button" onclick="this.closest('.box-item').remove()" class="text-red-400 hover:text-red-600 transition"><i class="fas fa-trash-alt"></i></button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                    <div class="md:col-span-1">
+                        <label class="text-[10px] text-gray-500 font-bold uppercase">Peso (kg)</label>
+                        <input type="number" step="0.1" class="input-field box-weight" required placeholder="0.0">
+                    </div>
+                    <div class="md:col-span-3">
+                        <label class="text-[10px] text-gray-500 font-bold uppercase">Contenido detalle</label>
+                        <input type="text" class="input-field box-desc" required placeholder="¿Qué lleva esta caja?">
+                    </div>
+                </div>
+            `;
+            container.appendChild(row);
+        };
+
+        // --- REGISTRO ---
         document.getElementById('shippingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btnSubmit');
-            const status = document.getElementById('statusMsg');
-            btn.disabled = true;
+            const boxesData = [];
+            const boxItems = document.querySelectorAll('.box-item');
+            if(boxItems.length === 0) return alert("Debe agregar al menos un bulto.");
 
-            const userEmail = currentUser ? currentUser.email : localStorage.getItem('demo_session');
+            boxItems.forEach(item => {
+                boxesData.push({ 
+                    weight: item.querySelector('.box-weight').value, 
+                    desc: item.querySelector('.box-desc').value 
+                });
+            });
+
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+
+            const userEmail = currentUser ? currentUser.email : localStorage.getItem('imperial_session');
             const orderData = {
                 userEmail,
                 createdAt: new Date().toISOString(),
-                sender: { name: document.getElementById('senderName').value, id: document.getElementById('senderId').value, phone: document.getElementById('senderPhone').value },
-                receiver: { name: document.getElementById('receiverName').value, country: document.getElementById('destinationCountry').value, city: document.getElementById('destinationCity').value, address: document.getElementById('destinationAddress').value },
-                package: { weight: document.getElementById('pkgWeight').value, desc: document.getElementById('pkgDesc').value }
+                sender: { 
+                    name: document.getElementById('senderName').value, 
+                    id: document.getElementById('senderId').value, 
+                    phone: document.getElementById('senderPhone').value 
+                },
+                receiver: { 
+                    name: document.getElementById('receiverName').value, 
+                    phone: document.getElementById('receiverPhone').value,
+                    refPhone: document.getElementById('receiverRefPhone').value || 'N/A',
+                    region: document.getElementById('destRegion').value,
+                    prov: document.getElementById('destProv').value,
+                    dist: document.getElementById('destDist').value,
+                    address: document.getElementById('destAddress').value
+                },
+                boxes: boxesData,
+                status: 'Nuevo'
             };
 
             try {
                 if (useLocalStorage) {
-                    const orders = JSON.parse(localStorage.getItem('orders_db') || '[]');
-                    orders.push({...orderData, id: 'ORD-'+Date.now()});
-                    localStorage.setItem('orders_db', JSON.stringify(orders));
+                    const orders = JSON.parse(localStorage.getItem('imp_orders') || '[]');
+                    const orderWithId = {...orderData, id: 'IMP-'+Date.now()};
+                    orders.push(orderWithId);
+                    localStorage.setItem('imp_orders', JSON.stringify(orders));
+                    lastSavedOrder = orderWithId;
                 } else {
-                    await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').add({
+                    const docRef = await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').add({
                         ...orderData, createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
+                    lastSavedOrder = {...orderData, id: docRef.id};
                 }
-                status.textContent = "✅ PEDIDO REGISTRADO EN IMPERIAL";
-                status.classList.remove('hidden');
-                document.getElementById('shippingForm').reset();
-                setTimeout(() => status.classList.add('hidden'), 5000);
-            } catch (err) { alert("Error."); }
-            finally { btn.disabled = false; }
+
+                btn.classList.add('hidden-screen');
+                document.getElementById('post-success-actions').classList.remove('hidden-screen');
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                
+            } catch (err) { alert("Error al guardar."); }
+            finally { btn.disabled = false; btn.textContent = "Registrar Pedido Maestro"; }
         });
 
-        // --- ADMIN & EXCEL ---
+        window.resetForm = () => {
+            document.getElementById('shippingForm').reset();
+            document.getElementById('boxes-container').innerHTML = '';
+            addBoxRow();
+            document.getElementById('btnSubmit').classList.remove('hidden-screen');
+            document.getElementById('post-success-actions').classList.add('hidden-screen');
+            window.scrollTo(0,0);
+        };
+
+        window.sendToWhatsApp = () => {
+            if(!lastSavedOrder) return;
+            const o = lastSavedOrder;
+            const boxesStr = o.boxes.map((b, i) => `📦 Bulto #${i+1}: ${b.desc} (${b.weight} kg)`).join('\n');
+            const totalWeight = o.boxes.reduce((acc, curr) => acc + parseFloat(curr.weight), 0).toFixed(1);
+
+            const message = `
+*PEDIDO REGISTRADO - IMPERIAL CARGO* 🚛
+--------------------------------------------
+👤 *REMITENTE:* ${o.sender.name}
+📱 *CEL:* ${o.sender.phone}
+--------------------------------------------
+📍 *DESTINO:* ${o.receiver.dist}, ${o.receiver.prov}, ${o.receiver.region}
+🏠 *DIRECCIÓN:* ${o.receiver.address}
+👤 *RECEPTOR:* ${o.receiver.name}
+📱 *CEL RECEPTOR:* ${o.receiver.phone}
+📞 *REF:* ${o.receiver.refPhone}
+--------------------------------------------
+📦 *DETALLE:*
+${boxesStr}
+--------------------------------------------
+⚖️ *PESO TOTAL:* ${totalWeight} kg
+--------------------------------------------
+💡 _Solicito cotización para el envío de esta carga._
+            `.trim();
+            
+            window.open(`https://wa.me/51924181502?text=${encodeURIComponent(message)}`, '_blank');
+        };
+
+        // --- ADMIN ---
         window.toggleAdminPanel = () => {
-            document.getElementById('adminModal').classList.toggle('hidden');
-            document.getElementById('adminAuth').classList.remove('hidden');
-            document.getElementById('adminData').classList.add('hidden');
+            const modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
+            document.getElementById('adminAuth').classList.remove('hidden-screen');
+            document.getElementById('adminData').classList.add('hidden-screen');
+            document.getElementById('tableBody').innerHTML = ''; 
             document.getElementById('adminPin').value = '';
         };
 
         window.checkPin = () => {
-            if (document.getElementById('adminPin').value === "2026") {
-                document.getElementById('adminAuth').classList.add('hidden');
-                document.getElementById('adminData').classList.remove('hidden');
+            if (document.getElementById('adminPin').value === "1234") {
+                document.getElementById('adminAuth').classList.add('hidden-screen');
+                document.getElementById('adminData').classList.remove('hidden-screen');
                 document.getElementById('adminData').style.display = 'flex';
-                loadAdminOrders();
-            } else { alert("PIN Incorrecto"); }
+                loadAdminData();
+            } else { 
+                const err = document.getElementById('pinError');
+                err.classList.remove('hidden');
+                setTimeout(() => err.classList.add('hidden'), 2000);
+            }
         };
 
-        let currentOrders = [];
-        async function loadAdminOrders() {
+        let currentAdminData = [];
+        async function loadAdminData() {
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Cargando datos maestros...</td></tr>';
-            currentOrders = [];
+            tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-400 italic">Consultando registros maestros...</td></tr>';
+            currentAdminData = [];
             try {
-                if (useLocalStorage) { 
-                    currentOrders = JSON.parse(localStorage.getItem('orders_db') || '[]'); 
-                    currentOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                if (useLocalStorage) {
+                    currentAdminData = JSON.parse(localStorage.getItem('imp_orders') || '[]');
+                    currentAdminData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 } else {
-                    const snap = await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').orderBy('createdAt', 'desc').limit(100).get();
+                    const snap = await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').orderBy('createdAt', 'desc').limit(50).get();
                     snap.forEach(doc => {
                         const d = doc.data();
                         const date = d.createdAt && d.createdAt.seconds ? new Date(d.createdAt.seconds * 1000).toISOString() : new Date().toISOString();
-                        currentOrders.push({ id: doc.id, ...d, createdAt: date });
+                        currentAdminData.push({ id: doc.id, ...d, createdAt: date });
                     });
                 }
                 tbody.innerHTML = '';
-                currentOrders.forEach(ord => {
+                currentAdminData.forEach(ord => {
                     const row = document.createElement('tr');
-                    const dateObj = new Date(ord.createdAt);
+                    const totalWeight = ord.boxes.reduce((a, b) => a + parseFloat(b.weight), 0).toFixed(1);
                     row.innerHTML = `
-                        <td class="p-4 border-b text-xs">${dateObj.toLocaleDateString()}</td>
-                        <td class="p-4 border-b font-bold">${ord.userEmail}</td>
-                        <td class="p-4 border-b text-sm">${ord.sender.name}</td>
-                        <td class="p-4 border-b text-sm">${ord.receiver.name}</td>
-                        <td class="p-4 border-b"><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-bold">${ord.receiver.country}</span></td>
-                        <td class="p-4 border-b">${ord.package.weight}kg</td>
-                        <td class="p-4 border-b text-center">
-                            <button onclick="deleteOrder('${ord.id}')" class="text-red-500 hover:text-red-700 transition">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
+                        <td class="p-3 border-b text-[10px] font-mono">${new Date(ord.createdAt).toLocaleString()}</td>
+                        <td class="p-3 border-b text-xs font-bold text-slate-600">${ord.userEmail}</td>
+                        <td class="p-3 border-b text-xs">${ord.sender.name}</td>
+                        <td class="p-3 border-b text-xs">${ord.receiver.dist} (${ord.receiver.region})</td>
+                        <td class="p-3 border-b text-xs text-center font-bold">${ord.boxes.length} bul. / ${totalWeight}kg</td>
+                        <td class="p-3 border-b text-center">
+                            <button onclick="window.deleteOrder('${ord.id}')" class="text-red-500 hover:text-red-700 px-2"><i class="fas fa-trash"></i></button>
                         </td>
                     `;
                     tbody.appendChild(row);
                 });
-                if(currentOrders.length === 0) tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">No hay registros.</td></tr>';
-            } catch (e) { tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-red-500">Error al cargar.</td></tr>'; }
+                if(currentAdminData.length === 0) tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center italic text-slate-400">Sin registros disponibles.</td></tr>';
+            } catch (e) { tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500 font-bold">Error de conexión.</td></tr>'; }
         }
 
         window.deleteOrder = async (id) => {
-            if(!confirm("¿Eliminar este registro imperial?")) return;
-            try {
-                if (useLocalStorage) {
-                    let orders = JSON.parse(localStorage.getItem('orders_db') || '[]');
-                    orders = orders.filter(o => o.id !== id);
-                    localStorage.setItem('orders_db', JSON.stringify(orders));
-                } else {
-                    await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').doc(id).delete();
-                }
-                loadAdminOrders();
-            } catch (e) { alert("Error."); }
+            if(!confirm("¿Eliminar registro permanentemente?")) return;
+            if (useLocalStorage) {
+                let orders = JSON.parse(localStorage.getItem('imp_orders') || '[]');
+                orders = orders.filter(o => o.id !== id);
+                localStorage.setItem('imp_orders', JSON.stringify(orders));
+            } else {
+                await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').doc(id).delete();
+            }
+            loadAdminData();
         };
 
         window.exportToExcel = () => {
-            if (currentOrders.length === 0) return alert("Sin datos.");
+            if (currentAdminData.length === 0) return alert("Nada para exportar.");
             let html = `
                 <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-                <head><meta charset="utf-8"><style>table { border-collapse: collapse; } th { background-color: #f97316; color: white; border: 1px solid black; } td { border: 1px solid #ccc; }</style></head>
-                <body><table><thead><tr><th>FECHA</th><th>USUARIO</th><th>REMITENTE</th><th>DNI</th><th>TEL</th><th>DESTINATARIO</th><th>PAIS</th><th>CIUDAD</th><th>DIRECCION</th><th>PESO</th><th>DESCRIPCION</th></tr></thead><tbody>
+                <head><meta charset="utf-8"><style>table { border-collapse: collapse; } th { background-color: #f97316; color: white; border: 1px solid black; padding: 5px; } td { border: 1px solid #ccc; padding: 5px; }</style></head>
+                <body><table><thead><tr>
+                    <th>FECHA</th><th>USUARIO</th><th>REMITENTE</th><th>DNI/RUC</th><th>TEL REMITENTE</th>
+                    <th>DESTINATARIO</th><th>CEL RECEPTOR</th><th>REF RECEPTOR</th>
+                    <th>REGION</th><th>PROVINCIA</th><th>DISTRITO</th><th>DIRECCION</th>
+                    <th>CANT_BULTOS</th><th>PESO_TOTAL</th><th>DETALLE_CARGA</th>
+                </tr></thead><tbody>
             `;
-            currentOrders.forEach(o => {
-                const date = new Date(o.createdAt).toLocaleDateString();
-                html += `<tr><td>${date}</td><td>${o.userEmail}</td><td>${o.sender.name}</td><td>${o.sender.id}</td><td>${o.sender.phone}</td><td>${o.receiver.name}</td><td>${o.receiver.country}</td><td>${o.receiver.city}</td><td>${o.receiver.address}</td><td>${o.package.weight}</td><td>${o.package.desc}</td></tr>`;
+            currentAdminData.forEach(o => {
+                const date = new Date(o.createdAt).toLocaleString();
+                const totalW = o.boxes.reduce((a, b) => a + parseFloat(b.weight), 0).toFixed(1);
+                const bultosStr = o.boxes.map(b => `${b.desc} (${b.weight}kg)`).join(' | ');
+                html += `<tr>
+                    <td>${date}</td><td>${o.userEmail}</td><td>${o.sender.name}</td><td>${o.sender.id}</td><td>${o.sender.phone}</td>
+                    <td>${o.receiver.name}</td><td>${o.receiver.phone}</td><td>${o.receiver.refPhone}</td>
+                    <td>${o.receiver.region}</td><td>${o.receiver.prov}</td><td>${o.receiver.dist}</td><td>${o.receiver.address}</td>
+                    <td>${o.boxes.length}</td><td>${totalW}</td><td>${bultosStr}</td>
+                </tr>`;
             });
             html += `</tbody></table></body></html>`;
             const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = `Reporte_Imperial_Cargo_${Date.now()}.xls`;
+            link.download = `Reporte_General_Imperial_${Date.now()}.xls`;
             link.click();
         };
 
-        window.onload = () => { updateUIState(); };
+        // --- INIT ---
+        window.initGeography();
+        window.addBoxRow();
+        updateUIState();
+        
     </script>
 </body>
 </html>
+</html>
+
 
