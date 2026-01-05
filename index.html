@@ -29,7 +29,7 @@
 
         .input-field {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
             background-color: white;
@@ -89,9 +89,8 @@
     <nav class="bg-slate-950 text-white shadow-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <!-- Botón de Inicio -->
                 <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
-                    <img src="logo.jpeg" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4060/4060012.png'" class="nav-logo-img" alt="Logo">
+                    <img src="logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4060/4060012.png'" class="nav-logo-img" alt="Logo">
                     <span class="text-xl font-bold tracking-tighter uppercase brand-font">IMPERIAL SERVICE CARGO</span>
                 </div>
                 
@@ -146,7 +145,7 @@
                 <div class="space-y-4">
                     <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Nuestras Rutas</h2>
                     <div class="bg-white p-2 rounded-xl shadow-lg border border-slate-200">
-                        <img src="flyer.jpeg" onerror="this.src='https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&w=800&q=80'" alt="Flyer" class="w-full h-auto rounded-lg">
+                        <img src="flyer.jpg" onerror="this.src='https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&w=800&q=80'" alt="Flyer" class="w-full h-auto rounded-lg">
                     </div>
                 </div>
             </div>
@@ -185,14 +184,12 @@
         <section id="orders-section" class="hidden-screen max-w-7xl mx-auto px-4 py-12">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div class="lg:col-span-2">
-                    <!-- Bloqueo -->
                     <div id="order-locked" class="bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl p-20 text-center">
                         <i class="fas fa-lock text-5xl text-slate-400 mb-4"></i>
                         <h3 class="text-xl font-bold text-slate-700">Inicia sesión para registrar</h3>
                         <button onclick="showAuthScreen('login')" class="btn-primary mt-4">Ir al Login</button>
                     </div>
 
-                    <!-- Formulario -->
                     <div id="order-unlocked" class="hidden-screen bg-white rounded-xl shadow-lg p-6 border-t-4 border-orange-500">
                         <h2 class="text-2xl font-bold text-slate-800 mb-6 uppercase brand-font flex items-center gap-2">
                             <i class="fas fa-clipboard-list text-orange-500"></i> Registro de Encomienda (PERÚ)
@@ -240,7 +237,7 @@
                                 </div>
                             </div>
 
-                            <!-- Cajas -->
+                            <!-- Registro de Cajas -->
                             <div class="bg-orange-50 p-4 rounded-lg border border-orange-200">
                                 <h3 class="font-bold text-orange-800 text-sm uppercase mb-3 flex justify-between items-center">
                                     Detalle de Carga / Bultos
@@ -253,7 +250,6 @@
 
                             <button type="submit" id="btnSubmit" class="w-full btn-primary h-14">Registrar Pedido Maestro</button>
                             
-                            <!-- Éxito -->
                             <div id="post-success-actions" class="hidden-screen space-y-4 mt-4">
                                 <div class="bg-green-100 text-green-700 p-4 rounded-lg border border-green-200 text-center">
                                     <p class="font-bold text-lg"><i class="fas fa-check-circle"></i> Registro Imperial Exitoso</p>
@@ -272,7 +268,7 @@
                     </div>
                 </div>
 
-                <!-- Info Sidebar -->
+                <!-- Info Help -->
                 <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg h-fit">
                     <h3 class="font-bold text-lg mb-4 text-orange-500 border-b border-slate-800 pb-2">Central Imperial</h3>
                     <p class="text-sm text-slate-400">Atención inmediata para cotizaciones y recojos a domicilio.</p>
@@ -285,7 +281,7 @@
         </section>
     </main>
 
-    <!-- ADMIN MODAL -->
+    <!-- ADMIN PANEL MODAL -->
     <div id="adminModal" class="fixed inset-0 bg-slate-900/95 z-[100] hidden flex justify-center items-center p-4">
         <div class="bg-white w-full max-w-6xl h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
             <div class="bg-slate-950 text-white p-5 flex justify-between items-center">
@@ -297,7 +293,7 @@
                 <i class="fas fa-user-lock text-6xl text-slate-300 mb-6"></i>
                 <h3 class="text-2xl font-bold text-slate-800">Verificación de Supervisor</h3>
                 <input type="password" id="adminPin" class="mt-4 border-2 p-4 rounded-xl w-64 text-center text-3xl tracking-[1rem]" placeholder="****">
-                <button onclick="checkPin()" class="mt-6 bg-slate-900 text-white px-10 py-3 rounded-xl font-bold">Acceder</button>
+                <button onclick="checkPin()" class="mt-6 bg-slate-900 text-white px-10 py-3 rounded-xl font-bold hover:bg-orange-600 transition">Acceder</button>
                 <p id="pinError" class="text-red-500 text-sm mt-4 hidden">Clave incorrecta</p>
             </div>
 
@@ -420,15 +416,9 @@
 
         // --- NAVEGACIÓN ---
         window.navigateTo = (screen) => {
-            // Ocultar todas las pantallas (buscando tanto ID -screen como -section)
             document.querySelectorAll('section').forEach(s => s.classList.add('hidden-screen'));
-            
             const target = document.getElementById(`${screen}-section`) || document.getElementById(`${screen}-screen`);
-            if (target) {
-                target.classList.remove('hidden-screen');
-            } else {
-                console.error("No se encontró la pantalla:", screen);
-            }
+            if (target) target.classList.remove('hidden-screen');
             window.scrollTo(0, 0);
         };
 
@@ -627,7 +617,8 @@ ${boxesStr}
 💡 _Solicito cotización para el envío de esta carga._
             `.trim();
             
-            window.open(`https://wa.me/51924181502?text=${encodeURIComponent(message)}`, '_blank');
+            // Número actualizado para redirección
+            window.open(`https://wa.me/393271028705?text=${encodeURIComponent(message)}`, '_blank');
         };
 
         // --- ADMIN ---
@@ -741,6 +732,6 @@ ${boxesStr}
     </script>
 </body>
 </html>
-</html>
+
 
 
