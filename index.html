@@ -381,8 +381,29 @@
             btn.disabled = true;
 
             if (useLocalStorage) {
-                localStorage.setItem('demo_session', email);
-                navigateTo('home');
+                // Simulación de validación en LocalStorage
+                const users = JSON.parse(localStorage.getItem('app_users') || '[]');
+                if (authMode === 'login') {
+                    const found = users.find(u => u.email === email && u.pass === pass);
+                    if (found) {
+                        localStorage.setItem('demo_session', email);
+                        navigateTo('home');
+                    } else {
+                        alert("Usuario no encontrado o contraseña incorrecta. Por favor regístrate primero.");
+                    }
+                } else {
+                    const exists = users.find(u => u.email === email);
+                    if (exists) {
+                        alert("Este correo ya tiene una cuenta creada. Intenta iniciar sesión.");
+                    } else {
+                        users.push({ email, pass });
+                        localStorage.setItem('app_users', JSON.stringify(users));
+                        alert("¡Cuenta creada exitosamente! Ahora puedes iniciar sesión.");
+                        authMode = 'login';
+                        updateAuthFormUI();
+                    }
+                }
+                btn.disabled = false;
                 return;
             }
 
@@ -414,11 +435,23 @@
         window.handlePasswordRecovery = async () => {
             const email = document.getElementById('auth-email').value;
             if(!email) return alert("Por favor escribe tu correo electrónico primero.");
+            
+            if (useLocalStorage) {
+                const users = JSON.parse(localStorage.getItem('app_users') || '[]');
+                const found = users.find(u => u.email === email);
+                if (found) {
+                    alert("Simulación: Tu contraseña es '" + found.pass + "'. En una web real, recibirías un email.");
+                } else {
+                    alert("El correo ingresado no pertenece a ningún usuario registrado.");
+                }
+                return;
+            }
+
             try {
                 await auth.sendPasswordResetEmail(email);
                 alert("Se ha enviado un enlace de recuperación a tu correo.");
             } catch (e) {
-                alert("Error: Asegúrate de que el correo sea válido.");
+                alert("Error: Asegúrate de que el correo sea válido y esté registrado.");
             }
         };
 
@@ -570,5 +603,4 @@
     </script>
 </body>
 </html>
-
 
