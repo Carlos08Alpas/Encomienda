@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Cargo - Sistema de Gestión de Encomiendas</title>
+    <title>IMPERIAL SERVICE CARGO - Gestión de Encomiendas</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -67,6 +67,11 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
         }
+        .nav-logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -75,10 +80,11 @@
     <nav class="bg-slate-950 text-white shadow-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <!-- Botón de Inicio (Logo) -->
-                <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
-                    <i class="fas fa-globe text-orange-500 text-2xl"></i>
-                    <span class="text-xl font-bold tracking-tighter uppercase brand-font">Global Cargo</span>
+                <!-- Botón de Inicio (Logo e Imagen) -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                    <!-- Si tienes logo.png en tu PC, súbelo a github con ese nombre -->
+                    <img src="logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4060/4060012.png'" class="nav-logo-img" alt="Logo">
+                    <span class="text-xl font-bold tracking-tighter uppercase brand-font">IMPERIAL SERVICE CARGO</span>
                 </div>
                 
                 <div class="flex items-center gap-4">
@@ -93,7 +99,7 @@
                     </div>
                     
                     <div class="flex gap-2">
-                        <button id="nav-login" onclick="showAuthScreen('login')" class="text-sm px-4 py-2 bg-orange-600 rounded font-bold hover:bg-orange-700 transition">Entrar / Registrarse</button>
+                        <button id="nav-login" onclick="showAuthScreen('login')" class="text-sm px-4 py-2 bg-orange-600 rounded font-bold hover:bg-orange-700 transition text-white">Entrar / Registrarse</button>
                         
                         <button id="nav-logout" onclick="handleLogout()" class="hidden-screen text-sm px-4 py-2 bg-slate-800 text-white rounded font-bold hover:bg-slate-700 transition border border-slate-700">
                             <i class="fas fa-sign-out-alt mr-2"></i>Salir
@@ -114,8 +120,8 @@
         <section id="home-screen" class="transition-all duration-300">
             <div class="hero-bg h-[350px] flex items-center justify-center text-center px-4">
                 <div class="max-w-3xl">
-                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 uppercase">Envíos de Confianza</h1>
-                    <p class="text-lg text-slate-300 mb-8 font-light">Gestiona tus encomiendas internacionales con el sistema más avanzado.</p>
+                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 uppercase">IMPERIAL SERVICE CARGO</h1>
+                    <p class="text-lg text-slate-300 mb-8 font-light">Líderes en logística internacional y transporte de confianza.</p>
                     <button onclick="navigateTo('orders')" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-10 rounded shadow-xl transition transform hover:scale-105 uppercase">
                         Hacer un Pedido
                     </button>
@@ -124,17 +130,24 @@
 
             <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div class="space-y-4">
-                    <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Vídeo Corporativo</h2>
+                    <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Vídeo Informativo</h2>
                     <div class="video-container shadow-2xl">
-                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Global Cargo Process" frameborder="0" allowfullscreen></iframe>
+                        <!-- Si el video es local y lo subes a github, usa: src="video.mp4" -->
+                        <video controls poster="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?fit=crop&w=800&q=80">
+                            <source src="video.mp4" type="video/mp4">
+                            Tu navegador no soporta videos.
+                        </video>
                     </div>
+                    <p class="text-xs text-gray-400 italic text-center">Sube tu archivo como 'video.mp4' a GitHub para visualizarlo aquí.</p>
                 </div>
 
                 <div class="space-y-4">
-                    <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Flyer Informativo</h2>
+                    <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Nuestro Flyer</h2>
                     <div class="bg-white p-2 rounded-xl shadow-lg border border-slate-200">
-                        <img src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&w=800&q=80" alt="Promociones" class="w-full h-auto rounded-lg">
+                        <!-- Sube tu flyer a github como flyer.jpg -->
+                        <img src="flyer.jpg" onerror="this.src='https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&w=800&q=80'" alt="Flyer Imperial" class="w-full h-auto rounded-lg">
                     </div>
+                    <p class="text-xs text-gray-400 italic text-center">Sube tu archivo como 'flyer.jpg' a GitHub para visualizarlo aquí.</p>
                 </div>
             </div>
         </section>
@@ -144,7 +157,7 @@
             <div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl border border-slate-100">
                 <div class="text-center mb-8">
                     <h2 id="auth-title" class="text-3xl font-bold text-slate-800">Iniciar Sesión</h2>
-                    <p id="auth-subtitle" class="text-slate-500 mt-2">Ingresa tus datos para continuar</p>
+                    <p id="auth-subtitle" class="text-slate-500 mt-2">Accede a IMPERIAL SERVICE CARGO</p>
                 </div>
 
                 <form id="authForm" class="space-y-4">
@@ -176,8 +189,8 @@
                 <div class="lg:col-span-2">
                     <div id="order-locked" class="bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl p-20 text-center">
                         <i class="fas fa-lock text-5xl text-slate-400 mb-4"></i>
-                        <h3 class="text-xl font-bold text-slate-700">Área Exclusiva para Clientes</h3>
-                        <p class="text-slate-500 mb-6">Por favor, inicia sesión para registrar un nuevo envío.</p>
+                        <h3 class="text-xl font-bold text-slate-700">Área Exclusiva de Clientes</h3>
+                        <p class="text-slate-500 mb-6">Por favor, inicia sesión para registrar un nuevo envío con Imperial Service.</p>
                         <button onclick="showAuthScreen('login')" class="btn-primary">Iniciar Sesión / Registrarse</button>
                     </div>
 
@@ -225,8 +238,8 @@
 
                 <div class="space-y-6">
                     <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg">
-                        <h3 class="font-bold text-lg mb-4 text-orange-500 border-b border-slate-800 pb-2">Central de Ayuda</h3>
-                        <p class="text-sm text-slate-400 italic">Si tienes dudas con los documentos de aduana, contáctanos.</p>
+                        <h3 class="font-bold text-lg mb-4 text-orange-500 border-b border-slate-800 pb-2">Atención al Cliente</h3>
+                        <p class="text-sm text-slate-400 italic">Central de soporte para socios y clientes Imperial.</p>
                         <div class="mt-6 flex items-center gap-3">
                             <i class="fab fa-whatsapp text-2xl text-green-500"></i>
                             <span class="text-sm">+51 924 181 502</span>
@@ -243,7 +256,7 @@
             <div class="bg-slate-950 text-white p-6 flex justify-between items-center">
                 <div class="flex items-center gap-3">
                     <i class="fas fa-user-shield text-orange-500"></i>
-                    <h2 class="text-xl font-bold uppercase brand-font">Panel de Control Global</h2>
+                    <h2 class="text-xl font-bold uppercase brand-font">Administración Imperial</h2>
                 </div>
                 <button onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-3xl">&times;</button>
             </div>
@@ -258,7 +271,7 @@
 
             <div id="adminData" class="hidden flex-col h-full bg-slate-50">
                 <div class="p-6 bg-white border-b flex justify-between items-center">
-                    <h4 class="text-lg font-bold text-slate-800">Registros de Encomiendas</h4>
+                    <h4 class="text-lg font-bold text-slate-800">Base de Datos de Encomiendas</h4>
                     <button onclick="exportToExcel()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold flex items-center gap-2">
                         <i class="fas fa-file-excel"></i> Descargar Excel Profesional
                     </button>
@@ -268,7 +281,7 @@
                         <thead class="bg-slate-100 sticky top-0">
                             <tr>
                                 <th class="p-4 border-b">Fecha</th>
-                                <th class="p-4 border-b">Cliente Registro</th>
+                                <th class="p-4 border-b">Usuario Registro</th>
                                 <th class="p-4 border-b">Remitente</th>
                                 <th class="p-4 border-b">Destinatario</th>
                                 <th class="p-4 border-b">País</th>
@@ -284,7 +297,7 @@
     </div>
 
     <footer class="bg-slate-950 text-slate-500 py-10 text-center text-xs">
-        <p>© 2024 Global Cargo International - Especialistas en Encomiendas</p>
+        <p>© 2024 IMPERIAL SERVICE CARGO - Especialistas en Logística Global</p>
     </footer>
 
     <script type="module">
@@ -292,7 +305,7 @@
         let db = null;
         let auth = null;
         let currentUser = null;
-        let appId = typeof __app_id !== 'undefined' ? __app_id : 'global-cargo-app';
+        let appId = typeof __app_id !== 'undefined' ? __app_id : 'imperial-cargo-app';
         let useLocalStorage = false;
         let authMode = 'login';
 
@@ -309,7 +322,7 @@
                 });
             } else { throw new Error("No config"); }
         } catch (e) {
-            console.warn("Modo Demo Activado");
+            console.warn("Modo Demo");
             useLocalStorage = true;
             updateUIState();
         }
@@ -319,14 +332,12 @@
             document.getElementById('home-screen').classList.add('hidden-screen');
             document.getElementById('order-section').classList.add('hidden-screen');
             document.getElementById('auth-section').classList.add('hidden-screen');
-            
             if (screen === 'home') document.getElementById('home-screen').classList.remove('hidden-screen');
             else if (screen === 'orders') document.getElementById('order-section').classList.remove('hidden-screen');
             else if (screen === 'auth') document.getElementById('auth-section').classList.remove('hidden-screen');
             window.scrollTo(0, 0);
         };
 
-        // --- ACTUALIZACIÓN DE INTERFAZ ---
         function updateUIState() {
             const locked = document.getElementById('order-locked');
             const unlocked = document.getElementById('order-unlocked');
@@ -389,16 +400,16 @@
                         updateUIState();
                         navigateTo('home');
                     } else {
-                        alert("Usuario no encontrado o contraseña incorrecta. Por favor regístrate primero.");
+                        alert("Usuario no encontrado o contraseña incorrecta.");
                     }
                 } else {
                     const exists = users.find(u => u.email === email);
                     if (exists) {
-                        alert("Este correo ya tiene una cuenta creada. Intenta iniciar sesión.");
+                        alert("Este correo ya tiene una cuenta.");
                     } else {
                         users.push({ email, pass });
                         localStorage.setItem('app_users', JSON.stringify(users));
-                        alert("¡Cuenta creada exitosamente! Ahora puedes iniciar sesión.");
+                        alert("¡Cuenta creada exitosamente!");
                         authMode = 'login';
                         updateAuthFormUI();
                     }
@@ -413,20 +424,12 @@
                     navigateTo('home');
                 } else {
                     await auth.createUserWithEmailAndPassword(email, pass);
-                    alert("¡Cuenta creada exitosamente! Ahora puedes iniciar sesión.");
+                    alert("¡Cuenta creada exitosamente!");
                     authMode = 'login';
                     updateAuthFormUI();
                 }
             } catch (err) {
-                if(err.code === "auth/user-not-found") {
-                    alert("Este correo no está registrado. Por favor regístrate primero.");
-                } else if(err.code === "auth/email-already-in-use") {
-                    alert("Este correo ya tiene una cuenta creada. Intenta iniciar sesión.");
-                } else if(err.code === "auth/wrong-password") {
-                    alert("Contraseña incorrecta.");
-                } else {
-                    alert("Error: " + err.message);
-                }
+                alert("Error: " + err.message);
             } finally {
                 btn.disabled = false;
             }
@@ -434,34 +437,22 @@
 
         window.handlePasswordRecovery = async () => {
             const email = document.getElementById('auth-email').value;
-            if(!email) return alert("Por favor escribe tu correo electrónico primero.");
-            
+            if(!email) return alert("Escribe tu correo primero.");
             if (useLocalStorage) {
-                const users = JSON.parse(localStorage.getItem('app_users') || '[]');
-                const found = users.find(u => u.email === email);
-                if (found) {
-                    alert("Modo Demo: Tu contraseña es '" + found.pass + "'.");
-                } else {
-                    alert("El correo ingresado no pertenece a ningún usuario registrado.");
-                }
+                alert("Modo Demo: No se puede enviar correo.");
                 return;
             }
-
             try {
                 await auth.sendPasswordResetEmail(email);
-                alert("Se ha enviado un enlace de recuperación a tu correo.");
+                alert("Enlace enviado.");
             } catch (e) {
-                alert("Error: Asegúrate de que el correo sea válido y esté registrado.");
+                alert("Error.");
             }
         };
 
         window.handleLogout = () => {
-            if (useLocalStorage) { 
-                localStorage.removeItem('demo_session'); 
-                location.reload(); 
-            } else { 
-                auth.signOut().then(() => location.reload()); 
-            }
+            if (useLocalStorage) { localStorage.removeItem('demo_session'); location.reload(); }
+            else { auth.signOut().then(() => location.reload()); }
         };
 
         // --- LÓGICA DE REGISTRO DE PEDIDOS ---
@@ -475,21 +466,9 @@
             const orderData = {
                 userEmail,
                 createdAt: new Date().toISOString(),
-                sender: { 
-                    name: document.getElementById('senderName').value, 
-                    id: document.getElementById('senderId').value, 
-                    phone: document.getElementById('senderPhone').value 
-                },
-                receiver: { 
-                    name: document.getElementById('receiverName').value, 
-                    country: document.getElementById('destinationCountry').value, 
-                    city: document.getElementById('destinationCity').value, 
-                    address: document.getElementById('destinationAddress').value 
-                },
-                package: { 
-                    weight: document.getElementById('pkgWeight').value, 
-                    desc: document.getElementById('pkgDesc').value 
-                }
+                sender: { name: document.getElementById('senderName').value, id: document.getElementById('senderId').value, phone: document.getElementById('senderPhone').value },
+                receiver: { name: document.getElementById('receiverName').value, country: document.getElementById('destinationCountry').value, city: document.getElementById('destinationCity').value, address: document.getElementById('destinationAddress').value },
+                package: { weight: document.getElementById('pkgWeight').value, desc: document.getElementById('pkgDesc').value }
             };
 
             try {
@@ -499,22 +478,18 @@
                     localStorage.setItem('orders_db', JSON.stringify(orders));
                 } else {
                     await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').add({
-                        ...orderData, 
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        ...orderData, createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 }
-                status.textContent = "✅ PEDIDO REGISTRADO CORRECTAMENTE";
+                status.textContent = "✅ PEDIDO REGISTRADO EN IMPERIAL";
                 status.classList.remove('hidden');
                 document.getElementById('shippingForm').reset();
                 setTimeout(() => status.classList.add('hidden'), 5000);
-            } catch (err) { 
-                alert("Error al registrar: " + err.message); 
-            } finally { 
-                btn.disabled = false; 
-            }
+            } catch (err) { alert("Error."); }
+            finally { btn.disabled = false; }
         });
 
-        // --- ADMIN & EXCEL PROFESIONAL ---
+        // --- ADMIN & EXCEL ---
         window.toggleAdminPanel = () => {
             document.getElementById('adminModal').classList.toggle('hidden');
             document.getElementById('adminAuth').classList.remove('hidden');
@@ -534,7 +509,7 @@
         let currentOrders = [];
         async function loadAdminOrders() {
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center">Cargando registros...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Cargando datos maestros...</td></tr>';
             currentOrders = [];
             try {
                 if (useLocalStorage) { 
@@ -560,26 +535,19 @@
                         <td class="p-4 border-b"><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-bold">${ord.receiver.country}</span></td>
                         <td class="p-4 border-b">${ord.package.weight}kg</td>
                         <td class="p-4 border-b text-center">
-                            <button onclick="deleteOrder('${ord.id}')" class="text-red-500 hover:text-red-700 transition" title="Eliminar registro">
+                            <button onclick="deleteOrder('${ord.id}')" class="text-red-500 hover:text-red-700 transition">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </td>
                     `;
                     tbody.appendChild(row);
                 });
-                if(currentOrders.length === 0) {
-                     tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">No hay pedidos registrados.</td></tr>';
-                }
-            } catch (e) { 
-                console.error(e);
-                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-red-500">Error al cargar datos.</td></tr>'; 
-            }
+                if(currentOrders.length === 0) tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">No hay registros.</td></tr>';
+            } catch (e) { tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-red-500">Error al cargar.</td></tr>'; }
         }
 
-        // --- FUNCIÓN PARA ELIMINAR DATOS ---
         window.deleteOrder = async (id) => {
-            if(!confirm("¿Estás seguro de que deseas eliminar este registro permanentemente?")) return;
-
+            if(!confirm("¿Eliminar este registro imperial?")) return;
             try {
                 if (useLocalStorage) {
                     let orders = JSON.parse(localStorage.getItem('orders_db') || '[]');
@@ -588,81 +556,30 @@
                 } else {
                     await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').doc(id).delete();
                 }
-                alert("Registro eliminado con éxito.");
-                loadAdminOrders(); // Refrescar tabla
-            } catch (e) {
-                alert("Error al intentar eliminar el registro: " + e.message);
-            }
+                loadAdminOrders();
+            } catch (e) { alert("Error."); }
         };
 
         window.exportToExcel = () => {
-            if (currentOrders.length === 0) return alert("No hay datos para exportar.");
-            
-            const headerColor = "#f97316"; 
-            const textColor = "#ffffff";
-            
+            if (currentOrders.length === 0) return alert("Sin datos.");
             let html = `
                 <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-                <head>
-                    <meta charset="utf-8">
-                    <style>
-                        table { border-collapse: collapse; width: 100%; font-family: sans-serif; }
-                        th { background-color: ${headerColor}; color: ${textColor}; font-weight: bold; border: 1px solid #000000; padding: 10px; text-align: center; }
-                        td { border: 1px solid #cccccc; padding: 8px; text-align: left; }
-                        .text-cell { mso-number-format:"\\@"; }
-                    </style>
-                </head>
-                <body>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>FECHA</th>
-                                <th>USUARIO SISTEMA</th>
-                                <th>REMITENTE</th>
-                                <th>DNI REMITENTE</th>
-                                <th>TEL REMITENTE</th>
-                                <th>DESTINATARIO</th>
-                                <th>PAIS DESTINO</th>
-                                <th>CIUDAD</th>
-                                <th>DIRECCION</th>
-                                <th>PESO KG</th>
-                                <th>DESCRIPCION</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                <head><meta charset="utf-8"><style>table { border-collapse: collapse; } th { background-color: #f97316; color: white; border: 1px solid black; } td { border: 1px solid #ccc; }</style></head>
+                <body><table><thead><tr><th>FECHA</th><th>USUARIO</th><th>REMITENTE</th><th>DNI</th><th>TEL</th><th>DESTINATARIO</th><th>PAIS</th><th>CIUDAD</th><th>DIRECCION</th><th>PESO</th><th>DESCRIPCION</th></tr></thead><tbody>
             `;
-            
             currentOrders.forEach(o => {
                 const date = new Date(o.createdAt).toLocaleDateString();
-                html += `
-                    <tr>
-                        <td>${date}</td>
-                        <td>${o.userEmail}</td>
-                        <td>${o.sender.name}</td>
-                        <td class="text-cell">${o.sender.id}</td>
-                        <td class="text-cell">${o.sender.phone}</td>
-                        <td>${o.receiver.name}</td>
-                        <td>${o.receiver.country}</td>
-                        <td>${o.receiver.city}</td>
-                        <td>${o.receiver.address}</td>
-                        <td>${o.package.weight}</td>
-                        <td>${o.package.desc}</td>
-                    </tr>
-                `;
+                html += `<tr><td>${date}</td><td>${o.userEmail}</td><td>${o.sender.name}</td><td>${o.sender.id}</td><td>${o.sender.phone}</td><td>${o.receiver.name}</td><td>${o.receiver.country}</td><td>${o.receiver.city}</td><td>${o.receiver.address}</td><td>${o.package.weight}</td><td>${o.package.desc}</td></tr>`;
             });
-            
             html += `</tbody></table></body></html>`;
-
             const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = `Reporte_GlobalCargo_${Date.now()}.xls`;
+            link.download = `Reporte_Imperial_Cargo_${Date.now()}.xls`;
             link.click();
         };
 
-        window.onload = () => {
-            updateUIState();
-        };
+        window.onload = () => { updateUIState(); };
     </script>
 </body>
 </html>
