@@ -22,7 +22,7 @@
         h1, h2, h3, .brand-font { font-family: 'Oswald', sans-serif; }
         
         .hero-bg {
-            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1600&q=80');
+            background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
         }
@@ -54,6 +54,19 @@
         .btn-primary:hover { background-color: #1e293b; transform: translateY(-1px); }
 
         .hidden-screen { display: none !important; }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: #000;
+        }
+        .video-container iframe, .video-container video {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -62,22 +75,28 @@
     <nav class="bg-slate-950 text-white shadow-xl sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
                     <i class="fas fa-globe text-orange-500 text-2xl"></i>
                     <span class="text-xl font-bold tracking-tighter uppercase brand-font">Global Cargo</span>
                 </div>
                 
                 <div class="flex items-center gap-4">
-                    <!-- User Status Info -->
-                    <div id="user-info" class="hidden text-xs text-right mr-4 md:block">
-                        <p class="text-slate-400">Bienvenido,</p>
+                    <div class="hidden md:flex gap-6 mr-6">
+                        <button onclick="navigateTo('home')" class="hover:text-orange-400 transition text-sm font-bold uppercase">Inicio</button>
+                        <button onclick="navigateTo('orders')" class="hover:text-orange-400 transition text-sm font-bold uppercase">Realizar Pedido</button>
+                    </div>
+
+                    <div id="user-info" class="hidden text-xs text-right mr-4 md:block border-l border-slate-700 pl-4">
+                        <p class="text-slate-400">Usuario Activo:</p>
                         <p id="display-user-email" class="font-bold text-orange-400"></p>
                     </div>
                     
                     <div class="flex gap-2">
-                        <button id="nav-login" onclick="showAuthScreen('login')" class="text-sm px-4 py-2 rounded hover:bg-slate-800 transition">Entrar</button>
-                        <button id="nav-logout" onclick="handleLogout()" class="hidden text-sm px-4 py-2 bg-red-900/30 text-red-400 rounded hover:bg-red-900/50 transition border border-red-900/50">Salir</button>
-                        <button onclick="toggleAdminPanel()" class="text-sm bg-slate-800 px-3 py-2 rounded hover:bg-slate-700 border border-slate-700">
+                        <button id="nav-login" onclick="showAuthScreen('login')" class="text-sm px-4 py-2 bg-orange-600 rounded font-bold hover:bg-orange-700 transition">Entrar / Registrarse</button>
+                        <button id="nav-logout" onclick="handleLogout()" class="hidden text-sm px-4 py-2 bg-slate-800 text-white rounded font-bold hover:bg-slate-700 transition border border-slate-700">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Salir
+                        </button>
+                        <button onclick="toggleAdminPanel()" class="text-sm bg-slate-800 px-3 py-2 rounded hover:bg-slate-700 border border-slate-700" title="Panel Administrador">
                             <i class="fas fa-user-shield"></i>
                         </button>
                     </div>
@@ -86,133 +105,133 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div id="home-hero" class="hero-bg h-[400px] flex items-center justify-center text-center px-4 transition-all">
-        <div class="max-w-3xl">
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">LOGÍSTICA SIN FRONTERAS</h1>
-            <p class="text-lg text-slate-300 mb-8 font-light">Regístrate para gestionar tus envíos internacionales con la mayor seguridad del mercado.</p>
-            <button onclick="scrollToOrder()" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-10 rounded shadow-xl transition transform hover:scale-105 uppercase">
-                Empezar envío ahora
-            </button>
-        </div>
-    </div>
-
-    <!-- Main Application -->
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-12 w-full">
+    <main class="flex-grow">
         
-        <!-- PANTALLA: AUTENTICACIÓN (LOGIN/REGISTRO) -->
-        <div id="auth-section" class="hidden-screen max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl border border-slate-100">
-            <div class="text-center mb-8">
-                <h2 id="auth-title" class="text-3xl font-bold text-slate-800">Iniciar Sesión</h2>
-                <p id="auth-subtitle" class="text-slate-500 mt-2">Ingresa tus credenciales para continuar</p>
+        <!-- PANTALLA: INICIO (HOME) -->
+        <section id="home-screen" class="transition-all duration-300">
+            <div class="hero-bg h-[350px] flex items-center justify-center text-center px-4">
+                <div class="max-w-3xl">
+                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-4 uppercase">Envíos de Confianza</h1>
+                    <p class="text-lg text-slate-300 mb-8 font-light">Gestiona tus encomiendas internacionales con el sistema más avanzado.</p>
+                    <button onclick="navigateTo('orders')" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-10 rounded shadow-xl transition transform hover:scale-105 uppercase">
+                        Hacer un Pedido
+                    </button>
+                </div>
             </div>
 
-            <form id="authForm" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">Correo Electrónico</label>
-                    <input type="email" id="auth-email" required class="input-field" placeholder="tu@correo.com">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-1">Contraseña</label>
-                    <input type="password" id="auth-pass" required class="input-field" placeholder="••••••••">
-                </div>
-                
-                <button type="submit" id="auth-btn" class="w-full btn-primary mt-4">Entrar al Sistema</button>
-                
-                <p class="text-center text-sm text-slate-600 mt-6">
-                    <span id="auth-switch-text">¿No tienes cuenta?</span>
-                    <button type="button" onclick="toggleAuthMode()" id="auth-switch-btn" class="text-orange-600 font-bold hover:underline ml-1">Regístrate aquí</button>
-                </p>
-            </form>
-        </div>
-
-        <!-- PANTALLA: FORMULARIO DE PEDIDO (Bloqueado si no hay login) -->
-        <div id="order-section" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            <div class="lg:col-span-2">
-                <!-- Overlay de bloqueo -->
-                <div id="order-locked" class="bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl p-20 text-center">
-                    <i class="fas fa-lock text-5xl text-slate-400 mb-4"></i>
-                    <h3 class="text-xl font-bold text-slate-700">Acceso Restringido</h3>
-                    <p class="text-slate-500 mb-6">Debes iniciar sesión o registrarte para realizar un pedido de encomienda.</p>
-                    <button onclick="showAuthScreen('login')" class="btn-primary">Identificarse ahora</button>
+            <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Vídeo Corporativo</h2>
+                    <div class="video-container shadow-2xl">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Global Cargo Process" frameborder="0" allowfullscreen></iframe>
+                    </div>
                 </div>
 
-                <!-- Formulario Real -->
-                <div id="order-unlocked" class="hidden-screen bg-white rounded-xl shadow-lg p-8 border-t-4 border-orange-500">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
-                            <i class="fas fa-box-open text-orange-500"></i> Nuevo Registro de Encomienda
-                        </h2>
-                        <span class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold">Sesión Activa</span>
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Flyer Informativo</h2>
+                    <div class="bg-white p-2 rounded-xl shadow-lg border border-slate-200">
+                        <img src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&w=800&q=80" alt="Promociones" class="w-full h-auto rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANTALLA: AUTENTICACIÓN -->
+        <section id="auth-section" class="hidden-screen py-20">
+            <div class="max-w-md mx-auto bg-white p-8 rounded-xl shadow-2xl border border-slate-100">
+                <div class="text-center mb-8">
+                    <h2 id="auth-title" class="text-3xl font-bold text-slate-800">Iniciar Sesión</h2>
+                    <p id="auth-subtitle" class="text-slate-500 mt-2">Ingresa tus datos para continuar</p>
+                </div>
+
+                <form id="authForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Correo Electrónico</label>
+                        <input type="email" id="auth-email" required class="input-field" placeholder="ejemplo@correo.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Contraseña</label>
+                        <input type="password" id="auth-pass" required class="input-field" placeholder="••••••••">
+                    </div>
+                    
+                    <button type="submit" id="auth-btn" class="w-full btn-primary mt-4">Entrar al Sistema</button>
+                    
+                    <div class="flex flex-col gap-3 mt-6 text-center">
+                        <p class="text-sm text-slate-600">
+                            <span id="auth-switch-text">¿No tienes cuenta?</span>
+                            <button type="button" onclick="toggleAuthMode()" id="auth-switch-btn" class="text-orange-600 font-bold hover:underline ml-1">Regístrate aquí</button>
+                        </p>
+                        <button type="button" onclick="handlePasswordRecovery()" class="text-xs text-slate-400 hover:text-slate-600 underline">¿Olvidaste tu contraseña?</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- PANTALLA: FORMULARIO DE PEDIDO -->
+        <section id="order-section" class="hidden-screen max-w-7xl mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <div id="order-locked" class="bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl p-20 text-center">
+                        <i class="fas fa-lock text-5xl text-slate-400 mb-4"></i>
+                        <h3 class="text-xl font-bold text-slate-700">Área Exclusiva para Clientes</h3>
+                        <p class="text-slate-500 mb-6">Por favor, inicia sesión para registrar un nuevo envío.</p>
+                        <button onclick="showAuthScreen('login')" class="btn-primary">Iniciar Sesión / Registrarse</button>
                     </div>
 
-                    <form id="shippingForm" class="space-y-8">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Columna 1: Remitente -->
-                            <div class="space-y-4">
-                                <h3 class="font-bold text-slate-500 uppercase text-xs tracking-widest border-b pb-2">Datos del Remitente</h3>
-                                <input type="text" id="senderName" required class="input-field" placeholder="Nombre completo">
-                                <input type="text" id="senderId" required class="input-field" placeholder="Documento ID / Pasaporte">
-                                <input type="tel" id="senderPhone" required class="input-classic input-field" placeholder="Teléfono de contacto">
-                            </div>
-                            <!-- Columna 2: Destinatario -->
-                            <div class="space-y-4">
-                                <h3 class="font-bold text-slate-500 uppercase text-xs tracking-widest border-b pb-2">Datos de Destino</h3>
-                                <input type="text" id="receiverName" required class="input-field" placeholder="Nombre de quien recibe">
-                                <select id="destinationCountry" class="input-field">
-                                    <option value="Perú">Perú 🇵🇪</option>
-                                    <option value="España">España 🇪🇸</option>
-                                    <option value="USA">USA 🇺🇸</option>
-                                    <option value="México">México 🇲🇽</option>
-                                </select>
-                                <input type="text" id="destinationCity" required class="input-field" placeholder="Ciudad de destino">
-                                <input type="text" id="destinationAddress" required class="input-field" placeholder="Dirección exacta">
-                            </div>
-                        </div>
+                    <div id="order-unlocked" class="hidden-screen bg-white rounded-xl shadow-lg p-8 border-t-4 border-orange-500">
+                        <h2 class="text-2xl font-bold text-slate-800 mb-6 uppercase brand-font flex items-center gap-2">
+                            <i class="fas fa-file-signature text-orange-500"></i> Nuevo Registro de Envío
+                        </h2>
 
-                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
-                            <h3 class="font-bold text-slate-500 uppercase text-xs tracking-widest mb-4">Detalle del Paquete</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <input type="number" id="pkgWeight" step="0.1" required class="input-field" placeholder="Peso est. (kg)">
-                                <input type="text" id="pkgDesc" required class="md:col-span-2 input-field" placeholder="¿Qué contiene el paquete?">
+                        <form id="shippingForm" class="space-y-8">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <h3 class="font-bold text-slate-500 uppercase text-xs tracking-widest border-b pb-2">Remitente</h3>
+                                    <input type="text" id="senderName" required class="input-field" placeholder="Nombre completo">
+                                    <input type="text" id="senderId" required class="input-field" placeholder="DNI / Pasaporte">
+                                    <input type="tel" id="senderPhone" required class="input-field" placeholder="Teléfono">
+                                </div>
+                                <div class="space-y-4">
+                                    <h3 class="font-bold text-slate-500 uppercase text-xs tracking-widest border-b pb-2">Destinatario</h3>
+                                    <input type="text" id="receiverName" required class="input-field" placeholder="Nombre del destinatario">
+                                    <select id="destinationCountry" class="input-field">
+                                        <option value="Perú">Perú 🇵🇪</option>
+                                        <option value="España">España 🇪🇸</option>
+                                        <option value="USA">USA 🇺🇸</option>
+                                        <option value="México">México 🇲🇽</option>
+                                        <option value="Colombia">Colombia 🇨🇴</option>
+                                    </select>
+                                    <input type="text" id="destinationCity" required class="input-field" placeholder="Ciudad">
+                                    <input type="text" id="destinationAddress" required class="input-field" placeholder="Dirección completa">
+                                </div>
                             </div>
-                        </div>
 
-                        <button type="submit" id="btnSubmit" class="w-full btn-primary h-16 text-lg">
-                            Registrar y Enviar Pedido
-                        </button>
-                        <p id="statusMsg" class="text-center font-bold hidden"></p>
-                    </form>
+                            <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                                <h3 class="font-bold text-slate-500 uppercase text-xs tracking-widest mb-4">Información del Paquete</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <input type="number" id="pkgWeight" step="0.1" required class="input-field" placeholder="Peso (kg)">
+                                    <input type="text" id="pkgDesc" required class="md:col-span-2 input-field" placeholder="Contenido detallado">
+                                </div>
+                            </div>
+
+                            <button type="submit" id="btnSubmit" class="w-full btn-primary h-16 text-lg">Guardar y Procesar Pedido</button>
+                            <p id="statusMsg" class="text-center font-bold hidden"></p>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Sidebar Info -->
-            <div class="space-y-6">
-                <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg">
-                    <h3 class="font-bold text-lg mb-4 text-orange-500 border-b border-slate-800 pb-2">Información de Carga</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed italic">
-                        "Recuerda que todos los envíos son validados por nuestro equipo de seguridad antes de ser embarcados."
-                    </p>
-                    <div class="mt-6 space-y-4">
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-headset text-orange-500"></i>
+                <div class="space-y-6">
+                    <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg">
+                        <h3 class="font-bold text-lg mb-4 text-orange-500 border-b border-slate-800 pb-2">Central de Ayuda</h3>
+                        <p class="text-sm text-slate-400 italic">Si tienes dudas con los documentos de aduana, contáctanos.</p>
+                        <div class="mt-6 flex items-center gap-3">
+                            <i class="fab fa-whatsapp text-2xl text-green-500"></i>
                             <span class="text-sm">+51 924 181 502</span>
                         </div>
                     </div>
                 </div>
-                
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 mb-3 text-sm">Restricciones:</h4>
-                    <ul class="text-xs text-slate-500 space-y-2">
-                        <li>🚫 No líquidos inflamables.</li>
-                        <li>🚫 No perecederos sin empaque.</li>
-                        <li>🚫 No dinero en efectivo.</li>
-                    </ul>
-                </div>
             </div>
-        </div>
-
+        </section>
     </main>
 
     <!-- ADMIN PANEL MODAL -->
@@ -220,43 +239,37 @@
         <div class="bg-white w-full max-w-6xl h-[90vh] rounded-2xl shadow-2xl flex flex-col overflow-hidden">
             <div class="bg-slate-950 text-white p-6 flex justify-between items-center">
                 <div class="flex items-center gap-3">
-                    <i class="fas fa-database text-orange-500"></i>
-                    <h2 class="text-xl font-bold uppercase brand-font">Consola de Administración</h2>
+                    <i class="fas fa-user-shield text-orange-500"></i>
+                    <h2 class="text-xl font-bold uppercase brand-font">Panel de Control Global</h2>
                 </div>
                 <button onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-3xl">&times;</button>
             </div>
             
             <div id="adminAuth" class="flex-grow flex flex-col justify-center items-center p-12 text-center">
-                <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-6">
-                    <i class="fas fa-shield-alt text-4xl text-slate-400"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-800">Verificación de Identidad</h3>
-                <p class="text-slate-500 mb-8">Ingresa el código PIN para acceder al reporte maestro.</p>
-                <input type="password" id="adminPin" class="border-2 border-slate-200 p-4 rounded-xl w-64 text-center text-3xl tracking-[1rem] focus:border-orange-500 outline-none transition" placeholder="****">
-                <button onclick="checkPin()" class="mt-6 bg-slate-900 text-white px-10 py-3 rounded-xl font-bold hover:bg-slate-800">Acceder</button>
-                <p id="pinError" class="text-red-500 text-sm mt-4 hidden">Código PIN incorrecto. Intenta de nuevo.</p>
+                <i class="fas fa-lock text-6xl text-slate-300 mb-6"></i>
+                <h3 class="text-2xl font-bold text-slate-800">Verificación Requerida</h3>
+                <input type="password" id="adminPin" class="mt-4 border-2 border-slate-200 p-4 rounded-xl w-64 text-center text-3xl tracking-[1rem] outline-none" placeholder="****">
+                <button onclick="checkPin()" class="mt-6 bg-slate-900 text-white px-10 py-3 rounded-xl font-bold">Autenticar</button>
+                <p id="pinError" class="text-red-500 text-sm mt-4 hidden">PIN Incorrecto</p>
             </div>
 
             <div id="adminData" class="hidden flex-col h-full bg-slate-50">
-                <div class="p-6 bg-white border-b flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div>
-                        <h4 class="text-lg font-bold text-slate-800">Historial de Encomiendas</h4>
-                        <p class="text-sm text-slate-500">Gestionando <span id="recordCount" class="font-bold text-orange-600">0</span> registros globales.</p>
-                    </div>
-                    <button onclick="exportToCSV()" class="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold flex items-center justify-center gap-2 shadow-lg">
-                        <i class="fas fa-file-csv"></i> Descargar Excel (CSV)
+                <div class="p-6 bg-white border-b flex justify-between items-center">
+                    <h4 class="text-lg font-bold text-slate-800">Registros de Encomiendas</h4>
+                    <button onclick="exportToCSV()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold flex items-center gap-2">
+                        <i class="fas fa-file-excel"></i> Descargar Excel Profesional
                     </button>
                 </div>
                 <div class="flex-grow overflow-auto">
-                    <table class="data-table">
-                        <thead>
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-100 sticky top-0">
                             <tr>
-                                <th>Fecha</th>
-                                <th>Usuario Registro</th>
-                                <th>Remitente</th>
-                                <th>País Destino</th>
-                                <th>Descripción</th>
-                                <th>Estado</th>
+                                <th class="p-4 border-b">Fecha</th>
+                                <th class="p-4 border-b">Cliente Registro</th>
+                                <th class="p-4 border-b">Remitente</th>
+                                <th class="p-4 border-b">Destinatario</th>
+                                <th class="p-4 border-b">País</th>
+                                <th class="p-4 border-b">Peso</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody"></tbody>
@@ -267,43 +280,46 @@
     </div>
 
     <footer class="bg-slate-950 text-slate-500 py-10 text-center text-xs">
-        <div class="max-w-7xl mx-auto px-4">
-            <p class="mb-2">© 2024 Global Cargo International - Registro de Operadores Autorizados</p>
-            <p>Este sistema está protegido por leyes de seguridad informática internacional.</p>
-        </div>
+        <p>© 2024 Global Cargo International - Especialistas en Encomiendas</p>
     </footer>
 
     <script type="module">
-        // --- CONFIGURACIÓN E INICIALIZACIÓN ---
+        // --- INICIALIZACIÓN ---
         let db = null;
         let auth = null;
         let currentUser = null;
         let appId = typeof __app_id !== 'undefined' ? __app_id : 'global-cargo-app';
         let useLocalStorage = false;
-        let authMode = 'login'; // 'login' o 'signup'
+        let authMode = 'login';
 
         try {
             if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                const firebaseConfig = JSON.parse(__firebase_config);
-                const app = firebase.initializeApp(firebaseConfig);
+                const config = JSON.parse(__firebase_config);
+                firebase.initializeApp(config);
                 auth = firebase.auth();
                 db = firebase.firestore();
                 
-                // Listener de autenticación
                 auth.onAuthStateChanged(user => {
                     currentUser = user;
                     updateUIState();
                 });
-            } else {
-                throw new Error("No config");
-            }
+            } else { throw new Error("No config"); }
         } catch (e) {
-            console.warn("Modo Demo Activado");
+            console.warn("Modo Demo");
             useLocalStorage = true;
             updateUIState();
         }
 
-        // --- MANEJO DE INTERFAZ ---
+        // --- NAVEGACIÓN ---
+        window.navigateTo = (screen) => {
+            document.getElementById('home-screen').classList.add('hidden-screen');
+            document.getElementById('order-section').classList.add('hidden-screen');
+            document.getElementById('auth-section').classList.add('hidden-screen');
+            if (screen === 'home') document.getElementById('home-screen').classList.remove('hidden-screen');
+            else if (screen === 'orders') document.getElementById('order-section').classList.remove('hidden-screen');
+            else if (screen === 'auth') document.getElementById('auth-section').classList.remove('hidden-screen');
+            window.scrollTo(0, 0);
+        };
 
         function updateUIState() {
             const locked = document.getElementById('order-locked');
@@ -313,7 +329,9 @@
             const userInfo = document.getElementById('user-info');
             const displayEmail = document.getElementById('display-user-email');
 
-            if (currentUser || (useLocalStorage && localStorage.getItem('demo_session'))) {
+            const isLoggedIn = currentUser || (useLocalStorage && localStorage.getItem('demo_session'));
+
+            if (isLoggedIn) {
                 const email = currentUser ? currentUser.email : localStorage.getItem('demo_session');
                 locked.classList.add('hidden-screen');
                 unlocked.classList.remove('hidden-screen');
@@ -321,8 +339,6 @@
                 navLogout.classList.remove('hidden-screen');
                 userInfo.classList.remove('hidden');
                 displayEmail.textContent = email;
-                document.getElementById('auth-section').classList.add('hidden-screen');
-                document.getElementById('home-hero').classList.remove('hidden-screen');
             } else {
                 locked.classList.remove('hidden-screen');
                 unlocked.classList.add('hidden-screen');
@@ -334,10 +350,8 @@
 
         window.showAuthScreen = (mode) => {
             authMode = mode;
-            document.getElementById('home-hero').classList.add('hidden-screen');
-            document.getElementById('auth-section').classList.remove('hidden-screen');
+            navigateTo('auth');
             updateAuthFormUI();
-            window.scrollTo(0, 0);
         };
 
         window.toggleAuthMode = () => {
@@ -346,233 +360,177 @@
         };
 
         function updateAuthFormUI() {
-            const title = document.getElementById('auth-title');
-            const btn = document.getElementById('auth-btn');
-            const switchBtn = document.getElementById('auth-switch-btn');
-            const switchText = document.getElementById('auth-switch-text');
-
-            if (authMode === 'login') {
-                title.textContent = "Iniciar Sesión";
-                btn.textContent = "Entrar al Sistema";
-                switchText.textContent = "¿No tienes cuenta?";
-                switchBtn.textContent = "Regístrate aquí";
-            } else {
-                title.textContent = "Crear Cuenta";
-                btn.textContent = "Registrarme ahora";
-                switchText.textContent = "¿Ya tienes cuenta?";
-                switchBtn.textContent = "Inicia sesión";
-            }
+            document.getElementById('auth-title').textContent = authMode === 'login' ? "Iniciar Sesión" : "Crear Cuenta";
+            document.getElementById('auth-btn').textContent = authMode === 'login' ? "Entrar al Sistema" : "Registrarme";
+            document.getElementById('auth-switch-text').textContent = authMode === 'login' ? "¿No tienes cuenta?" : "¿Ya tienes cuenta?";
+            document.getElementById('auth-switch-btn').textContent = authMode === 'login' ? "Regístrate aquí" : "Inicia sesión";
         }
 
-        window.scrollToOrder = () => {
-            document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
-        };
-
-        // --- LÓGICA DE AUTENTICACIÓN ---
-
-        const authForm = document.getElementById('authForm');
-        authForm.addEventListener('submit', async (e) => {
+        // --- LÓGICA DE AUTH ---
+        document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-pass').value;
             const btn = document.getElementById('auth-btn');
-            
             btn.disabled = true;
-            btn.textContent = authMode === 'login' ? "Entrando..." : "Creando cuenta...";
 
             if (useLocalStorage) {
-                // Simulación LocalStorage
                 localStorage.setItem('demo_session', email);
-                // Si es registro, guardar el "usuario"
-                if (authMode === 'signup') {
-                    const users = JSON.parse(localStorage.getItem('app_users') || '[]');
-                    users.push({ email, pass });
-                    localStorage.setItem('app_users', JSON.stringify(users));
-                }
-                setTimeout(() => location.reload(), 500);
+                navigateTo('home');
                 return;
             }
 
             try {
                 if (authMode === 'login') {
+                    // Validar si usuario existe antes de intentar login es nativo de Firebase
+                    // Firebase arroja error específico si no existe
                     await auth.signInWithEmailAndPassword(email, pass);
+                    navigateTo('home');
                 } else {
                     await auth.createUserWithEmailAndPassword(email, pass);
+                    alert("¡Cuenta creada exitosamente! Ahora puedes iniciar sesión.");
+                    authMode = 'login';
+                    updateAuthFormUI();
                 }
-                location.reload();
             } catch (err) {
-                alert("Error de autenticación: " + err.message);
+                if(err.code === "auth/user-not-found") {
+                    alert("Este correo no está registrado. Por favor regístrate primero.");
+                } else if(err.code === "auth/email-already-in-use") {
+                    alert("Este correo ya tiene una cuenta creada. Intenta iniciar sesión.");
+                } else if(err.code === "auth/wrong-password") {
+                    alert("Contraseña incorrecta.");
+                } else {
+                    alert("Error: " + err.message);
+                }
+            } finally {
                 btn.disabled = false;
-                btn.textContent = "Intentar de nuevo";
             }
         });
 
-        window.handleLogout = () => {
-            if (useLocalStorage) {
-                localStorage.removeItem('demo_session');
-                location.reload();
-            } else {
-                auth.signOut().then(() => location.reload());
+        window.handlePasswordRecovery = async () => {
+            const email = document.getElementById('auth-email').value;
+            if(!email) return alert("Por favor escribe tu correo electrónico primero.");
+            try {
+                await auth.sendPasswordResetEmail(email);
+                alert("Se ha enviado un enlace de recuperación a tu correo.");
+            } catch (e) {
+                alert("Error: Asegúrate de que el correo sea válido.");
             }
         };
 
-        // --- LÓGICA DE PEDIDOS ---
+        window.handleLogout = () => {
+            if (useLocalStorage) { localStorage.removeItem('demo_session'); location.reload(); }
+            else { auth.signOut().then(() => location.reload()); }
+        };
 
-        const shippingForm = document.getElementById('shippingForm');
-        shippingForm.addEventListener('submit', async (e) => {
+        // --- LÓGICA DE REGISTRO DE PEDIDOS ---
+        document.getElementById('shippingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
             const status = document.getElementById('statusMsg');
-            
             btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrando datos...';
 
             const userEmail = currentUser ? currentUser.email : localStorage.getItem('demo_session');
-            
             const orderData = {
-                userEmail: userEmail,
+                userEmail,
                 createdAt: new Date().toISOString(),
-                sender: {
-                    name: document.getElementById('senderName').value,
-                    id: document.getElementById('senderId').value,
-                    phone: document.getElementById('senderPhone').value
-                },
-                receiver: {
-                    name: document.getElementById('receiverName').value,
-                    country: document.getElementById('destinationCountry').value,
-                    city: document.getElementById('destinationCity').value,
-                    address: document.getElementById('destinationAddress').value
-                },
-                package: {
-                    weight: document.getElementById('pkgWeight').value,
-                    desc: document.getElementById('pkgDesc').value
-                },
-                status: 'Pendiente'
+                sender: { name: document.getElementById('senderName').value, id: document.getElementById('senderId').value, phone: document.getElementById('senderPhone').value },
+                receiver: { name: document.getElementById('receiverName').value, country: document.getElementById('destinationCountry').value, city: document.getElementById('destinationCity').value, address: document.getElementById('destinationAddress').value },
+                package: { weight: document.getElementById('pkgWeight').value, desc: document.getElementById('pkgDesc').value }
             };
 
             try {
                 if (useLocalStorage) {
                     const orders = JSON.parse(localStorage.getItem('orders_db') || '[]');
-                    orderData.id = 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-                    orders.push(orderData);
+                    orders.push({...orderData, id: 'ORD-'+Date.now()});
                     localStorage.setItem('orders_db', JSON.stringify(orders));
                 } else {
                     await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').add({
-                        ...orderData,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        ...orderData, createdAt: firebase.firestore.FieldValue.serverTimestamp()
                     });
                 }
-
-                status.textContent = "✅ PEDIDO REGISTRADO EXITOSAMENTE";
-                status.className = "text-center text-green-600 font-bold mt-4 block p-3 bg-green-50 rounded border border-green-200";
-                shippingForm.reset();
+                status.textContent = "✅ PEDIDO REGISTRADO CORRECTAMENTE";
+                status.classList.remove('hidden');
+                document.getElementById('shippingForm').reset();
                 setTimeout(() => status.classList.add('hidden'), 5000);
-
-            } catch (err) {
-                alert("Error al guardar: " + err.message);
-            } finally {
-                btn.disabled = false;
-                btn.textContent = "Registrar y Enviar Pedido";
-            }
+            } catch (err) { alert("Error al registrar."); }
+            finally { btn.disabled = false; }
         });
 
-        // --- ADMIN PANEL ---
-
+        // --- ADMIN & EXCEL ---
         window.toggleAdminPanel = () => {
-            const modal = document.getElementById('adminModal');
-            modal.classList.toggle('hidden');
+            document.getElementById('adminModal').classList.toggle('hidden');
             document.getElementById('adminAuth').classList.remove('hidden');
             document.getElementById('adminData').classList.add('hidden');
             document.getElementById('adminPin').value = '';
         };
 
         window.checkPin = () => {
-            const pin = document.getElementById('adminPin').value;
-            if (pin === "1234") {
+            if (document.getElementById('adminPin').value === "1234") {
                 document.getElementById('adminAuth').classList.add('hidden');
                 document.getElementById('adminData').classList.remove('hidden');
                 document.getElementById('adminData').style.display = 'flex';
                 loadAdminOrders();
-            } else {
-                document.getElementById('pinError').classList.remove('hidden');
-                setTimeout(() => document.getElementById('pinError').classList.add('hidden'), 2000);
-            }
+            } else { alert("PIN Incorrecto"); }
         };
 
         let currentOrders = [];
-
         async function loadAdminOrders() {
             const tbody = document.getElementById('tableBody');
-            const count = document.getElementById('recordCount');
-            tbody.innerHTML = '<tr><td colspan="6" class="text-center p-8 text-slate-400">Consultando base de datos...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center">Cargando...</td></tr>';
             currentOrders = [];
-
             try {
-                if (useLocalStorage) {
-                    currentOrders = JSON.parse(localStorage.getItem('orders_db') || '[]');
-                    currentOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                } else {
+                if (useLocalStorage) { currentOrders = JSON.parse(localStorage.getItem('orders_db') || '[]'); }
+                else {
                     const snap = await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').limit(100).get();
                     snap.forEach(doc => {
                         const d = doc.data();
                         const date = d.createdAt && d.createdAt.seconds ? new Date(d.createdAt.seconds * 1000).toISOString() : new Date().toISOString();
                         currentOrders.push({ id: doc.id, ...d, createdAt: date });
                     });
-                    currentOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 }
-
                 tbody.innerHTML = '';
-                count.textContent = currentOrders.length;
-
-                if (currentOrders.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" class="text-center p-8 text-slate-400 italic">No hay registros almacenados.</td></tr>';
-                    return;
-                }
-
                 currentOrders.forEach(ord => {
                     const row = document.createElement('tr');
-                    const date = new Date(ord.createdAt).toLocaleDateString();
-                    row.innerHTML = `
-                        <td class="text-xs font-mono text-slate-500">${date}</td>
-                        <td class="font-bold text-slate-700">${ord.userEmail}</td>
-                        <td class="text-slate-600">${ord.sender.name}</td>
-                        <td><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-bold">${ord.receiver.country}</span></td>
-                        <td class="text-xs italic text-slate-500">${ord.package.desc}</td>
-                        <td><span class="text-blue-600 font-bold text-xs uppercase">${ord.status}</span></td>
-                    `;
+                    row.innerHTML = `<td class="p-4 border-b text-xs">${new Date(ord.createdAt).toLocaleDateString()}</td><td class="p-4 border-b font-bold">${ord.userEmail}</td><td class="p-4 border-b">${ord.sender.name}</td><td class="p-4 border-b">${ord.receiver.name}</td><td class="p-4 border-b">${ord.receiver.country}</td><td class="p-4 border-b">${ord.package.weight}kg</td>`;
                     tbody.appendChild(row);
                 });
-
-            } catch (err) {
-                tbody.innerHTML = `<tr><td colspan="6" class="text-center p-8 text-red-500">Error: ${err.message}</td></tr>`;
-            }
+            } catch (e) { tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">Error.</td></tr>'; }
         }
 
         window.exportToCSV = () => {
-            if (currentOrders.length === 0) return alert("Nada para exportar.");
-
-            let csv = "ID,Fecha,Usuario_Registro,Remitente,Tel_Remitente,Destinatario,Pais,Ciudad,Direccion,Peso_KG,Contenido,Estado\n";
+            if (currentOrders.length === 0) return alert("Sin datos.");
+            
+            // Usamos punto y coma para separar columnas (formato Excel regional)
+            let csv = "\uFEFF"; // BOM para UTF-8 (Asegura tildes y columnas en Excel)
+            csv += "FECHA;USUARIO_SISTEMA;REMITENTE;DNI_REMITENTE;TEL_REMITENTE;DESTINATARIO;PAIS_DESTINO;CIUDAD;DIRECCION;PESO_KG;DESCRIPCION\n";
+            
             currentOrders.forEach(o => {
                 const date = new Date(o.createdAt).toLocaleDateString();
                 const row = [
-                    o.id || 'N/A', date, o.userEmail, 
-                    `"${o.sender.name}"`, o.sender.phone, 
-                    `"${o.receiver.name}"`, o.receiver.country, `"${o.receiver.city}"`, `"${o.receiver.address}"`,
-                    o.package.weight, `"${o.package.desc}"`, o.status
-                ].join(",");
+                    date,
+                    o.userEmail,
+                    o.sender.name,
+                    o.sender.id,
+                    o.sender.phone,
+                    o.receiver.name,
+                    o.receiver.country,
+                    o.receiver.city,
+                    o.receiver.address,
+                    o.package.weight,
+                    o.package.desc
+                ].map(text => `"${text || ''}"`).join(";"); // Unir con punto y coma
                 csv += row + "\n";
             });
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.setAttribute("download", "reporte_santech_encomiendas.csv");
-            document.body.appendChild(link);
+            link.download = `Reporte_GlobalCargo_${Date.now()}.csv`;
             link.click();
-            document.body.removeChild(link);
         };
-
     </script>
 </body>
 </html>
+
 
