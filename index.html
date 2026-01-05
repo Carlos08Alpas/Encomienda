@@ -87,7 +87,6 @@
                         <button onclick="navigateTo('orders')" class="hover:text-orange-400 transition text-sm font-bold uppercase">Realizar Pedido</button>
                     </div>
 
-                    <!-- Información de usuario -->
                     <div id="user-info" class="hidden text-xs text-right mr-4 md:block border-l border-slate-700 pl-4">
                         <p class="text-slate-400">Usuario Activo:</p>
                         <p id="display-user-email" class="font-bold text-orange-400"></p>
@@ -96,7 +95,6 @@
                     <div class="flex gap-2">
                         <button id="nav-login" onclick="showAuthScreen('login')" class="text-sm px-4 py-2 bg-orange-600 rounded font-bold hover:bg-orange-700 transition">Entrar / Registrarse</button>
                         
-                        <!-- BOTÓN CERRAR SESIÓN -->
                         <button id="nav-logout" onclick="handleLogout()" class="hidden-screen text-sm px-4 py-2 bg-slate-800 text-white rounded font-bold hover:bg-slate-700 transition border border-slate-700">
                             <i class="fas fa-sign-out-alt mr-2"></i>Salir
                         </button>
@@ -275,6 +273,7 @@
                                 <th class="p-4 border-b">Destinatario</th>
                                 <th class="p-4 border-b">País</th>
                                 <th class="p-4 border-b">Peso</th>
+                                <th class="p-4 border-b text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody"></tbody>
@@ -321,17 +320,13 @@
             document.getElementById('order-section').classList.add('hidden-screen');
             document.getElementById('auth-section').classList.add('hidden-screen');
             
-            if (screen === 'home') {
-                document.getElementById('home-screen').classList.remove('hidden-screen');
-            } else if (screen === 'orders') {
-                document.getElementById('order-section').classList.remove('hidden-screen');
-            } else if (screen === 'auth') {
-                document.getElementById('auth-section').classList.remove('hidden-screen');
-            }
+            if (screen === 'home') document.getElementById('home-screen').classList.remove('hidden-screen');
+            else if (screen === 'orders') document.getElementById('order-section').classList.remove('hidden-screen');
+            else if (screen === 'auth') document.getElementById('auth-section').classList.remove('hidden-screen');
             window.scrollTo(0, 0);
         };
 
-        // --- ACTUALIZACIÓN DE INTERFAZ (LOGUEO) ---
+        // --- ACTUALIZACIÓN DE INTERFAZ ---
         function updateUIState() {
             const locked = document.getElementById('order-locked');
             const unlocked = document.getElementById('order-unlocked');
@@ -377,7 +372,7 @@
             document.getElementById('auth-switch-btn').textContent = authMode === 'login' ? "Regístrate aquí" : "Inicia sesión";
         }
 
-        // --- LÓGICA DE AUTENTICACIÓN ---
+        // --- LÓGICA DE AUTH ---
         document.getElementById('authForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('auth-email').value;
@@ -391,7 +386,6 @@
                     const found = users.find(u => u.email === email && u.pass === pass);
                     if (found) {
                         localStorage.setItem('demo_session', email);
-                        // IMPORTANTE: Actualizar estado de UI antes de navegar
                         updateUIState();
                         navigateTo('home');
                     } else {
@@ -416,7 +410,6 @@
             try {
                 if (authMode === 'login') {
                     await auth.signInWithEmailAndPassword(email, pass);
-                    // El listener onAuthStateChanged disparará updateUIState() automáticamente
                     navigateTo('home');
                 } else {
                     await auth.createUserWithEmailAndPassword(email, pass);
@@ -541,13 +534,14 @@
         let currentOrders = [];
         async function loadAdminOrders() {
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center">Cargando registros...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center">Cargando registros...</td></tr>';
             currentOrders = [];
             try {
                 if (useLocalStorage) { 
                     currentOrders = JSON.parse(localStorage.getItem('orders_db') || '[]'); 
+                    currentOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 } else {
-                    const snap = await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').limit(100).get();
+                    const snap = await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').orderBy('createdAt', 'desc').limit(100).get();
                     snap.forEach(doc => {
                         const d = doc.data();
                         const date = d.createdAt && d.createdAt.seconds ? new Date(d.createdAt.seconds * 1000).toISOString() : new Date().toISOString();
@@ -561,17 +555,45 @@
                     row.innerHTML = `
                         <td class="p-4 border-b text-xs">${dateObj.toLocaleDateString()}</td>
                         <td class="p-4 border-b font-bold">${ord.userEmail}</td>
-                        <td class="p-4 border-b">${ord.sender.name}</td>
-                        <td class="p-4 border-b">${ord.receiver.name}</td>
-                        <td class="p-4 border-b">${ord.receiver.country}</td>
+                        <td class="p-4 border-b text-sm">${ord.sender.name}</td>
+                        <td class="p-4 border-b text-sm">${ord.receiver.name}</td>
+                        <td class="p-4 border-b"><span class="bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-bold">${ord.receiver.country}</span></td>
                         <td class="p-4 border-b">${ord.package.weight}kg</td>
+                        <td class="p-4 border-b text-center">
+                            <button onclick="deleteOrder('${ord.id}')" class="text-red-500 hover:text-red-700 transition" title="Eliminar registro">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
                     `;
                     tbody.appendChild(row);
                 });
+                if(currentOrders.length === 0) {
+                     tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">No hay pedidos registrados.</td></tr>';
+                }
             } catch (e) { 
-                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">Error al cargar datos.</td></tr>'; 
+                console.error(e);
+                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-red-500">Error al cargar datos.</td></tr>'; 
             }
         }
+
+        // --- FUNCIÓN PARA ELIMINAR DATOS ---
+        window.deleteOrder = async (id) => {
+            if(!confirm("¿Estás seguro de que deseas eliminar este registro permanentemente?")) return;
+
+            try {
+                if (useLocalStorage) {
+                    let orders = JSON.parse(localStorage.getItem('orders_db') || '[]');
+                    orders = orders.filter(o => o.id !== id);
+                    localStorage.setItem('orders_db', JSON.stringify(orders));
+                } else {
+                    await db.collection('artifacts').doc(appId).collection('public').doc('data').collection('orders').doc(id).delete();
+                }
+                alert("Registro eliminado con éxito.");
+                loadAdminOrders(); // Refrescar tabla
+            } catch (e) {
+                alert("Error al intentar eliminar el registro: " + e.message);
+            }
+        };
 
         window.exportToExcel = () => {
             if (currentOrders.length === 0) return alert("No hay datos para exportar.");
@@ -638,7 +660,6 @@
             link.click();
         };
 
-        // Al cargar la página por primera vez, asegurar el estado correcto
         window.onload = () => {
             updateUIState();
         };
