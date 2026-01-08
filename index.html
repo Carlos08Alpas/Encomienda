@@ -389,7 +389,7 @@
                         <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Base de datos en tiempo real (Firebase Cloud)</p>
                     </div>
                     <button onclick="exportToExcel()" class="bg-green-600 text-white px-6 py-3 rounded-full font-black text-xs flex items-center gap-3 hover:bg-green-700 transition shadow-lg shadow-green-600/20 uppercase tracking-widest">
-                        <i class="fas fa-file-excel text-lg"></i> Exportar Reporte
+                        <i class="fas fa-file-excel text-lg"></i> Exportar Reporte Total
                     </button>
                 </div>
                 <div class="flex-grow overflow-auto p-4 md:p-6">
@@ -422,7 +422,7 @@
         import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc, addDoc, serverTimestamp } from "firebase/firestore";
 
         // ==========================================
-        // PEGUE SU CONFIGURACIÓN DE FIREBASE AQUÍ:
+        // CONFIGURACIÓN DE FIREBASE
         // ==========================================
         const manualFirebaseConfig = {
           apiKey: "AIzaSyBxxSJaDfrrQ2eZy7wL-3QH3mcZBhzRQrA",
@@ -433,7 +433,6 @@
     appId: "1:372238366090:web:55edad7becce1fb6518473",
     measurementId: "G-NZCW6BTP44"
         };
-        // ==========================================
 
         const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config) 
             ? JSON.parse(__firebase_config) 
@@ -591,7 +590,7 @@
                 }
             } catch (err) { 
                 if (err.code === "auth/operation-not-allowed") {
-                    alert("Error: Debes habilitar el método 'Correo electrónico y contraseña' en la pestaña Authentication > Sign-in method de tu consola de Firebase.");
+                    alert("Error: Debes habilitar el método 'Correo electrónico y contraseña' en Firebase.");
                 } else {
                     alert("Error: " + err.message);
                 }
@@ -647,7 +646,8 @@
                     name: document.getElementById('senderName').value, 
                     id: document.getElementById('senderId').value, 
                     phone: document.getElementById('senderPhone').value,
-                    address: document.getElementById('senderAddress').value
+                    address: document.getElementById('senderAddress').value,
+                    ref: document.getElementById('senderRef').value || 'N/A'
                 },
                 receiver: { 
                     name: document.getElementById('receiverName').value, 
@@ -725,8 +725,8 @@
                     row.className = "bg-slate-50 border-b-8 border-white rounded-xl shadow-sm";
                     row.innerHTML = `
                         <td class="p-4 text-[9px] font-mono text-slate-500">${date}</td>
-                        <td class="p-4 text-[11px] font-bold text-slate-700">${ord.sender.name}</td>
-                        <td class="p-4 text-[11px] font-black text-slate-900">${ord.receiver.name}</td>
+                        <td class="p-4 text-[11px] font-bold text-slate-700">${ord.sender?.name || 'N/A'}</td>
+                        <td class="p-4 text-[11px] font-black text-slate-900">${ord.receiver?.name || 'N/A'}</td>
                         <td class="p-4 text-[10px] text-center font-black text-orange-600">${ord.boxes?.length || 0} bul. / ${totalW}kg</td>
                         <td class="p-4 text-center">
                             <button onclick="window.deleteOrder('${ord.id}')" class="text-red-400 hover:text-red-600 transition p-2"><i class="fas fa-trash-alt"></i></button>
@@ -748,19 +748,72 @@
 
         window.exportToExcel = () => {
             const data = window.masterOrders || [];
-            if (data.length === 0) return alert("Sin datos.");
-            let html = `<html><head><meta charset="utf-8"><style>table { border-collapse: collapse; } th { background-color: #f97316; color: white; border: 1px solid black; } td { border: 1px solid #ccc; }</style></head>
-                <body><table><thead><tr><th>FECHA</th><th>REMITENTE</th><th>DESTINATARIO</th><th>DEPARTAMENTO</th><th>DISTRITO</th><th>DIRECCION</th><th>PESO_TOTAL</th><th>DESCRIPCION</th></tr></thead><tbody>`;
+            if (data.length === 0) return alert("Sin datos para exportar.");
+            
+            let html = `<html><head><meta charset="utf-8">
+                <style>
+                    table { border-collapse: collapse; width: 100%; font-family: sans-serif; }
+                    th { background-color: #f97316; color: white; border: 1px solid #333; padding: 10px; text-transform: uppercase; font-size: 12px; }
+                    td { border: 1px solid #ccc; padding: 8px; font-size: 11px; vertical-align: top; }
+                    .header-main { background-color: #0f172a; color: #fff; }
+                </style>
+                </head><body>
+                <table><thead>
+                    <tr class="header-main">
+                        <th>FECHA</th>
+                        <th>USUARIO SISTEMA</th>
+                        <th>REMITENTE NOMBRE</th>
+                        <th>REMITENTE ID</th>
+                        <th>REMITENTE TEL</th>
+                        <th>REMITENTE DIRECCION</th>
+                        <th>REMITENTE REF</th>
+                        <th>RECEPTOR NOMBRE</th>
+                        <th>RECEPTOR TEL</th>
+                        <th>RECEPTOR REF TEL</th>
+                        <th>DEPARTAMENTO</th>
+                        <th>PROVINCIA</th>
+                        <th>DISTRITO</th>
+                        <th>DIRECCION ENTREGA</th>
+                        <th>CANT BULTOS</th>
+                        <th>PESO TOTAL KG</th>
+                        <th>DETALLE DE CARGA (CAJA: DESCRIPCION PESO)</th>
+                    </tr>
+                </thead><tbody>`;
+
             data.forEach(o => {
                 const date = o.createdAt ? new Date(o.createdAt.seconds * 1000).toLocaleDateString() : '';
                 const totalW = o.boxes ? o.boxes.reduce((a, b) => a + parseFloat(b.weight), 0).toFixed(1) : "0";
-                const bultosStr = o.boxes ? o.boxes.map(b => `${b.desc} (${b.weight}kg)`).join(' | ') : "";
-                html += `<tr><td>${date}</td><td>${o.sender.name}</td><td>${o.receiver.name}</td><td>${o.receiver.region}</td><td>${o.receiver.dist}</td><td>${o.receiver.address}</td><td>${totalW}</td><td>${bultosStr}</td></tr>`;
+                
+                // Generar detalle de bultos legible
+                const bultosStr = o.boxes ? o.boxes.map((b, i) => `[Caja ${i+1}: ${b.desc} - ${b.weight}kg]`).join(' | ') : "";
+                
+                html += `<tr>
+                    <td>${date}</td>
+                    <td>${o.userEmail || 'N/A'}</td>
+                    <td>${o.sender?.name || ''}</td>
+                    <td>${o.sender?.id || ''}</td>
+                    <td>${o.sender?.phone || ''}</td>
+                    <td>${o.sender?.address || ''}</td>
+                    <td>${o.sender?.ref || ''}</td>
+                    <td>${o.receiver?.name || ''}</td>
+                    <td>${o.receiver?.phone || ''}</td>
+                    <td>${o.receiver?.refPhone || ''}</td>
+                    <td>${o.receiver?.region || ''}</td>
+                    <td>${o.receiver?.prov || ''}</td>
+                    <td>${o.receiver?.dist || ''}</td>
+                    <td>${o.receiver?.address || ''}</td>
+                    <td>${o.boxes?.length || 0}</td>
+                    <td>${totalW}</td>
+                    <td>${bultosStr}</td>
+                </tr>`;
             });
+            
             html += `</tbody></table></body></html>`;
             const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
-            const link = document.createElement("a"); link.href = URL.createObjectURL(blob);
-            link.download = `Historial_Imperial_Nube.xls`; link.click();
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `Reporte_Imperial_Completo_${new Date().toLocaleDateString()}.xls`;
+            link.click();
         };
 
         window.initGeography();
