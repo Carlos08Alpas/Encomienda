@@ -12,7 +12,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
 
-    <!-- Firebase Modular SDK Map -->
+    <!-- Firebase SDK Map -->
     <script type="importmap">
     {
       "imports": {
@@ -112,8 +112,8 @@
                 
                 <div class="flex items-center gap-3">
                     <div class="hidden lg:flex gap-6 mr-6 uppercase font-bold text-sm tracking-widest">
-                        <button onclick="navigateTo('home')" class="hover:text-orange-400 transition">INICIO</button>
-                        <button onclick="navigateTo('orders')" class="hover:text-orange-400 transition">REMITENTE</button>
+                        <button onclick="navigateTo('home')" class="hover:text-orange-400 transition text-white">INICIO</button>
+                        <button onclick="navigateTo('orders')" class="hover:text-orange-400 transition text-white">REMITENTE</button>
                     </div>
 
                     <div id="user-info" class="hidden text-right mr-2 md:mr-4 md:block border-l border-slate-700 pl-4">
@@ -122,9 +122,9 @@
                     </div>
                     
                     <div class="flex gap-2">
-                        <button id="nav-login" onclick="showAuthScreen('login')" class="text-xs md:text-sm px-4 py-2 bg-orange-600 rounded font-bold hover:bg-orange-700 transition text-white">Entrar</button>
-                        <button id="nav-logout" onclick="handleLogout()" class="hidden-screen text-xs md:text-sm px-4 py-2 bg-slate-800 rounded font-bold hover:bg-slate-700 transition border border-slate-700">Salir</button>
-                        <button onclick="toggleAdminPanel()" class="p-2 bg-slate-800 rounded hover:bg-slate-700 border border-slate-700" title="Panel Maestro">
+                        <button id="nav-login" onclick="showAuthScreen('login')" class="text-xs md:text-sm px-4 py-2 bg-orange-600 rounded font-bold hover:bg-orange-700 transition text-white shadow-lg">Entrar</button>
+                        <button id="nav-logout" onclick="handleLogout()" class="hidden-screen text-xs md:text-sm px-4 py-2 bg-slate-800 rounded font-bold hover:bg-slate-700 transition border border-slate-700 text-white">Salir</button>
+                        <button onclick="toggleAdminPanel()" class="p-2 bg-slate-800 rounded hover:bg-slate-700 border border-slate-700 text-white" title="Panel Maestro">
                             <i class="fas fa-user-shield"></i>
                         </button>
                     </div>
@@ -141,7 +141,7 @@
                 <div class="max-w-3xl">
                     <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 uppercase leading-tight tracking-tighter">SERVICIO MARÍTIMO PROFESIONAL</h1>
                     <p class="text-lg md:text-xl text-slate-300 mb-10 font-light">Tu carga segura desde Europa hasta la puerta de tu hogar en Perú.</p>
-                    <button onclick="navigateTo('orders')" class="bg-orange-600 hover:bg-orange-700 text-white font-black py-4 px-12 rounded-full shadow-2xl transition-all transform hover:scale-105 uppercase tracking-widest">
+                    <button onclick="navigateTo('orders')" class="bg-orange-600 hover:bg-orange-700 text-white font-black py-4 px-12 rounded-full shadow-2xl transition-all transform hover:scale-105 uppercase tracking-widest text-sm md:text-base">
                         Realizar Registro de Pedido
                     </button>
                 </div>
@@ -151,7 +151,7 @@
                 <div class="max-w-4xl mx-auto px-6">
                     <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-8 brand-font uppercase">Excelencia en Logística Marítima</h2>
                     <p class="text-slate-600 leading-relaxed text-lg italic">
-                        "En <strong>Imperial Service Cargo</strong>, entendemos que cada envío cuenta una historia. Nos especializamos en el transporte consolidado por vía marítima, garantizando seguridad y puntualidad. Tiempo estimado de llegada al Perú: <strong>3 meses</strong> desde la salida del contenedor."
+                        "En <strong>Imperial Service Cargo</strong>, garantizamos seguridad y puntualidad. Tiempo estimado de llegada al Perú: <strong>3 meses</strong> desde la salida del contenedor."
                     </p>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
                     <div class="space-y-4">
                         <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font">Vídeo Informativo</h2>
-                        <div class="video-container shadow-2xl">
+                        <div class="video-container shadow-2xl border-4 border-white">
                             <video controls poster="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?fit=crop&w=800&q=80">
                                 <source src="video.mp4" type="video/mp4">
                                 Tu navegador no soporta videos.
@@ -175,7 +175,7 @@
                     </div>
                 </div>
 
-                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-12 uppercase brand-font text-center">Especialistas en Carga Especial</h2>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-12 uppercase brand-font text-center">Carga Especializada</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
                     <div class="group relative overflow-hidden rounded-2xl shadow-xl h-72 bg-slate-200">
                         <img src="5.jpeg" onerror="this.src='https://images.unsplash.com/photo-1534346503524-87140f065366?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
@@ -203,7 +203,7 @@
         <section id="auth-section" class="hidden-screen py-20 px-4">
             <div class="max-w-md mx-auto bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-slate-100">
                 <div class="text-center mb-8">
-                    <h2 id="auth-title" class="text-3xl font-black text-slate-900 uppercase brand-font tracking-tight">Acceso Imperial</h2>
+                    <h2 id="auth-title" class="text-3xl font-black text-slate-900 uppercase brand-font tracking-tight text-center">Acceso Imperial</h2>
                     <div class="w-16 h-1 bg-orange-500 mx-auto mt-2"></div>
                 </div>
                 <form id="authForm" class="space-y-5">
@@ -223,8 +223,8 @@
                     
                     <div id="order-locked" class="bg-white border border-slate-200 rounded-3xl p-16 text-center shadow-lg">
                         <i class="fas fa-lock text-5xl text-slate-300 mb-6"></i>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4 uppercase">Inicia sesión para registrar</h3>
-                        <button onclick="showAuthScreen('login')" class="btn-primary px-10 tracking-widest">Ir al Login</button>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-4 uppercase text-center">Inicia sesión para registrar</h3>
+                        <button onclick="showAuthScreen('login')" class="btn-primary px-10 tracking-widest uppercase text-sm mx-auto">Ir al Login</button>
                     </div>
 
                     <div id="order-unlocked" class="hidden-screen space-y-8">
@@ -237,7 +237,7 @@
                             <div class="text-center sm:text-left">
                                 <h4 class="text-blue-900 font-black uppercase text-lg mb-2">Forma Correcta de Empaque 📦</h4>
                                 <p class="text-slate-600 text-sm leading-relaxed">
-                                    Las cajas deben ser exclusivamente de <strong>forma rectangular</strong> para optimizar el espacio del contenedor.
+                                    Para garantizar la seguridad y optimización del contenedor, las cajas deben ser exclusivamente de <strong>forma rectangular</strong>.
                                 </p>
                             </div>
                         </div>
@@ -256,9 +256,9 @@
                                         <i class="fas fa-ban mt-1"></i>
                                         <span>NO SE RETIRAN CAJAS DEFORMADAS NI ABIERTAS.</span>
                                     </p>
-                                    <div class="bg-slate-900 text-white p-6 rounded-xl border-t-4 border-orange-500">
+                                    <div class="bg-slate-900 text-white p-6 rounded-xl border-t-4 border-orange-500 shadow-lg">
                                         <p class="font-black text-orange-400 mb-2 uppercase text-xs tracking-tighter italic">Prohibidos:</p>
-                                        <p class="text-sm opacity-90 leading-relaxed">
+                                        <p class="text-sm opacity-90 leading-relaxed font-medium">
                                             Celular, tablet, pc portátil, play station, nada de líquidos en botella de vidrio, no medicinas, alimentos procesados.
                                         </p>
                                     </div>
@@ -273,7 +273,7 @@
                             
                             <!-- Remitente -->
                             <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                                <h3 class="font-black text-slate-800 text-xs uppercase mb-6 flex items-center gap-2"><i class="fas fa-map-pin"></i> Origen (Remitente)</h3>
+                                <h3 class="font-black text-slate-800 text-xs uppercase mb-6 flex items-center gap-2 border-b pb-2"><i class="fas fa-map-pin text-orange-500"></i> Origen (Remitente)</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <input type="text" id="senderName" required class="input-field" placeholder="Nombre Completo">
                                     <input type="text" id="senderId" required class="input-field" placeholder="DNI / RUC / Pasaporte">
@@ -294,7 +294,7 @@
 
                             <!-- Destinatario -->
                             <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                                <h3 class="font-black text-slate-800 text-xs uppercase mb-6 flex items-center gap-2"><i class="fas fa-truck-loading"></i> Destino (Receptor Perú)</h3>
+                                <h3 class="font-black text-slate-800 text-xs uppercase mb-6 flex items-center gap-2 border-b pb-2"><i class="fas fa-truck-loading text-orange-500"></i> Destino (Receptor Perú)</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <input type="text" id="receiverName" required class="input-field" placeholder="Nombre de quién recibe">
                                     <input type="tel" id="receiverPhone" required class="input-field" placeholder="Celular Principal">
@@ -327,7 +327,7 @@
                                 <div id="boxes-container" class="space-y-4"></div>
                             </div>
 
-                            <button type="submit" id="btnSubmit" class="w-full btn-primary h-16 uppercase tracking-[0.2em] font-black shadow-2xl">Finalizar Registro Maestro</button>
+                            <button type="submit" id="btnSubmit" class="w-full btn-primary h-16 uppercase tracking-[0.2em] font-black shadow-2xl mt-4">Finalizar Registro Maestro</button>
                             
                             <!-- Éxito -->
                             <div id="post-success-actions" class="hidden-screen space-y-6 mt-10">
@@ -338,8 +338,8 @@
                                 <button type="button" onclick="sendToWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-6 rounded-3xl flex items-center justify-center gap-5 shadow-2xl transform transition active:scale-95">
                                     <i class="fab fa-whatsapp text-5xl"></i> 
                                     <div class="text-left">
-                                        <div class="text-[10px] uppercase opacity-80 font-bold tracking-widest">Supervisor Online</div>
-                                        <div class="text-xl uppercase">Cotizar por WhatsApp</div>
+                                        <div class="text-[10px] uppercase opacity-80 font-bold tracking-widest text-center">Supervisor Online</div>
+                                        <div class="text-xl uppercase text-center">Cotizar por WhatsApp</div>
                                     </div>
                                 </button>
                                 <button type="button" onclick="resetForm()" class="w-full text-slate-500 text-xs font-bold underline text-center block uppercase tracking-widest">Realizar Nuevo Registro</button>
@@ -355,7 +355,7 @@
                             <i class="fab fa-whatsapp text-4xl text-green-500 group-hover:scale-110 transition"></i>
                             <div>
                                 <p class="text-[10px] text-slate-500 uppercase font-black">Línea Europa</p>
-                                <span class="text-lg font-black tracking-tighter">+39 327 102 8705</span>
+                                <span class="text-lg font-black tracking-tighter text-white">+39 327 102 8705</span>
                             </div>
                         </div>
                     </div>
@@ -367,14 +367,14 @@
     <!-- ADMIN PANEL MODAL -->
     <div id="adminModal" class="fixed inset-0 bg-slate-950/95 z-[100] hidden flex justify-center items-center p-4 backdrop-blur-md">
         <div class="bg-white w-full max-w-6xl h-[95vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden">
-            <div class="bg-slate-950 text-white p-6 flex justify-between items-center">
+            <div class="bg-slate-950 text-white p-6 flex justify-between items-center text-center">
                 <h2 class="text-xl font-black uppercase brand-font italic tracking-widest text-orange-500">Consola Maestra Imperial</h2>
                 <button onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-4xl transition">&times;</button>
             </div>
             
             <div id="adminAuth" class="flex-grow flex flex-col justify-center items-center p-8 md:p-12 text-center bg-slate-50">
-                <div class="bg-white p-8 rounded-full mb-8 shadow-xl border border-slate-100">
-                    <i class="fas fa-fingerprint text-6xl text-slate-400"></i>
+                <div class="bg-white p-8 rounded-full mb-8 shadow-xl border border-slate-100 text-slate-400">
+                    <i class="fas fa-fingerprint text-6xl"></i>
                 </div>
                 <h3 class="text-3xl font-black text-slate-900 tracking-tighter uppercase mb-2">Identidad Requerida</h3>
                 <p class="text-slate-500 text-sm mb-10 max-w-sm">Ingrese su código PIN de supervisor para acceder al historial en la nube.</p>
@@ -383,10 +383,10 @@
             </div>
 
             <div id="adminData" class="hidden flex-col h-full bg-white">
-                <div class="p-6 border-b flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50">
+                <div class="p-6 border-b flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50 text-center md:text-left">
                     <div>
                         <h4 class="font-black uppercase text-xl text-slate-900">Historial Sincronizado</h4>
-                        <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Base de datos en tiempo real (Firebase Cloud)</p>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold font-mono">Real-Time Cloud Sincronizado</p>
                     </div>
                     <button onclick="exportToExcel()" class="bg-green-600 text-white px-6 py-3 rounded-full font-black text-xs flex items-center gap-3 hover:bg-green-700 transition shadow-lg shadow-green-600/20 uppercase tracking-widest">
                         <i class="fas fa-file-excel text-lg"></i> Exportar Reporte Total
@@ -395,12 +395,13 @@
                 <div class="flex-grow overflow-auto p-4 md:p-6">
                     <div class="table-responsive">
                         <table class="w-full text-left bg-white border-separate border-spacing-y-2">
-                            <thead class="text-slate-400">
+                            <thead class="text-slate-400 text-center">
                                 <tr>
                                     <th class="p-4 text-[10px] uppercase font-black">Fecha</th>
+                                    <th class="p-4 text-[10px] uppercase font-black text-center">Usuario Reg.</th>
                                     <th class="p-4 text-[10px] uppercase font-black">Remitente</th>
                                     <th class="p-4 text-[10px] uppercase font-black">Receptor</th>
-                                    <th class="p-4 text-[10px] uppercase font-black text-center">Peso Total</th>
+                                    <th class="p-4 text-[10px] uppercase font-black text-center">Bultos / Peso</th>
                                     <th class="p-4 text-[10px] uppercase font-black text-center">Acciones</th>
                                 </tr>
                             </thead>
@@ -422,17 +423,18 @@
         import { getFirestore, collection, doc, setDoc, getDocs, deleteDoc, addDoc, serverTimestamp } from "firebase/firestore";
 
         // ==========================================
-        // CONFIGURACIÓN DE FIREBASE
+        // CONFIGURACIÓN DE FIREBASE (SOLUCIÓN NUBE)
         // ==========================================
         const manualFirebaseConfig = {
           apiKey: "AIzaSyBxxSJaDfrrQ2eZy7wL-3QH3mcZBhzRQrA",
-    authDomain: "ecommers-47fd8.firebaseapp.com",
-    projectId: "ecommers-47fd8",
-    storageBucket: "ecommers-47fd8.firebasestorage.app",
-    messagingSenderId: "372238366090",
-    appId: "1:372238366090:web:55edad7becce1fb6518473",
-    measurementId: "G-NZCW6BTP44"
+          authDomain: "ecommers-47fd8.firebaseapp.com",
+          projectId: "ecommers-47fd8",
+          storageBucket: "ecommers-47fd8.firebasestorage.app",
+          messagingSenderId: "372238366090",
+          appId: "1:372238366090:web:55edad7becce1fb6518473",
+          measurementId: "G-NZCW6BTP44"
         };
+        // ==========================================
 
         const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config) 
             ? JSON.parse(__firebase_config) 
@@ -441,7 +443,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'imperial-cargo-master-v1';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'imperial-cargo-master-v2';
         
         let user = null;
         let lastSavedOrder = null;
@@ -465,18 +467,39 @@
             updateUIState();
         });
 
-        // --- GEOGRAFÍA ---
+        // --- GEOGRAFÍA PERÚ TOTAL ---
         const peruData = {
-            "Amazonas": { "Chachapoyas": ["Chachapoyas", "Asunción"], "Bagua": ["Bagua", "Aramango"] },
-            "Ancash": { "Huaraz": ["Huaraz", "Independencia"], "Santa": ["Chimbote", "Nuevo Chimbote"] },
-            "Arequipa": { "Arequipa": ["Arequipa", "Cayma"], "Islay": ["Mollendo"] },
-            "Cusco": { "Cusco": ["Cusco", "San Jerónimo"], "Urubamba": ["Urubamba", "Machupicchu"] },
-            "Ica": { "Ica": ["Ica", "Parcona"], "Chincha": ["Chincha Alta"] },
+            "Amazonas": { "Chachapoyas": ["Chachapoyas", "Asunción", "Balsas", "Cheto", "Chiliquin", "Chuquibamba", "Granada", "Huancas", "La Jalca", "Leymebamba", "Magdalena", "Mariscal Castilla", "Molinopampa", "Montevideo", "Olleros", "Quinjalca", "San Francisco de Daguas", "San Isidro de Maino", "Soloco", "Sonche"], "Bagua": ["Bagua", "Aramango", "Copallin", "El Parco", "Imaza", "La Peca"], "Bongará": ["Jumbilla", "Corosha", "Cuispes", "Florida", "Jazan", "Recta", "Shipasbamba", "Valera", "Yambrasbamba"], "Condorcanqui": ["Nieva", "El Cenepa", "Río Santiago"], "Luya": ["Lamud", "Camporredondo", "Cocabamba", "Colcamar", "Conila", "Inguilpata", "Longuita", "Lonya Chico", "Luya", "Luya Viejo", "María", "Ocalli", "Ocumal", "Pisuquia", "Providencia", "San Cristóbal", "San Francisco del Yeso", "San Jerónimo", "San Juan de Lopecancha", "Santa Catalina", "Santo Tomas", "Tingo", "Trita"], "Rodríguez de Mendoza": ["San Nicolás", "Chirimoto", "Cochamal", "Huambo", "Limabamba", "Longar", "Mariscal Benavides", "Milpuc", "Omia", "Santa Rosa", "Totora", "Vista Alegre"], "Utcubamba": ["Bagua Grande", "Cajaruro", "Cumba", "El Milagro", "Jamalca", "Lonya Grande", "Yamon"] },
+            "Ancash": { "Huaraz": ["Huaraz", "Independencia", "Cochabamba", "Colcabamba", "Huanchay", "Jangas", "La Libertad", "Olleros", "Pampas Grande", "Pariacoto", "Pira", "Tarica"], "Santa": ["Chimbote", "Nuevo Chimbote", "Coishco", "Moro", "Nepeña", "Samanco", "Santa", "Macate", "Caceres del Perú"], "Huaylas": ["Caraz", "Huallanca", "Huata", "Huaylas", "Mato", "Pamparomas", "Pueblo Libre", "Santa Cruz", "Santo Toribio", "Yura"], "Yungay": ["Yungay", "Cascapara", "Manco", "Matacoto", "Quillo", "Ranrahirca", "Shupluy", "Yanama"], "Huari": ["Huari", "Anra", "Cajay", "Chavin de Huantar", "Huacachi", "Huacchis", "Huachis", "Huantar", "Masin", "Paucas", "Ponto", "Rahuapampa", "Rapayan", "San Marcos", "San Pedro de Chana", "Uco"], "Casma": ["Casma", "Buena Vista Alta", "Comandante Noel", "Yautan"], "Pallasca": ["Cabana", "Bolognesi", "Conchucos", "Huacaschuque", "Huandoval", "Lacabamba", "Llapo", "Pallasca", "Pampas", "Santa Rosa", "Tauca"] },
+            "Apurímac": { "Abancay": ["Abancay", "Chacoche", "Circa", "Curahuasi", "Huanipaca", "Lambrama", "Pichirhua", "San Pedro de Cachora", "Tamburco"], "Andahuaylas": ["Andahuaylas", "Andarapa", "Chiara", "Huancaray", "Huayana", "Kaquiabamba", "Kishuara", "Pacobamba", "Pacucha", "Pampachiri", "Pomacocha", "San Antonio de Cachi", "San Jerónimo", "San Miguel de Chaccrampa", "Santa María de Chicmo", "Talavera", "Tumay Huaraca", "Turpo"], "Chincheros": ["Chincheros", "Anco_Huallo", "Cocharcas", "Huaccana", "Ocobamba", "Ongoy", "Ranracancha", "Uranmarca"] },
+            "Arequipa": { "Arequipa": ["Arequipa", "Alto Selva Alegre", "Cayma", "Cerro Colorado", "Characato", "Chiguata", "Jacobo Hunter", "José Luis Bustamante y Rivero", "Mariano Melgar", "Miraflores", "Mollebaya", "Paucarpata", "Sabandía", "Sachaca", "San Juan de Siguas", "San Juan de Tarucani", "Santa Isabel de Siguas", "Santa Rita de Siguas", "Socabaya", "Tiabaya", "Uchumayo", "Vitor", "Yanahuara", "Yura"], "Camaná": ["Camaná", "José María Quimper", "Mariano Nicolás Valcárcel", "Mariscal Cáceres", "Nicolás de Piérola", "Ocoña", "Quilca", "Samuel Pastor"], "Islay": ["Mollendo", "Cocachacra", "Deán Valdivia", "Islay", "Mejía", "Punta de Bombón"], "Caravelí": ["Caravelí", "Acarí", "Atico", "Atiquipa", "Bella Unión", "Cahuacho", "Chala", "Chaparra", "Huanuhuanu", "Jaqui", "Lomas", "Quicacha", "Yauca"], "Caylloma": ["Chivay", "Achoma", "Cabanaconde", "Callalli", "Caylloma", "Coporaque", "Huambo", "Huanca", "Ichupampa", "Lari", "Lluta", "Maca", "Madrigal", "Majes", "Müller", "Pinchollo", "Sibayo", "Tapay", "Tisco", "Tuti", "Yanque"] },
+            "Ayacucho": { "Huamanga": ["Ayacucho", "Carmen Alto", "Chiara", "Jesús Nazareno", "Ocros", "Pacaycasa", "Quinua", "San José de Ticllas", "San Juan Bautista", "Santiago de Pischa", "Socos", "Tambillo", "Vinchos"], "Huanta": ["Huanta", "Ayahuanco", "Iguain", "Llochegua", "Huamanguilla", "Santillana", "Sivia", "Canayre", "Uchuraccay"], "Lucanas": ["Puquio", "Aucara", "Cabana", "Carmen Salcedo", "Chaviña", "Chipao", "Huac-Huas", "Laramate", "Leoncio Prado", "Llauta", "Lucanas", "Ocaña", "Otoca", "Saisa", "San Cristóbal", "San Juan", "San Pedro", "San Pedro de Palco", "Sancos", "Santa Ana de Huaycahuacho", "Santa Lucia"] },
+            "Cajamarca": { "Cajamarca": ["Cajamarca", "Asunción", "Chetilla", "Cospan", "Encañada", "Jesús", "Llacanora", "Magdalena", "Matara", "Namora", "San Juan"], "Jaén": ["Jaén", "Bellavista", "Chontali", "Colasay", "Huabal", "Las Pirias", "Pomahuaca", "Pucara", "Sallique", "San Felipe", "San José del Alto", "Santa Rosa"], "Chota": ["Chota", "Anguia", "Chadin", "Chalamarca", "Chiguirip", "Chimban", "Choropampa", "Cochabamba", "Conchan", "Huambos", "Lajas", "Llama", "Miracosta", "Paccha", "Pion", "Querocoto", "San Juan de Licupis", "Tacabamba", "Tocmoche"] },
+            "Callao": { "Callao": ["Callao", "Bellavista", "Carmen de la Legua", "La Perla", "La Punta", "Ventanilla", "Mi Perú"] },
+            "Cusco": { "Cusco": ["Cusco", "Ccorca", "Poroy", "San Jerónimo", "San Sebastián", "Santiago", "Saylla", "Wanchaq"], "Anta": ["Anta", "Ancahuasi", "Cachimayo", "Chinchaypujio", "Huarocondo", "Limatambo", "Mollepata", "Pucyura", "Zurite"], "Calca": ["Calca", "Coya", "Lamay", "Lares", "Pisac", "San Salvador", "Taray", "Yanatile"], "Urubamba": ["Urubamba", "Chinchero", "Huayllabamba", "Machupicchu", "Maras", "Ollantaytambo", "Yucay"], "Quispicanchi": ["Urcos", "Andahuaylillas", "Camanti", "Ccarhuayo", "Ccatca", "Cusipata", "Huaro", "Lucre", "Marcapata", "Ocongate", "Oropesa", "Quiquijana"] },
+            "Huancavelica": { "Huancavelica": ["Huancavelica", "Acobambilla", "Acoria", "Conayca", "Cuenca", "Huachocolpa", "Huayllahuara", "Izcuchaca", "Laria", "Manta", "Mariscal Cáceres", "Moya", "Nuevo Occoro", "Palca", "Pilchaca", "Vilca", "Yauli"], "Tayacaja": ["Pampas", "Acostambo", "Acraquia", "Ahuaycha", "Colcabamba", "Daniel Hernández", "Huachocolpa", "Huaribamba", "Ñahuimpuquio", "Pazos", "Quishuar", "Salcabamba", "Salcahuasi", "San Marcos de Rocchac", "Surcubamba", "Tintay Puncu"] },
+            "Huánuco": { "Huánuco": ["Huánuco", "Amarilis", "Chinchao", "Churubamba", "Margos", "Quisqui", "San Francisco de Cayran", "San Pedro de Chaulan", "Santa María del Valle", "Yarumayo", "Yacus"], "Leoncio Prado": ["Tingo María", "Daniel Alomía Robles", "Hermilio Valdizán", "José Crespo y Castillo", "Luyando", "Mariano Dámaso Beraún"] },
+            "Ica": { "Ica": ["Ica", "La Tinguiña", "Los Aquijes", "Ocucaje", "Pachacutec", "Parcona", "Pueblo Nuevo", "Salas", "San José de los Molinos", "San Juan Bautista", "Santiago", "Subtanjalla", "Tate", "Yauca del Rosario"], "Chincha": ["Chincha Alta", "Chavin", "Chincha Baja", "El Carmen", "Grocio Prado", "Pueblo Nuevo", "San Juan de Yanac", "San Pedro de Huacarpana", "Sunampe", "Tambo de Mora"], "Nazca": ["Nazca", "Changuillo", "El Ingenio", "Marcona", "Vista Alegre"], "Pisco": ["Pisco", "Huancano", "Humay", "Independencia", "Paracas", "San Andrés", "San Clemente", "Tupac Amaru Inca"] },
+            "Junín": { "Huancayo": ["Huancayo", "Carhuacallanga", "Chacapampa", "Chicche", "Chilca", "Chongos Alto", "Chupuro", "Colca", "Cullhuas", "El Tambo", "Huacrapuquio", "Hualhuas", "Huancan", "Huasicancha", "Huayucachi", "Ingenio", "Pariahuanca", "Pilcomayo", "Pucara", "Quichuay", "Quilcas", "San Agustín", "San Jerónimo de Tunan", "Saño", "Sapallanga", "Sicaya", "Viques"], "Chanchamayo": ["La Merced", "San Luis de Shuaro", "Perene", "Pichanaqui", "San Ramón", "Vitoc"], "Satipo": ["Satipo", "Coviriali", "Llaylla", "Mazamari", "Pampa Hermosa", "Pangoa", "Río Negro", "Río Tambo"] },
+            "La Libertad": { "Trujillo": ["Trujillo", "El Porvenir", "Florencia de Mora", "Huanchaco", "La Esperanza", "Laredo", "Moche", "Poroto", "Salaverry", "Simbal", "Víctor Larco Herrera"], "Ascope": ["Ascope", "Chicama", "Chocope", "Magdalena de Cao", "Paiján", "Rázuri", "Santiago de Cao", "Casa Grande"], "Chepén": ["Chepén", "Pacanga", "Pueblo Nuevo"], "Pacasmayo": ["San Pedro de Lloc", "Guadalupe", "Jequetepeque", "Pacasmayo", "San José"], "Sánchez Carrión": ["Huamachuco", "Chugay", "Curgos", "Marcabal", "Sanagorán", "Sarin", "Sartimbamba"] },
+            "Lambayeque": { "Chiclayo": ["Chiclayo", "Chongoyape", "Eten", "Eten Puerto", "José Leonardo Ortiz", "La Victoria", "Lagunas", "Monsefu", "Nueva Arica", "Oyotun", "Picsi", "Pimentel", "Reque", "Santa Rosa", "Saña", "Cayalti", "Patapo", "Pomalca", "Pucala", "Tuman"], "Lambayeque": ["Lambayeque", "Chochope", "Illimo", "Jayanca", "Mórrope", "Motupe", "Olmos", "Pacora", "Salas", "San José", "Tucume"], "Ferreñafe": ["Ferreñafe", "Cañaris", "Incahuasi", "Manuel Antonio Mesones Muro", "Pitipo", "Pueblo Nuevo"] },
             "Lima": { 
-                "Lima": ["Miraflores", "San Isidro", "Los Olivos", "Santiago de Surco", "La Molina", "San Juan de Lurigancho", "Ate", "Barranco", "San Miguel", "Callao", "Pueblo Libre", "Breña", "La Victoria", "Lince"],
-                "Cañete": ["San Vicente de Cañete", "Mala", "Asia"]
+                "Lima": ["Lima", "Ancón", "Ate", "Barranco", "Breña", "Carabayllo", "Chaclacayo", "Chorrillos", "Cieneguilla", "Comas", "El Agustino", "Independencia", "Jesús María", "La Molina", "La Victoria", "Lince", "Los Olivos", "Lurigancho", "Lurín", "Magdalena del Mar", "Miraflores", "Pachacámac", "Pucusana", "Pueblo Libre", "Puente Piedra", "Punta Hermosa", "Punta Negra", "Rímac", "San Bartolo", "San Borja", "San Isidro", "San Juan de Lurigancho", "San Juan de Miraflores", "San Luis", "San Martín de Porres", "San Miguel", "Santa Anita", "Santa María del Mar", "Santa Rosa", "Santiago de Surco", "Surquillo", "Villa El Salvador", "Villa María del Triunfo"],
+                "Barranca": ["Barranca", "Paramonga", "Pativilca", "Supe", "Supe Puerto"],
+                "Cañete": ["San Vicente de Cañete", "Asia", "Calango", "Cerro Azul", "Coayllo", "Imperial", "Lunahuaná", "Mala", "Nuevo Imperial", "Pacarán", "Quilmaná", "San Antonio", "San Luis", "Santa Cruz de Flores", "Zúñiga"],
+                "Huaral": ["Huaral", "Aucallama", "Chancay", "Ihuari", "Lampián", "Pacaraos", "Santa Cruz de Andamarca", "Sumbilca", "Veintisiete de Noviembre"],
+                "Huaura": ["Huacho", "Ámbar", "Caleta de Carquín", "Checras", "Hualmay", "Huaura", "Leoncio Prado", "Paccho", "Santa Leonor", "Santa María", "Sayán", "Végueta"]
             },
-            "Piura": { "Piura": ["Piura", "Castilla"], "Talara": ["Talara", "Máncora"] }
+            "Loreto": { "Maynas": ["Iquitos", "Alto Nanay", "Belén", "Fernando Lores", "Indiana", "Las Amazonas", "Mazán", "Napo", "Punchana", "Putumayo", "Torres Causana", "San Juan Bautista"], "Alto Amazonas": ["Yurimaguas", "Balsapuerto", "Jeberos", "Lagunas", "Santa Cruz", "Teniente Cesar Lopez Rojas"], "Ucayali": ["Contamana", "Inahuaya", "Padre Márquez", "Pampa Hermosa", "Sarayacu", "Vargas Guerra"] },
+            "Madre de Dios": { "Tambopata": ["Puerto Maldonado", "Inambari", "Laberinto", "Las Piedras"], "Manu": ["Manu", "Fitzcarrald", "Madre de Dios", "Huepetuhe"] },
+            "Moquegua": { "Mariscal Nieto": ["Moquegua", "Carumas", "Cuchumbaya", "Samegua", "San Cristóbal", "Torata"], "Ilo": ["Ilo", "El Algarrobal", "Pacocha"] },
+            "Pasco": { "Pasco": ["Chaupimarca", "Huachon", "Huariaca", "Huayllay", "Ninacaca", "Pallanchacra", "Paucartambo", "San Francisco de Asís de Yarusyacán", "Simon Bolívar", "Ticlacayán", "Tinyahuarco", "Vicco", "Yanacancha"], "Oxapampa": ["Oxapampa", "Chontabamba", "Huancabamba", "Palcazu", "Pozuzo", "Puerto Bermúdez", "Villa Rica"] },
+            "Piura": { "Piura": ["Piura", "Castilla", "Catacaos", "Cura Mori", "El Tallán", "La Arena", "La Unión", "Las Lomas", "Tambo Grande", "Veintiséis de Octubre"], "Ayabaca": ["Ayabaca", "Frias", "Jilili", "Lagunas", "Montero", "Pacaipampa", "Paimas", "Sapillica", "Sicchez", "Suyo"], "Huancabamba": ["Huancabamba", "Canchaque", "El Carmen de la Frontera", "Huarmaca", "Lalaquiz", "San Miguel de El Faique", "Sondor", "Sondorillo"], "Paita": ["Paita", "Amotape", "Arenal", "Colán", "La Huaca", "Tamarindo", "Vichayal"], "Sullana": ["Sullana", "Bellavista", "Ignacio Escudero", "Lancones", "Marcavelica", "Miguel Checa", "Querecotillo", "Salitral"], "Talara": ["Talara", "El Alto", "La Brea", "Lobitos", "Los Órganos", "Máncora"], "Sechura": ["Sechura", "Bellavista de la Unión", "Bernal", "Cristo Nos Valga", "Vice", "Rinconada Llicuar"] },
+            "Puno": { "Puno": ["Puno", "Acora", "Amantani", "Atuncolla", "Capachica", "Chucuito", "Coata", "Huata", "Mañazo", "Paucarcolla", "Pichacani", "Platería", "San Antonio", "Tiquillaca", "Vilque"], "San Román": ["Juliaca", "Cabana", "Cabanillas", "Caracoto"], "Chucuito": ["Juli", "Desaguadero", "Huacullani", "Kelluyo", "Pisacoma", "Pomata", "Zepita"] },
+            "San Martín": { "Moyobamba": ["Moyobamba", "Calzada", "Habana", "Jepelacio", "Soritor", "Yantalo"], "San Martín": ["Tarapoto", "Alberto Leveau", "Cacatachi", "Chazuta", "Chipurana", "El Porvenir", "Huimbayoc", "Juan Guerra", "La Banda de Shilcayo", "Morales", "Papaplaya", "San Antonio", "Sauce", "Shapaja"], "Mariscal Cáceres": ["Juanjuí"] },
+            "Tacna": { "Tacna": ["Tacna", "Alto de la Alianza", "Calana", "Ciudad Nueva", "Inclán", "Pachía", "Palca", "Pocollay", "Sama", "Coronel Gregorio Albarracín Lanchipa"] },
+            "Tumbes": { "Tumbes": ["Tumbes", "Corrales", "La Cruz", "Pampas de Hospital", "San Jacinto", "San Juan de la Virgen"] },
+            "Ucayali": { "Coronel Portillo": ["Pucallpa", "Campoverde", "Iparia", "Masisea", "Yarinacocha", "Nueva Requena", "Manantay"] }
         };
 
         window.initGeography = () => {
@@ -528,12 +551,14 @@
             } else {
                 const addr = document.getElementById('destAddress').value;
                 const dist = document.getElementById('destDist').value;
+                const reg = document.getElementById('destRegion').value;
                 if (!addr || !dist) return alert("Complete dirección y distrito.");
-                address = `${addr}, ${dist}, Perú`;
+                address = `${addr}, ${dist}, ${reg}, Perú`;
             }
             window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, '_blank');
         };
 
+        // --- NAVEGACIÓN ---
         window.navigateTo = (screen) => {
             document.querySelectorAll('section').forEach(s => s.classList.add('hidden-screen'));
             const target = document.getElementById(`${screen}-section`);
@@ -590,7 +615,7 @@
                 }
             } catch (err) { 
                 if (err.code === "auth/operation-not-allowed") {
-                    alert("Error: Debes habilitar el método 'Correo electrónico y contraseña' en Firebase.");
+                    alert("Error: Debes habilitar el método 'Correo electrónico y contraseña' en tu panel de Firebase (Authentication > Sign-in method).");
                 } else {
                     alert("Error: " + err.message);
                 }
@@ -647,7 +672,7 @@
                     id: document.getElementById('senderId').value, 
                     phone: document.getElementById('senderPhone').value,
                     address: document.getElementById('senderAddress').value,
-                    ref: document.getElementById('senderRef').value || 'N/A'
+                    ref: document.getElementById('senderRef').value || ""
                 },
                 receiver: { 
                     name: document.getElementById('receiverName').value, 
@@ -663,6 +688,7 @@
             };
 
             try {
+                // RUTA PÚBLICA PARA QUE CUALQUIER EQUIPO VEA TODO
                 const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
                 const docRef = await addDoc(ordersCol, orderData);
                 lastSavedOrder = { ...orderData, id: docRef.id };
@@ -696,20 +722,21 @@
             document.getElementById('adminPin').value = '';
         };
 
-        window.checkPin = () => {
+        window.checkPin = async () => {
             if (document.getElementById('adminPin').value === "1234") {
                 document.getElementById('adminAuth').classList.add('hidden-screen');
                 document.getElementById('adminData').style.display = 'flex';
+                // El admin ahora lee la colección pública universal
                 loadAdminData();
             } else { alert("Acceso denegado."); }
         };
 
         async function loadAdminData() {
-            if (!user) return;
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="5" class="p-10 text-center italic text-slate-400">Consultando nube...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="p-10 text-center italic text-slate-400">Consultando registros maestros en la nube...</td></tr>';
             
             try {
+                // IMPORTANTE: Se apunta a la colección pública sin filtros de usuario
                 const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
                 const snap = await getDocs(ordersCol);
                 let orders = [];
@@ -722,9 +749,10 @@
                     const date = ord.createdAt ? new Date(ord.createdAt.seconds * 1000).toLocaleDateString() : 'Pend...';
                     const totalW = ord.boxes ? ord.boxes.reduce((a, b) => a + parseFloat(b.weight), 0).toFixed(1) : "0";
                     const row = document.createElement('tr');
-                    row.className = "bg-slate-50 border-b-8 border-white rounded-xl shadow-sm";
+                    row.className = "bg-slate-50 border-b-8 border-white rounded-xl shadow-sm hover:bg-slate-100 transition";
                     row.innerHTML = `
                         <td class="p-4 text-[9px] font-mono text-slate-500">${date}</td>
+                        <td class="p-4 text-[10px] text-center font-bold text-slate-400">${ord.userEmail?.split('@')[0] || 'Anon'}</td>
                         <td class="p-4 text-[11px] font-bold text-slate-700">${ord.sender?.name || 'N/A'}</td>
                         <td class="p-4 text-[11px] font-black text-slate-900">${ord.receiver?.name || 'N/A'}</td>
                         <td class="p-4 text-[10px] text-center font-black text-orange-600">${ord.boxes?.length || 0} bul. / ${totalW}kg</td>
@@ -735,11 +763,14 @@
                     tbody.appendChild(row);
                 });
                 window.masterOrders = orders;
-            } catch (e) { tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-red-500">Error: ' + e.message + '</td></tr>'; }
+            } catch (e) { 
+                console.error(e);
+                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">Error de conexión: Verifique sus reglas de seguridad en Firebase Rules.</td></tr>'; 
+            }
         }
 
         window.deleteOrder = async (id) => {
-            if(!confirm("¿Eliminar registro de la nube?")) return;
+            if(!confirm("¿Eliminar registro de la nube global?")) return;
             try {
                 await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'orders', id));
                 loadAdminData();
@@ -750,70 +781,18 @@
             const data = window.masterOrders || [];
             if (data.length === 0) return alert("Sin datos para exportar.");
             
-            let html = `<html><head><meta charset="utf-8">
-                <style>
-                    table { border-collapse: collapse; width: 100%; font-family: sans-serif; }
-                    th { background-color: #f97316; color: white; border: 1px solid #333; padding: 10px; text-transform: uppercase; font-size: 12px; }
-                    td { border: 1px solid #ccc; padding: 8px; font-size: 11px; vertical-align: top; }
-                    .header-main { background-color: #0f172a; color: #fff; }
-                </style>
-                </head><body>
-                <table><thead>
-                    <tr class="header-main">
-                        <th>FECHA</th>
-                        <th>USUARIO SISTEMA</th>
-                        <th>REMITENTE NOMBRE</th>
-                        <th>REMITENTE ID</th>
-                        <th>REMITENTE TEL</th>
-                        <th>REMITENTE DIRECCION</th>
-                        <th>REMITENTE REF</th>
-                        <th>RECEPTOR NOMBRE</th>
-                        <th>RECEPTOR TEL</th>
-                        <th>RECEPTOR REF TEL</th>
-                        <th>DEPARTAMENTO</th>
-                        <th>PROVINCIA</th>
-                        <th>DISTRITO</th>
-                        <th>DIRECCION ENTREGA</th>
-                        <th>CANT BULTOS</th>
-                        <th>PESO TOTAL KG</th>
-                        <th>DETALLE DE CARGA (CAJA: DESCRIPCION PESO)</th>
-                    </tr>
-                </thead><tbody>`;
-
+            let html = `<html><head><meta charset="utf-8"><style>table { border-collapse: collapse; width: 100%; font-family: sans-serif; } th { background-color: #f97316; color: white; border: 1px solid black; } td { border: 1px solid #ccc; }</style></head>
+                <body><table><thead><tr style="background:#0f172a; color:#fff"><th>FECHA</th><th>USUARIO REG</th><th>REMITENTE</th><th>ORIGEN</th><th>DESTINATARIO</th><th>DPTO</th><th>DISTRITO</th><th>DIRECCION</th><th>PESO_TOTAL</th><th>DESCRIPCION</th></tr></thead><tbody>`;
             data.forEach(o => {
                 const date = o.createdAt ? new Date(o.createdAt.seconds * 1000).toLocaleDateString() : '';
                 const totalW = o.boxes ? o.boxes.reduce((a, b) => a + parseFloat(b.weight), 0).toFixed(1) : "0";
-                
-                // Generar detalle de bultos legible
-                const bultosStr = o.boxes ? o.boxes.map((b, i) => `[Caja ${i+1}: ${b.desc} - ${b.weight}kg]`).join(' | ') : "";
-                
-                html += `<tr>
-                    <td>${date}</td>
-                    <td>${o.userEmail || 'N/A'}</td>
-                    <td>${o.sender?.name || ''}</td>
-                    <td>${o.sender?.id || ''}</td>
-                    <td>${o.sender?.phone || ''}</td>
-                    <td>${o.sender?.address || ''}</td>
-                    <td>${o.sender?.ref || ''}</td>
-                    <td>${o.receiver?.name || ''}</td>
-                    <td>${o.receiver?.phone || ''}</td>
-                    <td>${o.receiver?.refPhone || ''}</td>
-                    <td>${o.receiver?.region || ''}</td>
-                    <td>${o.receiver?.prov || ''}</td>
-                    <td>${o.receiver?.dist || ''}</td>
-                    <td>${o.receiver?.address || ''}</td>
-                    <td>${o.boxes?.length || 0}</td>
-                    <td>${totalW}</td>
-                    <td>${bultosStr}</td>
-                </tr>`;
+                const bultosStr = o.boxes ? o.boxes.map(b => `${b.desc} (${b.weight}kg)`).join(' | ') : "";
+                html += `<tr><td>${date}</td><td>${o.userEmail}</td><td>${o.sender?.name}</td><td>${o.sender?.address}</td><td>${o.receiver?.name}</td><td>${o.receiver?.region}</td><td>${o.receiver?.dist}</td><td>${o.receiver?.address}</td><td>${totalW}</td><td>${bultosStr}</td></tr>`;
             });
-            
             html += `</tbody></table></body></html>`;
             const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = `Reporte_Imperial_Completo_${new Date().toLocaleDateString()}.xls`;
-            link.click();
+            const link = document.createElement("a"); link.href = URL.createObjectURL(blob);
+            link.download = `Historial_Global_Imperial_${new Date().toLocaleDateString()}.xls`; link.click();
         };
 
         window.initGeography();
@@ -823,5 +802,3 @@
     </script>
 </body>
 </html>
-
-
