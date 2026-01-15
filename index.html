@@ -24,11 +24,16 @@
     </script>
 
     <style>
-        body { font-family: 'Roboto', sans-serif; background-color: #f8fafc; }
+        :root {
+            --imperial-blue: #1e3a8a;
+            --imperial-yellow: #facc15;
+            --imperial-dark: #0f172a;
+        }
+        body { font-family: 'Roboto', sans-serif; background-color: #f1f5f9; }
         h1, h2, h3, .brand-font { font-family: 'Oswald', sans-serif; }
         
         .hero-bg {
-            background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1600&q=80');
+            background-image: linear-gradient(rgba(30, 58, 138, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1494412651409-8963ce7935a7?auto=format&fit=crop&w=1600&q=80');
             background-size: cover;
             background-position: center;
         }
@@ -36,29 +41,44 @@
         .input-field {
             width: 100%;
             padding: 12px;
-            border: 1px solid #cbd5e1;
+            border: 2px solid #e2e8f0;
             border-radius: 8px;
             background-color: white;
             transition: all 0.2s;
             font-size: 1rem;
         }
         .input-field:focus {
-            border-color: #f97316;
+            border-color: var(--imperial-blue);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+            box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
         }
 
         .btn-primary {
-            background-color: #0f172a;
+            background-color: var(--imperial-yellow);
+            color: var(--imperial-dark);
+            font-weight: 800;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid var(--imperial-yellow);
+        }
+        .btn-primary:hover { 
+            background-color: #eab308; 
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+        }
+
+        .btn-blue {
+            background-color: var(--imperial-blue);
             color: white;
             font-weight: 700;
             padding: 12px 24px;
             border-radius: 8px;
             transition: all 0.2s;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
-        .btn-primary:hover { background-color: #1e293b; transform: translateY(-1px); }
 
         .hidden-screen { display: none !important; }
 
@@ -69,6 +89,7 @@
             overflow: hidden;
             border-radius: 12px;
             background: #000;
+            border: 4px solid var(--imperial-blue);
         }
         .video-container video {
             position: absolute;
@@ -78,6 +99,7 @@
             height: 35px;
             width: auto;
             object-fit: contain;
+            filter: drop-shadow(0 0 2px rgba(250, 204, 21, 0.5));
         }
         @media (min-width: 768px) {
             .nav-logo-img { height: 48px; }
@@ -89,6 +111,7 @@
             border-radius: 10px;
             margin-bottom: 12px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--imperial-yellow);
         }
         
         .table-responsive {
@@ -97,34 +120,46 @@
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
+
+        .section-tag {
+            background-color: var(--imperial-yellow);
+            color: var(--imperial-dark);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
     <!-- Navbar -->
-    <nav class="bg-slate-950 text-white shadow-xl sticky top-0 z-50">
+    <nav class="bg-blue-900 text-white shadow-xl sticky top-0 z-50 border-b-4 border-yellow-400">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 md:h-20 items-center">
                 <div class="flex items-center gap-2 md:gap-4 cursor-pointer" onclick="navigateTo('home')">
                     <img src="logo.jpeg" onerror="this.src='https://cdn-icons-png.flaticon.com/512/4060/4060012.png'" class="nav-logo-img" alt="Logo">
-                    <span class="text-xs md:text-xl font-bold tracking-tighter uppercase brand-font leading-tight">IMPERIAL SERVICE<br class="md:hidden"> CARGO</span>
+                    <span class="text-xs md:text-xl font-bold tracking-tighter uppercase brand-font leading-tight">
+                        <span class="text-yellow-400">IMPERIAL</span> SERVICE<br class="md:hidden"> CARGO
+                    </span>
                 </div>
                 
                 <div class="flex items-center gap-3">
                     <div class="hidden lg:flex gap-6 mr-6 uppercase font-bold text-sm tracking-widest text-white">
-                        <button onclick="navigateTo('home')" class="hover:text-orange-400 transition">INICIO</button>
-                        <button onclick="navigateTo('orders')" class="hover:text-orange-400 transition">REMITENTE</button>
+                        <button onclick="navigateTo('home')" class="hover:text-yellow-400 transition">INICIO</button>
+                        <button onclick="navigateTo('orders')" class="hover:text-yellow-400 transition">REMITENTE</button>
                     </div>
 
-                    <div id="user-info" class="hidden text-right mr-2 md:mr-4 md:block border-l border-slate-700 pl-4">
-                        <p class="text-[10px] text-slate-500 uppercase font-bold">Estado:</p>
-                        <p id="display-user-email" class="text-xs font-bold text-orange-400 truncate max-w-[150px]"></p>
+                    <div id="user-info" class="hidden text-right mr-2 md:mr-4 md:block border-l border-blue-700 pl-4">
+                        <p class="text-[10px] text-blue-300 uppercase font-bold tracking-tighter">Estado:</p>
+                        <p id="display-user-email" class="text-xs font-bold text-yellow-400 truncate max-w-[150px]"></p>
                     </div>
                     
                     <div class="flex gap-2">
-                        <button id="nav-login" onclick="showAuthScreen('login')" class="text-xs md:text-sm px-4 py-2 bg-orange-600 rounded font-bold hover:bg-orange-700 transition text-white shadow-lg">Entrar</button>
-                        <button id="nav-logout" onclick="handleLogout()" class="hidden-screen text-xs md:text-sm px-4 py-2 bg-slate-800 rounded font-bold hover:bg-slate-700 transition border border-slate-700 text-white">Salir</button>
-                        <button onclick="toggleAdminPanel()" class="p-2 bg-slate-800 rounded hover:bg-slate-700 border border-slate-700 text-white" title="Panel Maestro">
+                        <button id="nav-login" onclick="showAuthScreen('login')" class="text-xs md:text-sm px-4 py-2 bg-yellow-400 rounded font-black hover:bg-yellow-500 transition text-blue-900 shadow-lg">Entrar</button>
+                        <button id="nav-logout" onclick="handleLogout()" class="hidden-screen text-xs md:text-sm px-4 py-2 bg-blue-800 rounded font-bold hover:bg-blue-700 transition border border-blue-600 text-white">Salir</button>
+                        <button onclick="toggleAdminPanel()" class="p-2 bg-blue-800 rounded hover:bg-blue-700 border border-blue-600 text-yellow-400" title="Panel Maestro">
                             <i class="fas fa-user-shield"></i>
                         </button>
                     </div>
@@ -139,18 +174,18 @@
         <section id="home-section" class="transition-all duration-300">
             <div class="hero-bg min-h-[400px] flex items-center justify-center text-center px-4 py-16">
                 <div class="max-w-3xl">
-                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 uppercase leading-tight tracking-tighter">SERVICIO MARÍTIMO PROFESIONAL</h1>
-                    <p class="text-lg md:text-xl text-slate-300 mb-10 font-light text-center">Tu carga segura desde Europa hasta la puerta de tu hogar en Perú.</p>
-                    <button onclick="navigateTo('orders')" class="bg-orange-600 hover:bg-orange-700 text-white font-black py-4 px-12 rounded-full shadow-2xl transition-all transform hover:scale-105 uppercase tracking-widest text-sm md:text-base mx-auto block">
+                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 uppercase leading-tight tracking-tighter">SERVICIO MARÍTIMO <span class="text-yellow-400">PROFESIONAL</span></h1>
+                    <p class="text-lg md:text-xl text-blue-100 mb-10 font-light text-center">Tu carga segura desde Europa hasta la puerta de tu hogar en Perú.</p>
+                    <button onclick="navigateTo('orders')" class="bg-yellow-400 hover:bg-yellow-500 text-blue-950 font-black py-4 px-12 rounded-full shadow-2xl transition-all transform hover:scale-105 uppercase tracking-widest text-sm md:text-base mx-auto block">
                         Realizar Registro de Pedido
                     </button>
                 </div>
             </div>
 
-            <div class="bg-white py-16 md:py-20 border-b shadow-sm text-center">
+            <div class="bg-blue-50 py-16 md:py-20 border-b shadow-sm text-center">
                 <div class="max-w-4xl mx-auto px-6">
-                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-8 brand-font uppercase">Excelencia en Logística Marítima</h2>
-                    <p class="text-slate-600 leading-relaxed text-lg italic text-center">
+                    <h2 class="text-3xl md:text-4xl font-black text-blue-900 mb-8 brand-font uppercase">Excelencia en Logística Marítima</h2>
+                    <p class="text-slate-700 leading-relaxed text-lg italic text-center">
                         "En <strong>Imperial Service Cargo</strong>, entendemos que cada envío cuenta una historia. Nos especializamos en el transporte consolidado por vía marítima, garantizando seguridad y puntualidad. Tiempo estimado de llegada al Perú: <strong>3 meses</strong> desde la salida del contenedor."
                     </p>
                 </div>
@@ -159,8 +194,8 @@
             <div class="max-w-7xl mx-auto px-4 py-16">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
                     <div class="space-y-4 text-center">
-                        <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font inline-block">Vídeo Informativo</h2>
-                        <div class="video-container shadow-2xl border-4 border-white">
+                        <h2 class="text-2xl font-bold text-blue-900 border-l-4 border-yellow-400 pl-4 uppercase brand-font inline-block">Vídeo Informativo</h2>
+                        <div class="video-container shadow-2xl">
                             <video controls poster="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?fit=crop&w=800&q=80">
                                 <source src="video.mp4" type="video/mp4">
                                 Tu navegador no soporta videos.
@@ -168,31 +203,31 @@
                         </div>
                     </div>
                     <div class="space-y-4 text-center">
-                        <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-orange-500 pl-4 uppercase brand-font inline-block">Flyer Oficial</h2>
+                        <h2 class="text-2xl font-bold text-blue-900 border-l-4 border-yellow-400 pl-4 uppercase brand-font inline-block">Flyer Oficial</h2>
                         <div class="bg-white p-2 rounded-xl shadow-lg border border-slate-200">
                             <img src="flyer.jpeg" onerror="this.src='https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&w=800&q=80'" alt="Flyer" class="w-full h-auto rounded-lg">
                         </div>
                     </div>
                 </div>
 
-                <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-12 uppercase brand-font text-center">Carga Especializada</h2>
+                <h2 class="text-2xl md:text-3xl font-black text-blue-900 mb-12 uppercase brand-font text-center">Carga Especializada</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
-                    <div class="group relative overflow-hidden rounded-2xl shadow-xl h-72 bg-slate-200 text-center">
+                    <div class="group relative overflow-hidden rounded-2xl shadow-xl h-72 bg-slate-200 text-center border-b-4 border-yellow-400">
                         <img src="5.jpeg" onerror="this.src='https://images.unsplash.com/photo-1534346503524-87140f065366?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 flex items-end p-6">
-                            <p class="text-white font-bold text-lg text-center w-full">Movilidades Eléctricas</p>
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950 flex items-end p-6">
+                            <p class="text-white font-bold text-lg text-center w-full uppercase">Movilidades Eléctricas</p>
                         </div>
                     </div>
-                    <div class="group relative overflow-hidden rounded-2xl shadow-xl h-72 bg-slate-200 text-center">
+                    <div class="group relative overflow-hidden rounded-2xl shadow-xl h-72 bg-slate-200 text-center border-b-4 border-yellow-400">
                         <img src="6.jpeg" onerror="this.src='https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 flex items-end p-6">
-                            <p class="text-white font-bold text-lg text-center w-full">Sillas de Ruedas</p>
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950 flex items-end p-6">
+                            <p class="text-white font-bold text-lg text-center w-full uppercase">Sillas de Ruedas</p>
                         </div>
                     </div>
-                    <div class="group relative overflow-hidden rounded-2xl shadow-xl h-72 bg-slate-200 text-center">
+                    <div class="group relative overflow-hidden rounded-2xl shadow-xl h-72 bg-slate-200 text-center border-b-4 border-yellow-400">
                         <img src="7.jpeg" onerror="this.src='https://images.unsplash.com/photo-1566576721346-d4a3b4eaad5b?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 flex items-end p-6">
-                            <p class="text-white font-bold text-lg text-center w-full">Carga Consolidada</p>
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-950 flex items-end p-6">
+                            <p class="text-white font-bold text-lg text-center w-full uppercase">Carga Consolidada</p>
                         </div>
                     </div>
                 </div>
@@ -201,16 +236,16 @@
 
         <!-- PANTALLA: AUTENTICACIÓN -->
         <section id="auth-section" class="hidden-screen py-20 px-4">
-            <div class="max-w-md mx-auto bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-slate-100 text-center">
+            <div class="max-w-md mx-auto bg-white p-8 md:p-10 rounded-3xl shadow-2xl border-t-8 border-blue-900 text-center">
                 <div class="text-center mb-8">
-                    <h2 id="auth-title" class="text-3xl font-black text-slate-900 uppercase brand-font tracking-tight text-center">Acceso Imperial</h2>
-                    <div class="w-16 h-1 bg-orange-500 mx-auto mt-2"></div>
+                    <h2 id="auth-title" class="text-3xl font-black text-blue-900 uppercase brand-font tracking-tight text-center">Acceso Imperial</h2>
+                    <div class="w-16 h-1 bg-yellow-400 mx-auto mt-2"></div>
                 </div>
                 <form id="authForm" class="space-y-5">
                     <input type="email" id="auth-email" required class="input-field" placeholder="Correo Electrónico">
                     <input type="password" id="auth-pass" required class="input-field" placeholder="Contraseña">
-                    <button type="submit" id="auth-btn" class="w-full btn-primary mt-4 py-4 shadow-orange-500/20">Ingresar al Sistema</button>
-                    <button type="button" onclick="toggleAuthMode()" id="auth-switch-btn" class="w-full text-xs font-bold text-orange-600 mt-6 underline text-center uppercase tracking-widest">Crear Cuenta Nueva</button>
+                    <button type="submit" id="auth-btn" class="w-full btn-primary mt-4 py-4 shadow-xl">Ingresar al Sistema</button>
+                    <button type="button" onclick="toggleAuthMode()" id="auth-switch-btn" class="w-full text-xs font-bold text-blue-900 mt-6 underline text-center uppercase tracking-widest">Crear Cuenta Nueva</button>
                 </form>
             </div>
         </section>
@@ -221,17 +256,17 @@
                 
                 <div class="lg:col-span-2 space-y-8">
                     
-                    <div id="order-locked" class="bg-white border border-slate-200 rounded-3xl p-16 text-center shadow-lg">
-                        <i class="fas fa-lock text-5xl text-slate-300 mb-6 mx-auto block text-center"></i>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-4 uppercase text-center">Inicia sesión para registrar</h3>
+                    <div id="order-locked" class="bg-white border-2 border-dashed border-blue-200 rounded-3xl p-16 text-center shadow-lg">
+                        <i class="fas fa-lock text-5xl text-blue-300 mb-6 mx-auto block text-center"></i>
+                        <h3 class="text-2xl font-bold text-blue-900 mb-4 uppercase text-center">Inicia sesión para registrar</h3>
                         <button onclick="showAuthScreen('login')" class="btn-primary px-10 tracking-widest uppercase text-sm mx-auto block">Ir al Login</button>
                     </div>
 
                     <div id="order-unlocked" class="hidden-screen space-y-8">
                         
                         <!-- Bloque Forma de Caja -->
-                        <div class="bg-white border-l-8 border-blue-600 p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-8 shadow-md">
-                            <div class="flex-shrink-0 w-40 h-40 bg-slate-50 rounded-xl border border-dashed border-slate-300 flex items-center justify-center overflow-hidden">
+                        <div class="bg-white border-l-8 border-blue-900 p-6 rounded-2xl flex flex-col sm:flex-row items-center gap-8 shadow-md">
+                            <div class="flex-shrink-0 w-40 h-40 bg-blue-50 rounded-xl border border-dashed border-blue-300 flex items-center justify-center overflow-hidden">
                                 <img src="8.jpeg" onerror="this.src='https://images.unsplash.com/photo-1580674285054-bed31e145f59?auto=format&fit=crop&w=400&q=80'" class="max-w-full max-h-full object-contain p-2">
                             </div>
                             <div class="text-center sm:text-left">
@@ -243,21 +278,21 @@
                         </div>
 
                         <!-- BLOQUE: NORMATIVAS -->
-                        <div class="bg-white border-l-8 border-orange-500 p-8 rounded-2xl shadow-md">
-                            <h3 class="text-slate-900 font-black uppercase flex items-center gap-3 mb-6 text-xl">
-                                <i class="fas fa-shield-alt text-orange-500"></i> NORMATIVAS
+                        <div class="bg-white border-l-8 border-yellow-400 p-8 rounded-2xl shadow-md">
+                            <h3 class="text-blue-900 font-black uppercase flex items-center gap-3 mb-6 text-xl">
+                                <i class="fas fa-shield-alt text-yellow-500"></i> NORMATIVAS
                             </h3>
                             <div class="space-y-6">
-                                <div class="w-full bg-slate-50 rounded-xl border border-slate-200 overflow-hidden flex items-center justify-center shadow-inner">
+                                <div class="w-full bg-blue-50 rounded-xl border border-blue-100 overflow-hidden flex items-center justify-center shadow-inner">
                                     <img src="9.jpeg" onerror="this.src='https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80'" class="max-w-full h-auto max-h-56 object-contain" alt="Referencia Cajas">
                                 </div>
                                 <div class="space-y-4">
-                                    <p class="flex items-start gap-3 font-bold text-red-600 bg-red-50 p-4 rounded-lg">
+                                    <p class="flex items-start gap-3 font-bold text-red-600 bg-red-50 p-4 rounded-lg border border-red-100">
                                         <i class="fas fa-ban mt-1"></i>
                                         <span>NO SE RETIRAN CAJAS DEFORMADAS NI ABIERTAS.</span>
                                     </p>
-                                    <div class="bg-slate-900 text-white p-6 rounded-xl border-t-4 border-orange-500 shadow-lg">
-                                        <p class="font-black text-orange-400 mb-2 uppercase text-xs tracking-tighter italic text-center">Prohibidos:</p>
+                                    <div class="bg-blue-900 text-white p-6 rounded-xl border-t-4 border-yellow-400 shadow-lg">
+                                        <p class="font-black text-yellow-400 mb-2 uppercase text-xs tracking-tighter italic text-center">Prohibidos:</p>
                                         <p class="text-sm opacity-90 leading-relaxed font-medium text-center">
                                             Celular, tablet, pc portátil, play station, nada de líquidos en botella de vidrio, no medicinas, alimentos procesados.
                                         </p>
@@ -266,14 +301,14 @@
                             </div>
                         </div>
 
-                        <form id="shippingForm" class="bg-white rounded-3xl shadow-2xl p-6 md:p-10 border-t-8 border-slate-950 space-y-8">
-                            <h2 class="text-2xl font-black text-slate-900 uppercase brand-font flex items-center gap-3">
-                                <i class="fas fa-file-signature text-orange-500"></i> Registro de Encomienda
+                        <form id="shippingForm" class="bg-white rounded-3xl shadow-2xl p-6 md:p-10 border-t-8 border-blue-900 space-y-8">
+                            <h2 class="text-2xl font-black text-blue-900 uppercase brand-font flex items-center gap-3">
+                                <i class="fas fa-file-signature text-yellow-500"></i> Registro de Encomienda
                             </h2>
                             
                             <!-- Remitente -->
-                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                                <h3 class="font-black text-slate-800 text-xs uppercase mb-6 flex items-center gap-2 border-b pb-2"><i class="fas fa-map-pin text-orange-500"></i> Origen (Remitente)</h3>
+                            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                                <h3 class="font-black text-blue-900 text-xs uppercase mb-6 flex items-center gap-2 border-b-2 border-yellow-400 pb-2"><i class="fas fa-map-pin text-blue-900"></i> Origen (Remitente)</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <input type="text" id="senderName" required class="input-field" placeholder="Nombre Completo">
                                     <input type="text" id="senderId" required class="input-field" placeholder="DNI / RUC / Pasaporte">
@@ -281,10 +316,10 @@
                                     <input type="tel" id="senderPhone2" required class="input-field" placeholder="Teléfono Móvil 2 (Obligatorio)">
                                     
                                     <div class="md:col-span-2 space-y-2">
-                                        <label class="text-[10px] uppercase font-black text-slate-400">Dirección de Recojo</label>
+                                        <label class="text-[10px] uppercase font-black text-blue-800">Dirección de Recojo</label>
                                         <div class="flex gap-2">
                                             <input type="text" id="senderAddress" required class="input-field" placeholder="Calle, Número, Piso/Dpto">
-                                            <button type="button" onclick="openMap('sender')" class="bg-slate-900 text-white px-5 rounded-xl hover:bg-slate-800 shrink-0 shadow-lg transition">
+                                            <button type="button" onclick="openMap('sender')" class="bg-blue-900 text-white px-5 rounded-xl hover:bg-blue-800 shrink-0 shadow-lg transition">
                                                 <i class="fas fa-location-arrow"></i>
                                             </button>
                                         </div>
@@ -294,8 +329,8 @@
                             </div>
 
                             <!-- Destinatario -->
-                            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                                <h3 class="font-black text-slate-800 text-xs uppercase mb-6 flex items-center gap-2 border-b pb-2"><i class="fas fa-truck-loading text-orange-500"></i> Destino (Receptor Perú)</h3>
+                            <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                                <h3 class="font-black text-blue-900 text-xs uppercase mb-6 flex items-center gap-2 border-b-2 border-yellow-400 pb-2"><i class="fas fa-truck-loading text-blue-900"></i> Destino (Receptor Perú)</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <input type="text" id="receiverName" required class="input-field" placeholder="Nombre de quién recibe">
                                     <input type="tel" id="receiverPhone" required class="input-field" placeholder="Celular Principal">
@@ -306,10 +341,10 @@
                                     <select id="destDist" required class="input-field"></select>
                                     
                                     <div class="md:col-span-2 space-y-2 mt-2">
-                                        <label class="text-[10px] uppercase font-black text-slate-400">Dirección Exacta de Entrega</label>
+                                        <label class="text-[10px] uppercase font-black text-blue-800">Dirección Exacta de Entrega</label>
                                         <div class="flex gap-2">
                                             <input type="text" id="destAddress" required class="input-field" placeholder="Av, Calle, Mz, Lote, Referencia">
-                                            <button type="button" onclick="openMap('receiver')" class="bg-slate-900 text-white px-5 rounded-xl hover:bg-slate-800 shrink-0 shadow-lg transition">
+                                            <button type="button" onclick="openMap('receiver')" class="bg-blue-900 text-white px-5 rounded-xl hover:bg-blue-800 shrink-0 shadow-lg transition">
                                                 <i class="fas fa-location-arrow"></i>
                                             </button>
                                         </div>
@@ -318,10 +353,10 @@
                             </div>
 
                             <!-- Carga -->
-                            <div class="bg-orange-50 p-6 rounded-2xl border border-orange-200">
-                                <h3 class="font-black text-orange-900 text-xs uppercase mb-6 flex justify-between items-center">
+                            <div class="bg-yellow-50 p-6 rounded-2xl border border-yellow-200">
+                                <h3 class="font-black text-blue-900 text-xs uppercase mb-6 flex justify-between items-center">
                                     Detalle de Bultos
-                                    <button type="button" onclick="addBoxRow()" class="bg-orange-600 text-white text-[10px] px-4 py-2 rounded-lg hover:bg-orange-700 shadow-md uppercase tracking-wider">
+                                    <button type="button" onclick="addBoxRow()" class="bg-blue-900 text-yellow-400 text-[10px] px-4 py-2 rounded-lg hover:bg-blue-800 shadow-md uppercase tracking-wider">
                                         <i class="fas fa-plus"></i> Añadir Bulto
                                     </button>
                                 </h3>
@@ -332,30 +367,30 @@
                             
                             <!-- Éxito -->
                             <div id="post-success-actions" class="hidden-screen space-y-6 mt-10">
-                                <div class="bg-green-600 text-white p-6 rounded-2xl text-center shadow-xl">
-                                    <p class="font-black text-xl mb-1 uppercase tracking-wider"><i class="fas fa-check-circle"></i> Sincronización Exitosa</p>
+                                <div class="bg-blue-900 text-white p-6 rounded-2xl text-center shadow-xl border-b-4 border-yellow-400">
+                                    <p class="font-black text-xl mb-1 uppercase tracking-wider text-yellow-400"><i class="fas fa-check-circle"></i> Sincronización Exitosa</p>
                                     <p class="text-xs opacity-90">Pedido guardado en la nube central de Imperial.</p>
                                 </div>
-                                <button type="button" onclick="sendToWhatsApp()" class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-6 rounded-3xl flex items-center justify-center gap-5 shadow-2xl transform transition active:scale-95">
+                                <button type="button" onclick="sendToWhatsApp()" class="w-full bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-black py-6 rounded-3xl flex items-center justify-center gap-5 shadow-2xl transform transition active:scale-95">
                                     <i class="fab fa-whatsapp text-5xl"></i> 
                                     <div class="text-left text-center">
                                         <div class="text-[10px] uppercase opacity-80 font-bold tracking-widest text-center">Supervisor Online</div>
                                         <div class="text-xl uppercase text-center">Cotizar por WhatsApp</div>
                                     </div>
                                 </button>
-                                <button type="button" onclick="resetForm()" class="w-full text-slate-500 text-xs font-bold underline text-center block uppercase tracking-widest">Realizar Nuevo Registro</button>
+                                <button type="button" onclick="resetForm()" class="w-full text-blue-900 text-xs font-bold underline text-center block uppercase tracking-widest">Realizar Nuevo Registro</button>
                             </div>
                         </form>
                     </div>
                 </div>
 
                 <div class="space-y-8 h-fit">
-                    <div class="bg-slate-950 text-white p-8 rounded-3xl shadow-2xl border border-slate-800">
-                        <h3 class="font-black text-xl mb-6 text-orange-500 border-b border-slate-800 pb-4 uppercase brand-font tracking-wide text-center">Contacto Directo</h3>
-                        <div class="flex items-center gap-4 bg-slate-900 p-5 rounded-2xl border border-slate-800 shadow-inner group cursor-pointer" onclick="window.open('https://wa.me/393271028705')">
-                            <i class="fab fa-whatsapp text-4xl text-green-500 group-hover:scale-110 transition"></i>
+                    <div class="bg-blue-900 text-white p-8 rounded-3xl shadow-2xl border-b-8 border-yellow-400">
+                        <h3 class="font-black text-xl mb-6 text-yellow-400 border-b border-blue-800 pb-4 uppercase brand-font tracking-wide text-center">Contacto Directo</h3>
+                        <div class="flex items-center gap-4 bg-blue-800 p-5 rounded-2xl border border-blue-700 shadow-inner group cursor-pointer" onclick="window.open('https://wa.me/393271028705')">
+                            <i class="fab fa-whatsapp text-4xl text-green-400 group-hover:scale-110 transition"></i>
                             <div>
-                                <p class="text-[10px] text-slate-500 uppercase font-black">Línea Europa</p>
+                                <p class="text-[10px] text-blue-200 uppercase font-black">Línea Europa</p>
                                 <span class="text-lg font-black tracking-tighter text-white">+39 327 102 8705</span>
                             </div>
                         </div>
@@ -366,28 +401,28 @@
     </main>
 
     <!-- ADMIN PANEL MODAL -->
-    <div id="adminModal" class="fixed inset-0 bg-slate-950/95 z-[100] hidden flex justify-center items-center p-4 backdrop-blur-md">
+    <div id="adminModal" class="fixed inset-0 bg-blue-950/95 z-[100] hidden flex justify-center items-center p-4 backdrop-blur-md">
         <div class="bg-white w-full max-w-6xl h-[95vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden">
-            <div class="bg-slate-950 text-white p-6 flex justify-between items-center text-center">
-                <h2 class="text-xl font-black uppercase brand-font italic tracking-widest text-orange-500">Consola Maestra Imperial</h2>
-                <button onclick="toggleAdminPanel()" class="text-slate-400 hover:text-white text-4xl transition">&times;</button>
+            <div class="bg-blue-900 text-white p-6 flex justify-between items-center text-center border-b-4 border-yellow-400">
+                <h2 class="text-xl font-black uppercase brand-font italic tracking-widest text-yellow-400">Consola Maestra Imperial</h2>
+                <button onclick="toggleAdminPanel()" class="text-blue-200 hover:text-white text-4xl transition">&times;</button>
             </div>
             
-            <div id="adminAuth" class="flex-grow flex flex-col justify-center items-center p-8 md:p-12 text-center bg-slate-50">
-                <div class="bg-white p-8 rounded-full mb-8 shadow-xl border border-slate-100 text-slate-400 text-center">
+            <div id="adminAuth" class="flex-grow flex flex-col justify-center items-center p-8 md:p-12 text-center bg-blue-50">
+                <div class="bg-white p-8 rounded-full mb-8 shadow-xl border-4 border-yellow-400 text-blue-900 text-center">
                     <i class="fas fa-fingerprint text-6xl"></i>
                 </div>
-                <h3 class="text-3xl font-black text-slate-900 tracking-tighter uppercase mb-2 text-center">Identidad Requerida</h3>
-                <p class="text-slate-500 text-sm mb-10 max-w-sm mx-auto text-center">Ingrese su código PIN de supervisor para acceder al historial en la nube.</p>
-                <input type="password" id="adminPin" class="border-b-4 border-slate-200 p-4 w-48 md:w-64 text-center text-4xl tracking-[1rem] focus:border-orange-500 transition outline-none bg-transparent" placeholder="****">
-                <button onclick="checkPin()" class="mt-12 bg-slate-950 text-white px-16 py-4 rounded-full font-black uppercase text-sm shadow-2xl hover:bg-slate-900 transition mx-auto block">Verificar y Acceder</button>
+                <h3 class="text-3xl font-black text-blue-900 tracking-tighter uppercase mb-2 text-center">Supervisor Maestro</h3>
+                <p class="text-slate-500 text-sm mb-10 max-w-sm mx-auto text-center">Ingrese el código de seguridad para acceder a la base de datos global.</p>
+                <input type="password" id="adminPin" class="border-b-4 border-blue-900 p-4 w-48 md:w-64 text-center text-4xl tracking-[1rem] focus:border-yellow-400 transition outline-none bg-transparent font-bold text-blue-900" placeholder="****">
+                <button onclick="checkPin()" class="mt-12 bg-blue-900 text-yellow-400 px-16 py-4 rounded-full font-black uppercase text-sm shadow-2xl hover:bg-blue-800 transition mx-auto block">Verificar y Acceder</button>
             </div>
 
             <div id="adminData" class="hidden flex-col h-full bg-white">
                 <div class="p-6 border-b flex flex-col md:flex-row justify-between items-center gap-4 bg-slate-50 text-center md:text-left">
                     <div>
-                        <h4 class="font-black uppercase text-xl text-slate-900">Historial Sincronizado</h4>
-                        <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold font-mono">Real-Time Cloud Universal</p>
+                        <h4 class="font-black uppercase text-xl text-blue-900">Historial Sincronizado</h4>
+                        <p class="text-[10px] text-blue-400 uppercase tracking-widest font-bold font-mono">Real-Time Cloud Universal</p>
                     </div>
                     <button onclick="exportToExcel()" class="bg-green-600 text-white px-6 py-3 rounded-full font-black text-xs flex items-center gap-3 hover:bg-green-700 transition shadow-lg shadow-green-600/20 uppercase tracking-widest mx-auto block md:inline-block">
                         <i class="fas fa-file-excel text-lg"></i> Exportar Reporte Total
@@ -396,10 +431,10 @@
                 <div class="flex-grow overflow-auto p-4 md:p-6">
                     <div class="table-responsive">
                         <table class="w-full text-left bg-white border-separate border-spacing-y-2">
-                            <thead class="text-slate-400 text-center">
+                            <thead class="text-blue-900 text-center">
                                 <tr>
                                     <th class="p-4 text-[10px] uppercase font-black">Fecha</th>
-                                    <th class="p-4 text-[10px] uppercase font-black text-center">Usuario Reg.</th>
+                                    <th class="p-4 text-[10px] uppercase font-black text-center">Usuario</th>
                                     <th class="p-4 text-[10px] uppercase font-black">Remitente</th>
                                     <th class="p-4 text-[10px] uppercase font-black">Receptor</th>
                                     <th class="p-4 text-[10px] uppercase font-black text-center">Bultos / Peso</th>
@@ -414,8 +449,8 @@
         </div>
     </div>
 
-    <footer class="bg-slate-950 text-slate-600 py-10 text-center text-[10px] mt-auto border-t border-slate-900 uppercase tracking-[0.3em] font-medium text-white">
-        <p>© 2024 IMPERIAL SERVICE CARGO - Logística Profesional</p>
+    <footer class="bg-blue-950 text-blue-200 py-10 text-center text-[10px] mt-auto border-t-4 border-yellow-400 uppercase tracking-[0.3em] font-medium">
+        <p>© 2024 <span class="text-yellow-400">IMPERIAL SERVICE CARGO</span> - Logística Profesional</p>
     </footer>
 
     <script type="module">
@@ -444,7 +479,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = 'imperial-cargo-master-system-v1'; // APP ID FIJO PARA TODOS
+        const appId = 'imperial-cargo-master-system-v1'; 
         
         let user = null;
         let lastSavedOrder = null;
@@ -549,8 +584,9 @@
             } else {
                 const addr = document.getElementById('destAddress').value;
                 const dist = document.getElementById('destDist').value;
+                const reg = document.getElementById('destRegion').value;
                 if (!addr || !dist) return alert("Complete dirección y distrito.");
-                address = `${addr}, ${dist}, Perú`;
+                address = `${addr}, ${dist}, ${reg}, Perú`;
             }
             window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, '_blank');
         };
@@ -609,13 +645,7 @@
                     alert("Cuenta creada con éxito."); 
                     window.showAuthScreen('login');
                 }
-            } catch (err) { 
-                if (err.code === "auth/operation-not-allowed") {
-                    alert("Error: Debes habilitar el método 'Correo electrónico y contraseña' en Firebase.");
-                } else {
-                    alert("Error: " + err.message);
-                }
-            }
+            } catch (err) { alert("Error: " + err.message); }
             finally { btn.disabled = false; }
         });
 
@@ -631,8 +661,8 @@
             row.className = 'box-item';
             row.innerHTML = `
                 <div class="flex justify-between items-center mb-3 text-center">
-                    <span class="font-black text-slate-800 text-[10px] uppercase text-center">📦 Bulto #${boxCount}</span>
-                    <button type="button" onclick="this.closest('.box-item').remove()" class="text-red-400 hover:text-red-600 transition"><i class="fas fa-trash-alt"></i></button>
+                    <span class="font-black text-blue-900 text-[10px] uppercase text-center">📦 Bulto #${boxCount}</span>
+                    <button type="button" onclick="this.closest('.box-item').remove()" class="text-red-500 hover:text-red-700 transition"><i class="fas fa-trash-alt"></i></button>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                     <input type="number" step="0.1" class="input-field box-weight" required placeholder="Peso kg">
@@ -685,7 +715,6 @@
             };
 
             try {
-                // RUTA GLOBAL UNIVERSAL PARA TODAS LAS MÁQUINAS
                 const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
                 const docRef = await addDoc(ordersCol, orderData);
                 lastSavedOrder = { ...orderData, id: docRef.id };
@@ -723,23 +752,20 @@
             if (document.getElementById('adminPin').value === "1234") {
                 document.getElementById('adminAuth').classList.add('hidden-screen');
                 document.getElementById('adminData').style.display = 'flex';
-                // El admin ahora lee la colección pública universal SIN FILTROS
                 loadAdminData();
             } else { alert("PIN Incorrecto."); }
         };
 
         async function loadAdminData() {
             const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '<tr><td colspan="6" class="p-10 text-center italic text-slate-400">Consultando registros maestros en la nube global...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="p-10 text-center italic text-slate-400">Consultando nube global...</td></tr>';
             
             try {
-                // REGLA CLAVE: Sin filtros de correo. Carga todo lo que existe.
                 const ordersCol = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
                 const snap = await getDocs(ordersCol);
                 let orders = [];
                 snap.forEach(d => orders.push({ id: d.id, ...d.data() }));
                 
-                // Ordenar por fecha (los más recientes primero)
                 orders.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
 
                 tbody.innerHTML = '';
@@ -750,12 +776,12 @@
                     row.className = "bg-slate-50 border-b-8 border-white rounded-xl shadow-sm hover:bg-slate-100 transition";
                     row.innerHTML = `
                         <td class="p-4 text-[9px] font-mono text-slate-500">${date}</td>
-                        <td class="p-4 text-[10px] text-center font-bold text-slate-400">${ord.userEmail || 'Web'}</td>
+                        <td class="p-4 text-[10px] text-center font-bold text-blue-400">${ord.userEmail || 'Web'}</td>
                         <td class="p-4 text-[11px] font-bold text-slate-700 text-center">${ord.sender?.name || 'N/A'}</td>
-                        <td class="p-4 text-[11px] font-black text-slate-900 text-center">${ord.receiver?.name || 'N/A'}</td>
-                        <td class="p-4 text-[10px] text-center font-black text-orange-600">${ord.boxes?.length || 0} bul. / ${totalW}kg</td>
+                        <td class="p-4 text-[11px] font-black text-blue-900 text-center">${ord.receiver?.name || 'N/A'}</td>
+                        <td class="p-4 text-[10px] text-center font-black text-blue-900 bg-yellow-100">${ord.boxes?.length || 0} bul. / ${totalW}kg</td>
                         <td class="p-4 text-center">
-                            <button onclick="window.deleteOrder('${ord.id}')" class="text-red-400 hover:text-red-600 transition p-2"><i class="fas fa-trash-alt"></i></button>
+                            <button onclick="window.deleteOrder('${ord.id}')" class="text-red-500 hover:text-red-700 transition p-2"><i class="fas fa-trash-alt"></i></button>
                         </td>
                     `;
                     tbody.appendChild(row);
@@ -763,7 +789,7 @@
                 window.masterOrders = orders;
             } catch (e) { 
                 console.error(e);
-                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500 font-black">ERROR: Active las REGLAS de su base de datos Firebase.</td></tr>'; 
+                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500 font-black">Error de permisos en la nube.</td></tr>'; 
             }
         }
 
@@ -782,9 +808,9 @@
             let html = `<html><head><meta charset="utf-8">
                 <style>
                     table { border-collapse: collapse; width: 100%; font-family: sans-serif; }
-                    th { background-color: #f97316; color: white; border: 1px solid #333; padding: 10px; text-transform: uppercase; font-size: 12px; }
+                    th { background-color: #1e3a8a; color: white; border: 1px solid #333; padding: 10px; text-transform: uppercase; font-size: 12px; }
                     td { border: 1px solid #ccc; padding: 8px; font-size: 11px; vertical-align: top; }
-                    .header-main { background-color: #0f172a; color: #fff; }
+                    .header-main { background-color: #1e3a8a; color: #fff; }
                 </style>
                 </head><body>
                 <table><thead>
@@ -852,4 +878,5 @@
     </script>
 </body>
 </html>
+
 
