@@ -737,7 +737,7 @@
 
             const message = `*REGISTRO IMPERIAL CARGO* 🚛💨\n--------------------------------------------\n👤 *REMITENTE:* ${o.sender.name}\n📱 *CELULARES:* ${o.sender.phone} / ${o.sender.phone2}\n🏠 *ORIGEN:* ${o.sender.address}\n--------------------------------------------\n📍 *DESTINO:* ${o.receiver.dist}, ${o.receiver.region}\n🏠 *ENTREGA:* ${o.receiver.address}\n👤 *RECIBE:* ${o.receiver.name}\n📱 *CEL REC:* ${o.receiver.phone}\n--------------------------------------------\n📦 *DETALLE DE CARGA:*\n${boxesStr}\n⚖️ *PESO:* ${totalWeight} kg`.trim();
             
-            window.open(`https://wa.me/393271028705?text=${encodeURIComponent(message)}`, '_blank');
+            window.open(`https://wa.me/393883909873?text=${encodeURIComponent(message)}`, '_blank');
         };
 
         window.toggleAdminPanel = () => {
@@ -749,7 +749,7 @@
         };
 
         window.checkPin = async () => {
-            if (document.getElementById('adminPin').value === "1234") {
+            if (document.getElementById('adminPin').value === "1212") {
                 document.getElementById('adminAuth').classList.add('hidden-screen');
                 document.getElementById('adminData').style.display = 'flex';
                 loadAdminData();
